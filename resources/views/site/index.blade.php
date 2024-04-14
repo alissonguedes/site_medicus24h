@@ -9,14 +9,14 @@
 		<title>Médicus24h</title>
 
 		<!-- Compiled and minified CSS -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<link rel="stylesheet" href="{{ asset('assets/plugins/materialize/materialize.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/styles/defaults/colors.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/styles/defaults/animate.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/styles/site.css') }}">
 
 		<!-- Compiled and minified JavaScript -->
-		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+		<script src="{{ asset('assets/plugins/materialize/materialize.min.js') }}"></script>
 
 		<script>
 			$(function() {
@@ -32,17 +32,15 @@
 		<header>
 			<nav class="navbar-color navbar-fixed z-depth-0">
 				<div class="nav-wrapper">
-					<h1 class="no-margin no-padding">
-						<a class="brand-logo" href="#">
-							<img src="{{ asset('assets/img/logo/logo.png') }}" alt="">
-						</a>
-					</h1>
-					<ul id="nav-mobile" class="right hide-on-med-and-down letterspacing">
-						<li><a class="skew active" href="#">Início</a></li>
-						<li><a class="skew" href="#">Sobre Nós</a></li>
-						<li><a class="skew" href="#">Serviços</a></li>
-						<li><a class="skew" href="#">ClubMédicus24h</a></li>
-						<li><a class="skew" href="#">Atendimento</a></li>
+					<a class="brand-logo skew" href="#">
+						<img src="{{ asset('assets/img/logo/logo.png') }}" alt="">
+					</a>
+					<ul id="nav-mobile" class="navbar-main right hide-on-med-and-down letterspacing">
+						<li><a class="active" href="#">Início</a></li>
+						<li><a class="" href="#">Sobre Nós</a></li>
+						<li><a class="" href="#">Serviços</a></li>
+						<li><a class="" href="#">ClubMédicus24h</a></li>
+						<li><a class="" href="#">Atendimento</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -52,16 +50,32 @@
 			<div id="slider">
 				<div class="slider fullscreen">
 					<ul class="slides">
-						@for ($i = 1; $i <= 2; $i++)
+						@for ($i = 1; $i <= 10; $i++)
+							@php
+								$delay = ['delay-2s', 'delay-3s', 'delay-4s'];
+								$animation = ['fadeIn' => 'fadeOut', 'fadeInRight' => 'fadeOutRight', 'fadeInLeft' => 'fadeOutLeft'];
+								$rand = rand(0, count($animation) - 1);
+								$delay = $delay[rand(0, count($delay) - 1)];
+								$inAnimation = array_keys($animation)[$rand];
+								$outAnimation = array_values($animation)[$rand];
+							@endphp
 							<li>
-								<img src="{{ asset('assets/img/site/banner/ambulancia.png') }}" class="animated delay-3s fadeInRight" style="position: absolute; top: 30px; left: 150px;">
+								<img src="{{ asset('assets/img/site/banner/ambulancia.png') }}" class=""
+									data-in-animation="{{ $inAnimation }}" data-out-animation="{{ $outAnimation }}">
 								<div class="caption center-align">
-									<h3 class="animated delay-1s fadeInLeft">This is our big Tagline!</h3>
-									<h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+									<h3 class="animated delay-2s fadeInLeft black-text">This is our big Tagline!</h3>
+									<h5 class="red-text">Here's our small slogan.</h5>
 								</div>
 							</li>
 						@endfor
 					</ul>
+				</div>
+				<div class="base">
+					<div class="box-1"></div>
+					<div class="box-2"></div>
+					<div class="box-3"></div>
+					<div class="box-4"></div>
+					<div class="box-5"></div>
 				</div>
 			</div>
 
@@ -75,7 +89,8 @@
 
 										<div class="card-content teal lighten-1 border">
 
-											<img src="{{ asset('assets/img/site/cards/ambulancia.jpg') }}" class="border-radius-8 z-depth-3 image-n-margin" alt="">
+											<img src="{{ asset('assets/img/site/cards/ambulancia.jpg') }}"
+												class="border-radius-8 z-depth-3 image-n-margin" alt="">
 
 											<h6 class="card-title">
 												<a class="mt-5 letterspacing white-text" href="#">UTI Móvel</a>
@@ -108,21 +123,6 @@
 				</div>
 			</div>
 
-			<script>
-				// $(function() {
-				//     setInterval(function() {
-				//         $('#slider').find('.slides li .animated').each(function() {
-				//             if ($(this).is(':visible')) {
-				//                 $(this).removeClass('fadeInRight');
-				//                 $(this).addClass('fadeOutLeft');
-				//             } else {
-				//                 $(this).removeClass('fadeInLeft');
-				//                 $(this).addClass('fadeOutRight');
-				//             }
-				//         });
-				//     }, 1200);
-				// })
-			</script>
 		</div>
 
 	</body>
