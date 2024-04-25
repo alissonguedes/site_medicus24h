@@ -51,6 +51,10 @@
 
 			{{ $slot }}
 
+			@if (isset($footer))
+				{{ $footer }}
+			@endif
+
 			@if (isset($scripts))
 				{{ $scripts }}
 			@endif
