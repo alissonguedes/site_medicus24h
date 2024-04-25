@@ -1,130 +1,194 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-site-layout>
 
-	<head>
+	<x-slot:title>Página Inicial</x-slot:title>
 
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<title>Médicus24h</title>
+	<div id="home" class="scrollspy">
+		<div id="slider" class="splide">
+			<div class="splide__track">
+				<ul class="splide__list">
+					@for ($i = 0; $i <= 10; $i++)
+						<li class="splide__slide">
+							<img src="{{ asset('assets/img/site/banner/ambulancia.png') }}" alt="">
+							<span class="teal-text text-lighten-1">DRª. Maria da Conceição</span>
+							<small> {{ $i }} - Pediatra</small>
+						</li>
+					@endfor
+				</ul>
+			</div>
+		</div>
+	</div>
 
-		<!-- Compiled and minified CSS -->
-		<link rel="stylesheet" href="{{ asset('assets/plugins/materialize/materialize.min.css') }}">
-		<link rel="stylesheet" href="{{ asset('assets/styles/defaults/colors.css') }}">
-		<link rel="stylesheet" href="{{ asset('assets/styles/defaults/animate.css') }}">
-		<link rel="stylesheet" href="{{ asset('assets/styles/site.css') }}">
+	<div id="about-us" class="row scrollspy">
+		<div class="col s12 l12">
+			<div class="container services">
+				<div class="row">
+					@for ($i = 0; $i < 3; $i++)
+						<div class="col s12 m6 l4">
+							<div class="card-panel card-animation-1 card z-depth-0">
 
-		<!-- Compiled and minified JavaScript -->
-		<script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-		<script src="{{ asset('assets/plugins/materialize/materialize.min.js') }}"></script>
+								<div class="card-content teal lighten-1 border">
 
-		<script>
-			$(function() {
-				$('.slider').slider({
+									<img src="{{ asset('assets/img/site/cards/ambulancia.jpg') }}" class="border-radius-8 z-depth-3 image-n-margin" alt="">
 
-				});
-			});
-		</script>
-	</head>
+									<h6 class="card-title">
+										<a href="#" class="mt-5 letterspacing white-text">UTI Móvel</a>
+									</h6>
 
-	<body>
-
-		<header>
-			<nav class="navbar-color navbar-fixed z-depth-0">
-				<div class="nav-wrapper">
-					<a class="brand-logo skew" href="#">
-						<img src="{{ asset('assets/img/logo/logo.png') }}" alt="">
-					</a>
-					<ul id="nav-mobile" class="navbar-main right hide-on-med-and-down letterspacing">
-						<li><a class="active" href="#">Início</a></li>
-						<li><a class="" href="#">Sobre Nós</a></li>
-						<li><a class="" href="#">Serviços</a></li>
-						<li><a class="" href="#">ClubMédicus24h</a></li>
-						<li><a class="" href="#">Atendimento</a></li>
-					</ul>
-				</div>
-			</nav>
-		</header>
-
-		<div id="page">
-			<div id="slider">
-				<div class="slider fullscreen">
-					<ul class="slides">
-						@for ($i = 1; $i <= 10; $i++)
-							@php
-								$delay = ['delay-2s', 'delay-3s', 'delay-4s'];
-								$animation = ['fadeIn' => 'fadeOut', 'fadeInRight' => 'fadeOutRight', 'fadeInLeft' => 'fadeOutLeft'];
-								$rand = rand(0, count($animation) - 1);
-								$delay = $delay[rand(0, count($delay) - 1)];
-								$inAnimation = array_keys($animation)[$rand];
-								$outAnimation = array_values($animation)[$rand];
-							@endphp
-							<li>
-								<img src="{{ asset('assets/img/site/banner/ambulancia.png') }}" class=""
-									data-in-animation="{{ $inAnimation }}" data-out-animation="{{ $outAnimation }}">
-								<div class="caption center-align">
-									<h3 class="animated delay-2s fadeInLeft black-text">This is our big Tagline!</h3>
-									<h5 class="red-text">Here's our small slogan.</h5>
+									<ul>
+										<li>
+											<span>Profissionais especializados</span>
+										</li>
+										<li>
+											<span>Suporte básico e avançado</span>
+										</li>
+										<li>
+											<span>Proteção médica</span>
+										</li>
+										<li>
+											<span>Profissionais capacitados</span>
+										</li>
+										<li>
+											<span>Atendimento ágil</span>
+										</li>
+									</ul>
 								</div>
-							</li>
-						@endfor
-					</ul>
-				</div>
-				<div class="base">
-					<div class="box-1"></div>
-					<div class="box-2"></div>
-					<div class="box-3"></div>
-					<div class="box-4"></div>
-					<div class="box-5"></div>
+
+							</div>
+						</div>
+					@endfor
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<div id="outros-servicos" class="row red scrollspy">
+
+		<div class="header">
+			<h4 class="espec center-align">Outros Serviços</h4>
+		</div>
+
+		<div class="container">
 
 			<div class="row">
-				<div class="col s12 l12">
-					<div class="container services">
-						<div class="row">
-							@for ($i = 0; $i < 3; $i++)
-								<div class="col s12 m4">
-									<div class="card-panel card-animation-1 card z-depth-0">
 
-										<div class="card-content teal lighten-1 border">
+				@for ($i = 0; $i < 3; $i++)
+					<div class="col s12 m6 l4">
 
-											<img src="{{ asset('assets/img/site/cards/ambulancia.jpg') }}"
-												class="border-radius-8 z-depth-3 image-n-margin" alt="">
+						<div class="card-panel outlined card-animation-1 card z-depth-0">
 
-											<h6 class="card-title">
-												<a class="mt-5 letterspacing white-text" href="#">UTI Móvel</a>
-											</h6>
+							<div class="card-content teal lighten-1 border">
 
-											<ul>
-												<li>
-													<span>Profissionais especializados</span>
-												</li>
-												<li>
-													<span>Suporte básico e avançado</span>
-												</li>
-												<li>
-													<span>Proteção médica</span>
-												</li>
-												<li>
-													<span>Profissionais capacitados</span>
-												</li>
-												<li>
-													<span>Atendimento ágil</span>
-												</li>
-											</ul>
-										</div>
+								<img src="{{ asset('assets/img/site/cards/ambulancia.jpg') }}" class="border-radius-8 z-depth-3 image-n-margin" alt="">
 
-									</div>
-								</div>
-							@endfor
+								<h6 class="card-title">
+									<a href="#" class="mt-5 letterspacing white-text">UTI Móvel</a>
+								</h6>
+
+								<ul>
+									<li>
+										<span>Profissionais especializados</span>
+									</li>
+									<li>
+										<span>Suporte básico e avançado</span>
+									</li>
+									<li>
+										<span>Proteção médica</span>
+									</li>
+									<li>
+										<span>Profissionais capacitados</span>
+									</li>
+									<li>
+										<span>Atendimento ágil</span>
+									</li>
+								</ul>
+							</div>
+
 						</div>
+
 					</div>
-				</div>
+				@endfor
+
 			</div>
 
 		</div>
 
-	</body>
+		<div class="footer"></div>
 
-</html>
+	</div>
+
+	<div id="nossa-equipe" class="row scrollspy">
+		<div class="col s12">
+			<div class="container">
+				<div class="row">
+					<div class="col s12 l12">
+						<div class="row">
+							<div class="col s12">
+								<h4 class="right-align"><small>Nossa</small><br>Equipe</h4>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col s12">
+								<div id="slideshow" class="splide">
+									<div class="splide__track">
+										<ul class="splide__list">
+											@for ($i = 0; $i <= 10; $i++)
+												<li class="splide__slide">
+													<div class="card card-panel profile z-depth-3">
+														<div class="card-content">
+															<div class="img">
+																<img src="{{ asset('assets/img/site/profiles/profile.jpg') }}" alt="">
+															</div>
+														</div>
+														<div class="card-title center-align">
+															<span class="teal-text text-lighten-1">DRª. Maria da Conceição</span>
+															<small> {{ $i }} - Pediatra</small>
+														</div>
+													</div>
+												</li>
+											@endfor
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<x-slot:script>
+		<script>
+			// #slider
+			Splide.defaults = {
+				type: 'loop',
+				speed: 1000,
+				perPage: 1,
+				autoplay: true,
+				wheel: false,
+				arrows: false,
+				pauseOnHover: false,
+				pagination: false,
+			};
+			new Splide('#slider').mount();
+
+			// #slideshow
+			Splide.defaults = {
+				type: 'loop',
+				speed: 1000,
+				perPage: 4,
+				perMove: 4,
+				autoplay: true,
+				wheel: false,
+				arrows: false,
+				pauseOnHover: false,
+				pagination: false,
+				gap: '1rem',
+			};
+			new Splide('#slideshow').mount();
+		</script>
+	</x-slot:script>
+
+</x-site-layout>

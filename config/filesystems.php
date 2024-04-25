@@ -72,7 +72,8 @@ return [
 	'links'   => [
 		// base_path('public') => base_path('../public'),
 		// storage_path('assets') => resource_path('assets'),
-		public_path('assets') => resource_path('assets'),
+		public_path('assets')              => resource_path('assets'),
+		public_path('assets/node_modules') => base_path('node_modules'),
 	],
 
 ];

@@ -9,5 +9,10 @@
         "axios": "^1.6.4",
         "laravel-vite-plugin": "^1.0",
         "vite": "^5.0"
+    },
+    "dependencies": {
+        "@splidejs/splide": "^4.1.4",
+        "jquery": "^3.7.1",
+        "materialize-css": "^1.0.0-rc.2"
     }
 }
