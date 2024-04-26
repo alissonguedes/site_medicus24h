@@ -11,20 +11,18 @@
 	{{-- END Styles --}}
 
 	{{-- BEGIN Body --}}
-	<div id="body">
+	<div id="page">
 
 		{{-- BGIN Header --}}
-		<x-slot:header>
-			@include('layouts.site.header')
-		</x-slot:header>
+		@include('layouts.site.header')
 		{{-- END Header --}}
 
-		{{ $slot }}
+		<main id="body">
+			{{ $body }}
+		</main>
 
 		{{-- BEGIN Footer --}}
-		<x-slot:footer>
-			@include('layouts.site.footer')
-		</x-slot:footer>
+		@include('layouts.site.footer')
 		{{-- END Footer --}}
 
 	</div>

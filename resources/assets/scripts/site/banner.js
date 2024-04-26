@@ -8,6 +8,7 @@ Splide.defaults = {
     arrows: false,
     pauseOnHover: false,
     pagination: false,
+	drag: false
 };
 new Splide('#slider').mount();
 
@@ -22,6 +23,6 @@ Splide.defaults = {
     arrows: false,
     pauseOnHover: false,
     pagination: false,
-    gap: '1rem',
+    gap: '3rem',
 };
 new Splide('#slideshow').mount();

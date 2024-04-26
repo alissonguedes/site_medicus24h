@@ -23,7 +23,6 @@
 
 		<link rel="preload" href="{{ asset('img/site/logo/logo-vertical.png') }}" as="image">
 		<link rel="canonical" href="{{ config('site.url') }}">
-		<link rel="manifest" href="/webmanifest">
 		<link rel="manifest" href="{{ url('/webmainfest') }}">
 		<link rel="shortcut icon" type="image/x-icon" href="{{ url('/favicon.ico') }}" />
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
@@ -37,29 +36,16 @@
 		@endif
 
 		<title>{{ config('site.title') . (isset($title) ? ' - ' . $title : null) }}</title>
-		{{-- <title>{{ $title ?? (config('site.title') ?? 'Médicus24h - Soluções em Saúde') }}</title> --}}
 
 	</head>
 
 	<body>
 
-		<main id="page">
+		{{ $slot }}
 
-			@if (isset($header))
-				{{ $header }}
-			@endif
-
-			{{ $slot }}
-
-			@if (isset($footer))
-				{{ $footer }}
-			@endif
-
-			@if (isset($scripts))
-				{{ $scripts }}
-			@endif
-
-		</main>
+		@if (isset($scripts))
+			{{ $scripts }}
+		@endif
 
 	</body>
 

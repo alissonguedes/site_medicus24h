@@ -8,8 +8,8 @@ return [
 	'author'      => env('SITE_AUTHOR', 'Alisson Guedes'),
 	'theme-color' => env('THEME_COLOR', '#d23740'),
 	'manifest'    => env('MANIFEST'),
-	'logo'        => env('SITE_LOGO', asset('assets/img/logo/logo.png')),
 	'type'        => env('SITE_TYPE', 'health, telemedicina, saúde'),
 	'locale'      => env('APP_LOCALE'),
-	'url'         => url('/'),
+	// 'logo'        => env('SITE_LOGO', asset('assets/img/logo/logo.png')),
+	// 'url'         => url('/'),
 ];

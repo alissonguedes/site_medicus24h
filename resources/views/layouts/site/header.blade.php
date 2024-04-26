@@ -2,7 +2,7 @@
 
 	<nav class="navbar-color navbar-fixed z-depth-0">
 		<div class="nav-wrapper">
-			<a href="#" class="brand-logo skew-after">
+			<a href="#" class="brand-logo">
 				@if (isset($header))
 					{{ $header }}
 				@else

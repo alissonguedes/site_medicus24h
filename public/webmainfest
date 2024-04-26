@@ -1,0 +1,90 @@
+{
+	"background_color": "#ffffff",
+	"display": "standalone",
+	"theme_color": "#ffffff",
+	"dir": "ltr",
+	"name": "medicus24h.com.br",
+	"orientation": "portrait-primary",
+	"scope": "/clinica",
+	"short_name": "Médicus24h",
+	"start_url": "/clinica",
+	"categories": [
+		"health",
+		"medical"
+	],
+	"icons": [
+		{
+			"src": "/favicon-32x32.png",
+			"type": "image/png",
+			"sizes": "32x32"
+		},
+		{
+			"src": "/favicon-16x16.png",
+			"type": "image/png",
+			"sizes": "16x16"
+		},
+		{
+			"src": "/favicon.ico",
+			"type": "image/x-icon"
+		},
+		{
+			"src": "/assets/img/favicon.png",
+			"type": "image/x-icon"
+		},
+		{
+			"src": "/android-chrome-512x512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		},
+		{
+			"src": "/apple-touch-icon.png",
+			"type": "image/png",
+			"sizes": "180x180"
+		},
+		{
+			"src": "/favicon.ico",
+			"type": "image/x-icon"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "Página Inicial",
+			"url": "/"
+		},
+		{
+			"name": "Sobre Nós",
+			"url": "/about-us"
+		},
+		{
+			"name": "Serviços",
+			"url": "/services"
+		},
+		{
+			"name": "ClubMédicus24h",
+			"url": "https://www.clubmedicus24h.com.br/"
+		},
+		{
+			"name": "Atendimento",
+			"url": "/contact"
+		}
+	],
+	"lang": "pt",
+	"display_override": [
+		"minimal-ui",
+		"standalone",
+		"window-controls-overlay"
+	],
+	"edge_side_panel": {
+		"preferred_width": 1
+	},
+	"id": "VCzCBg3UZqTN5BSjOZqUxV2ossnCJuelOH1vZh4CfrM",
+	"description": "A Médicus24h é uma empresa que nasceu com um olhar humanizado ao seu associado. A longa experiência de seus profissionais no serviço de home care possibilitou a criação do melhor programa de assistência médica da Paraíba, ampliando os cuidados médicos a domicílio para toda a população, possibilitando o atendimento de urgências médicas 24 horas por dia e a prevenção contra doenças através do seu programa médico.",
+	"launch_handler": {
+		"client_mode": [
+			"navigate-existing",
+			"auto"
+		]
+	},
+	"handle_links": "preferred",
+	"protocol_handlers": []
+}
