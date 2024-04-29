@@ -10,6 +10,14 @@
 		<script>
 			$(document).ready(function() {
 
+				$('.sidenav').sidenav();
+
+				$('.btn-menu').unbind().bind('click', function() {
+
+					$('body').toggleClass('nav-collapsed');
+
+				});
+
 				$('aside').find('ul').each(function() {
 
 					var a = $(this).find('li').find('a[href="javascript:void(0);"]');
@@ -32,6 +40,41 @@
 					});
 
 				});
+
+				$('aside').unbind().bind('mouseleave', function() {
+					var self = $(this);
+
+					// var timeout = setTimeout(function() {
+
+					// 	self.find('ul.submenu').removeClass('in out');
+					// 	self.find('ul:not(.submenu)').removeClass('out').addClass('in');
+
+					// }, 2000);
+
+					// $(this).bind('mouseenter', function() {
+					// 	clearTimeout(timeout);
+					// })
+
+				});
+
+
+
+				$('#open-search').bind('click', function() {
+					// $(this).parents('li.search').find('input[type="search"]').show().focus();
+					$('#input-search-header').show().focus()
+						// .find('input[type="search"]')
+						.bind('blur', function() {
+							if ($(this).val().length === 0) {
+								// $(this).val('').parents('li').removeClass('search-open');
+								// $(this).parents('li.search').find('input[type="search"]').hide();
+								$('#input-search-header').hide();
+								$(this).parents('li.search').find('#open-search').show();
+								$(this).parents().find('li:not(.search)').removeClass('disabled')
+							}
+						});
+					// $(this).parents('li').addClass('search-open');
+					$(this).parents().find('li:not(.search)').addClass('disabled')
+				}) //.parents('li')
 			})
 		</script>
 	</x-slot:script>

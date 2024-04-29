@@ -4,6 +4,6 @@
 	$classes = $active ?? false ? 'active' : '';
 @endphp
 
-<a {{ $attributes->merge(['class' => implode(', ', [$classes, 'waves-effect'])]) }}>
+<a {{ $attributes->merge(['class' => implode(' ', [$classes, 'waves-effect'])]) }}>
 	{{ $slot }}
 </a>
