@@ -21,7 +21,7 @@
 	}
 
 	.navbar .navbar-main {
-		padding: 0 8px 0 15px;
+		padding: 0 8px 0 310px;
 	}
 
 	.navbar-fixed nav {
@@ -35,14 +35,19 @@
 		background-color: #9c27b0;
 	}
 
+	nav .sidenav-trigger {
+		margin: 0;
+	}
+
 	.navbar .navbar-dark .header-search-wrapper i,
 	.navbar .navbar-dark ul a {
 		color: #fff;
 	}
 
+	nav ul a,
 	.navbar .notification-button,
 	.navbar .toggle-fullscreen {
-		line-height: 1;
+		line-height: normal;
 	}
 
 	/* .navbar .notification-button,
@@ -61,6 +66,40 @@
 		border-radius: 50%;
 		background-color: #00bcd4;
 		box-shadow: 0 0 10px 0 #00bcd4;
+	}
+
+	.navbar-nav .logo span {
+		position: relative;
+		top: -25px;
+		display: block;
+		width: 45px;
+		height: 45px;
+		border-radius: 100%;
+		background-image: url("{{ asset('assets/img/logo/coracao.png') }}");
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: bottom;
+	}
+
+	.navbar-nav .logo span::after {
+		content: '';
+		width: 60px;
+		height: 60px;
+		position: absolute;
+		background-color: #ffffff;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		background-position: center;
+		left: 50%;
+		right: 50%;
+		top: 50%;
+		bottom: 50%;
+		border-radius: 100%;
+		margin-left: -30px;
+		margin-right: -30px;
+		margin-top: -30px;
+		margin-bottom: -30px;
+		z-index: -1;
 	}
 
 	.avatar-status {
@@ -122,8 +161,51 @@
 		nav .nav-wrapper i,
 		nav a.sidenav-trigger,
 		nav a.sidenav-trigger i {
-			height: 64px;
-			line-height: 64px;
+			height: 50px;
+			line-height: 50px;
+		}
+	}
+
+	@media only screen and (max-width: 600px) {
+		.notification-button i {
+			font-size: 29px;
+			position: relative;
+			top: 12px;
+		}
+	}
+
+	@media only screen and (max-width: 992px) {
+		.navbar-nav {
+			position: fixed;
+			bottom: 0;
+			z-index: 999999;
+			background: var(--red-lighten-1);
+			left: 0;
+			right: 0;
+			display: flex;
+			place-content: space-between;
+			height: 50px;
+			line-height: 50px;
+			margin: 0 3%;
+			border-radius: 50px 50px 0 0;
+			padding: 0 25px !important;
+		}
+
+		.navbar-nav li:not(.logo) a {
+			border-radius: 50%;
+			width: 40px;
+			height: 40px;
+			line-height: 0;
+			padding: 0 8px;
+		}
+
+		nav .sidenav-trigger {
+			margin: 5px 0;
+		}
+
+		.navbar-nav li a i {
+			line-height: 40px;
+			/* padding: 0; */
 		}
 	}
 
