@@ -23,7 +23,9 @@
 
 		{{-- BEGIN Body --}}
 		<main id="body">
-			{{ $body }}
+			<div class="container">
+				{{ $body }}
+			</div>
 		</main>
 		{{-- END Body --}}
 

@@ -2,6 +2,7 @@
 <script src="{{ asset('assets/node_modules/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/materialize-css/dist/js/materialize.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/@splidejs/splide/dist/js/splide.min.js') }}"></script>
+<script src="{{ asset('assets/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>
 
 <script>
 	$(function() {

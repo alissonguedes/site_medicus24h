@@ -2,7 +2,7 @@
 	<li><x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">{{ __('Dashboard') }}</x-nav-link></li>
 	<li><x-nav-link href="javascript:void(0);" class="submenu-open" data-id="#menu-2" :active="request()->routeIs('admin.teste')">
 			<i class="material-symbols-outlined left">dashboard</i> Menu 2 </x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')"><i class="material-symbols-outlined left">group</i>Menu 3</x-nav-link>
+	<li><x-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')"><i class="material-symbols-outlined left">group</i>Menu 3</x-nav-link>
 	</li>
 	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')"><i class="material-symbols-outlined left">event</i>Menu
 			4</x-nav-link></li>

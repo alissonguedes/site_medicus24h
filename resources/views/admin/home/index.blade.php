@@ -3,14 +3,110 @@
 	<x-slot:title>Home</x-slot:title>
 
 	<x-slot:body>
-		Página inicial
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
+		Página inicial<br>
 	</x-slot:body>
 
 	<x-slot:script>
 		<script>
 			$(document).ready(function() {
 
-				$('.sidenav').sidenav();
+				var scroller = $('.scroller');
+
+				$(scroller).each(function() {
+
+					var scroll = new PerfectScrollbar(this, {
+						theme: "dark",
+					});
+
+					$(window).bind('resize', function() {
+						scroll.update();
+					});
+
+				});
+
+				$('.sidenav').sidenav({
+					onCloseStart: () => {
+						var self = $('aside');
+
+						self.find('ul.submenu').removeClass('in out');
+						self.find('ul:not(.submenu)').removeClass('out').addClass('in');
+
+					}
+				});
 
 				$('.btn-menu').unbind().bind('click', function() {
 
@@ -44,16 +140,16 @@
 				$('aside').unbind().bind('mouseleave', function() {
 					var self = $(this);
 
-					// var timeout = setTimeout(function() {
+					var timeout = setTimeout(function() {
 
-					// 	self.find('ul.submenu').removeClass('in out');
-					// 	self.find('ul:not(.submenu)').removeClass('out').addClass('in');
+						self.find('ul.submenu').removeClass('in out');
+						self.find('ul:not(.submenu)').removeClass('out').addClass('in');
 
-					// }, 2000);
+					}, 2000);
 
-					// $(this).bind('mouseenter', function() {
-					// 	clearTimeout(timeout);
-					// })
+					$(this).bind('mouseenter', function() {
+						clearTimeout(timeout);
+					})
 
 				});
 

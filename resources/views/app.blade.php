@@ -10,7 +10,7 @@
 		<meta name="keywords" content="{{ config('site.keywords') }}">
 		<meta name="author" content="{{ config('site.author') }}">
 		<meta name="robots" content="{{ config('site.robots') }}">
-		<meta name="theme-color" content="{{ config('site.theme-color') }}">
+		<meta name="theme-color" content="{{ config('site.theme-color', '#ff0000') }}">
 		<meta rel="manifest" name="manifest.json">
 
 		<meta property="og:title" content="{{ config('site.title') }}">
