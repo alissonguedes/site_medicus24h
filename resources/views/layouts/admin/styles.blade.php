@@ -56,14 +56,14 @@
 	}
 
 	main>.main-container {
-		/* position: relative; */
+		position: relative;
 		background-color: #ffffff;
 		margin: 0;
 		margin-bottom: 120px;
 		width: auto;
 		height: calc(100vh - 120px);
 		max-width: 100%;
-		/* overflow: auto; */
+		overflow: hidden;
 		border-radius: 24px;
 		padding: 0;
 		border-bottom-width: 10px;
@@ -203,7 +203,7 @@
 	.navbar .notification-button,
 	.navbar .toggle-fullscreen,
 	.navbar ul a {
-		color: var(--teal-darken-1);
+		color: var(--teal-lighten-1);
 	}
 
 	.navbar .notification-button i {
@@ -313,8 +313,15 @@
 		box-shadow: none !important;
 		border: none !important;
 		display: none;
+		/* opacity: 0; */
 		padding: 0 30px;
 		width: calc(100% - 60px);
+		transition: opacity 3000ms;
+	}
+
+	#input-search-header.show {
+		display: block;
+		opacity: 1;
 	}
 
 	.brand-logo img {
@@ -327,11 +334,18 @@
 		position: relative;
 	}
 
-	.btn-menu {
+	.btn-menu,
+	.btn.sidenav-close {
 		position: absolute;
 		z-index: 999999;
 		top: 10px;
 		left: 9px;
+	}
+
+	.btn.sidenav-close {
+		left: auto;
+		right: 9px;
+		top 10px;
 	}
 
 	.btn-menu,
@@ -398,10 +412,18 @@
 		color: var(--grey-darken-4);
 	}
 
+	nav ul a {
+		top: -1px;
+	}
+
 	.nav-collapsed header nav,
 	.nav-collapsed .navbar .navbar-main,
 	.nav-collapsed main {
 		padding-left: 90px;
+	}
+
+	.nav-collapsed header .navbar .navbar-main {
+		padding-left: 70px;
 	}
 
 	.nav-collapsed aside {
@@ -438,6 +460,8 @@
 		right: 0;
 		bottom: 0;
 		padding-top: 20px;
+		padding-bottom: 20px;
+		height: calc(100% - 120px);
 		transform: translate(100%, 0);
 		transition: transform 0.6s ease;
 		-webkit-transition: -webkit-transform 0.5s ease;
@@ -449,7 +473,8 @@
 	}
 
 	.sidenav {
-		overflow-x: hidden;
+		/* overflow-x: hidden; */
+		overflow: hidden;
 	}
 
 	aside ul.in {

@@ -13,7 +13,7 @@ Route::prefix('/')->group(function () {
 Route::middleware(['auth', 'verified'])->prefix('/admin')->group(function () {
 
 	Route::get('/', [AdminHomeController::class, 'index'])->name('admin.index');
-	Route::get('/dashboard', [AdminHomeController::class, 'index'])->name('admin.dashboard');
+	Route::get('/dashboard', [AdminHomeController::class, 'index'])->name('dashboard');
 
 });
 

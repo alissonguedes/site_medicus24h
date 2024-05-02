@@ -155,24 +155,17 @@
 
 				});
 
-
-
 				$('#open-search').bind('click', function() {
-					// $(this).parents('li.search').find('input[type="search"]').show().focus();
 					$('#input-search-header').show().focus()
-						// .find('input[type="search"]')
 						.bind('blur', function() {
 							if ($(this).val().length === 0) {
-								// $(this).val('').parents('li').removeClass('search-open');
-								// $(this).parents('li.search').find('input[type="search"]').hide();
 								$('#input-search-header').hide();
 								$(this).parents('li.search').find('#open-search').show();
 								$(this).parents().find('li:not(.search)').removeClass('disabled')
 							}
 						});
-					// $(this).parents('li').addClass('search-open');
 					$(this).parents().find('li:not(.search)').addClass('disabled')
-				}) //.parents('li')
+				})
 			})
 		</script>
 	</x-slot:script>
