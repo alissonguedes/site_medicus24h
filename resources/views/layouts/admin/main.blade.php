@@ -23,7 +23,7 @@
 
 		{{-- BEGIN Body --}}
 		<main id="body">
-			<div class="container">
+			<div class="main-container scroller">
 				{{ $body }}
 			</div>
 		</main>

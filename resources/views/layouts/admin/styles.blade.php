@@ -8,6 +8,17 @@
 <link rel="stylesheet" href="{{ asset('assets/styles/defaults/animate.css') }}">
 
 <style>
+	.btn:focus,
+	.btn:hover,
+	.btn:active,
+	.btn.active {
+		background-color: inherit !important;
+	}
+
+	.mr-3 {
+		margin-right: 3%;
+	}
+
 	body {
 		overflow: hidden;
 		font-family: 'Montserrat', sans-serif;
@@ -44,19 +55,29 @@
 		opacity: 0.7;
 	}
 
-	main>.container {
+	main>.main-container {
+		/* position: relative; */
 		background-color: #ffffff;
 		margin: 0;
+		margin-bottom: 120px;
 		width: auto;
-		height: calc(100vh - 125px);
+		height: calc(100vh - 120px);
 		max-width: 100%;
-		overflow: auto;
+		/* overflow: auto; */
 		border-radius: 24px;
-		padding: 15px;
+		padding: 0;
 		border-bottom-width: 10px;
 		border-top-width: 10px;
 		border-color: var(--teal-darken-4);
 		border-style: solid none solid;
+	}
+
+	main>.main-container>.container {
+		/* height: 100%; */
+		/* overflow: auto; */
+		padding: 20px;
+		width: inherit;
+		max-width: inherit;
 	}
 
 	.material-symbols-outlined {
@@ -427,6 +448,10 @@
 		background-color: inherit !important;
 	}
 
+	.sidenav {
+		overflow-x: hidden;
+	}
+
 	aside ul.in {
 		opacity: 1;
 		display: block;
@@ -586,8 +611,8 @@
 	}
 
 	@media only screen and (min-width: 1px) and (max-width: 600px) {
-		main>.container {
-			height: calc(100vh - 160px);
+		main>.main-container {
+			height: calc(100vh - 140px);
 		}
 
 		nav,
@@ -629,6 +654,10 @@
 			left: 0;
 		}
 
+		.sidenav {
+			width: 100%;
+		}
+
 		nav ul a:hover {
 			background-color: transparent;
 		}
@@ -638,11 +667,11 @@
 		}
 
 		main {
-			padding: 20px;
+			padding: 10px 20px;
 		}
 
-		main>.container {
-			height: calc(100vh - 220px);
+		main>.main-container {
+			height: calc(100vh - 200px);
 		}
 
 		.navbar-nav {
