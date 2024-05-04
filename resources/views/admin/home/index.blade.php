@@ -1,8 +1,10 @@
 <x-admin-layout>
 
-	<x-slot:title>Home</x-slot:title>
+	<x-slot:icon> dashboard </x-slot:icon>
+	<x-slot:title> Dashboard </x-slot:title>
 
 	<x-slot:body>
+
 		<div class="container">
 			Página inicial<br>
 			Página inicial<br>
@@ -165,6 +167,11 @@
 							}
 						});
 					$(this).parents().find('li:not(.search)').addClass('disabled')
+				});
+
+				$('[data-href]').unbind().bind('click', function() {
+					var href = $(this).data('href');
+					location.href = href;
 				})
 			})
 		</script>

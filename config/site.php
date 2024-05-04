@@ -10,6 +10,7 @@ return [
 	'manifest'    => env('MANIFEST'),
 	'type'        => env('SITE_TYPE', 'health, telemedicina, saúde'),
 	'locale'      => env('APP_LOCALE'),
+	'language'    => env('APP_LOCALE'),
 	// 'logo'        => env('SITE_LOGO', asset('assets/img/logo/logo.png')),
 	// 'url'         => url('/'),
 ];

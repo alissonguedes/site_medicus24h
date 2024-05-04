@@ -10,10 +10,18 @@
 
 			<div class="nav-wrapper">
 
-				<h1 id="page-title" class="hide-on-large-only">
-					<span class="icon material-symbols-outlined">dashboard</span>
-					Nome da página
-				</h1>
+				@if (isset($title))
+					<h1 id="page-title">
+
+						@if (isset($icon))
+							@var($attributes = $icon->attributes ?? null)
+							<x-icon-page {{ $attributes }}>{{ $icon }}</x-icon-page>
+						@endif
+
+						{{ $title }}
+
+					</h1>
+				@endif
 
 				<ul class="navbar-list right">
 					<li>

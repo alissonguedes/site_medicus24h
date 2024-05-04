@@ -24,6 +24,13 @@
 		font-family: 'Montserrat', sans-serif;
 	}
 
+	.sidenav,
+	main,
+	header,
+	.navbar-main {
+		transition: all 400ms;
+	}
+
 	main {
 		display: block;
 		height: calc(100vh - 54px);
@@ -73,11 +80,12 @@
 	}
 
 	main>.main-container>.container {
-		/* height: 100%; */
-		/* overflow: auto; */
+		position: relative;
+		overflow: auto;
 		padding: 20px;
-		width: inherit;
 		max-width: inherit;
+		width: inherit;
+		height: 100%;
 	}
 
 	.material-symbols-outlined {
@@ -105,16 +113,29 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		padding-left: 12px;
 	}
 
-	#page-title .icon {
+	#page-title .icon,
+	#page-title .btn {
 		margin: 0;
 		padding: 0;
-		vertical-align: bottom;
+		vertical-align: middle;
 		height: inherit;
 		line-height: inherit;
 		font-weight: 300;
 		font-size: 34px;
+		top: -3px;
+		position: relative;
+		/* margin-right: 10px; */
+	}
+
+	#page-title .btn {
+		width: 34px;
+		height: 34px;
+		line-height: 34px;
+		vertical-align: middle;
+		color: inherit;
 	}
 
 	#page-title::before {
@@ -122,10 +143,14 @@
 		height: 80%;
 		width: 10px;
 		background-color: var(--red-lighten-1);
-		display: block;
+		display: none;
 		float: left;
-		margin: 0 10px;
+		margin-right: 10px;
 		border-radius: 0 0 10px 10px;
+	}
+
+	#page-title a {
+		color: inherit;
 	}
 
 	.progress {
@@ -398,12 +423,6 @@
 		background-color: #ffffff;
 		z-index: 9999999;
 		overflow: hidden;
-	}
-
-	.sidenav,
-	main,
-	header {
-		transition: all 600ms;
 	}
 
 	nav ul a,
@@ -735,6 +754,10 @@
 
 		nav .sidenav-trigger {
 			margin: 8px 0;
+		}
+
+		#page-title::before {
+			display: block;
 		}
 	}
 

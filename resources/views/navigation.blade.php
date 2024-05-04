@@ -1,10 +1,20 @@
-@if (isset($teste))
-	{{ $teste }}
+@if (isset($ul))
+
+	@foreach ($ul as $ul => $li)
+		@foreach ($li as $i => $l)
+			{{-- <ul id="menu-{{ $ul }}">
+				<li>Teste</li>
+			</ul> --}}
+			@if ($l['category'])
+				<div>
+					<h3 style="font-size: 18px; color: rgba(0, 0, 0, 0.5); font-family: sans-serif; padding: 5px 20px; display: block; background-color:rgba(0, 0, 0, 0.5);">{{ $l['titulo'] }}</h3>
+				</div>
+			@endif
+		@endforeach
+	@endforeach
+
 @endif
 
-@php
-dump($teste)
-@endphp
 {{-- {!! getMenu('main-menu', 'clinica') !!} --}}
 {{-- <ul id="menu-1" class="in scroller">
 	<li><x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">{{ __('Dashboard') }}</x-nav-link></li>
