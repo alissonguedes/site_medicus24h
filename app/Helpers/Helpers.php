@@ -4,8 +4,7 @@ use App\Models\Model;
 
 if (!function_exists('lang')) {
 
-	function lang($return_id = false)
-	{
+	function lang($return_id = false) {
 
 		$sigla = isset($_COOKIE['idioma']) ? $_COOKIE['idioma'] : config('site.language');
 
@@ -30,8 +29,7 @@ if (!function_exists('lang')) {
 
 if (!function_exists('getMenu')) {
 
-	function getMenu($local, $id = null, $path = null)
-	{
+	function getMenu($local, $id = null, $path = null) {
 
 		$model = new Model();
 		$model->setConnection(env('DB_SYSTEM_CONNECTION'));
@@ -66,6 +64,13 @@ if (!function_exists('getMenu')) {
 					->where('id_modulo', $idModulo);
 
 				// If Is Restrict Modulo
+
+				// if ($moduloModel->getIsRestrictModulo($path)) {
+				// if (session()->exists('userdata') && session()->exists('app_session')) {
+				// 	$id_grupo = session()->get('userdata')[session()->get('app_session')]['id_grupo'];
+				$query->where('id_grupo', 1);
+				// }
+				// }
 
 			})
 			->whereColumn('MG_Menu.id_menu', 'Menu.id')
@@ -110,7 +115,17 @@ if (!function_exists('getMenu')) {
 											->where('id_modulo', $idModulo);
 
 										// If Is Restrict Modulo
+										// if ($moduloModel->getIsRestrictModulo($path)) {
+										// if (Auth::user()) {
+										// 	$id_grupo = Auth::user()->id_grupo;
+										$query->where('id_grupo', 1);
+										// }
 
+										// if (session()->exists('userdata') && session()->exists('app_session')) {
+										//     $id_grupo = session()->get('userdata')[session()->get('app_session')]['id_grupo'];
+										//     $query->where('id_grupo', $id_grupo);
+										// }
+										// }
 									});
 
 							});
@@ -128,7 +143,7 @@ if (!function_exists('getMenu')) {
 
 						if (!is_null($item->item_type)) {
 
-							$menu_list[$menu->id][] = [
+							$menu_list[$menu->id][$item->id] = [
 								'id'       => $item->id,
 								'titulo'   => $item->item_type,
 								'category' => true,
@@ -183,7 +198,8 @@ if (!function_exists('getMenu')) {
 							})->get();
 
 						if ($submenus->count() > 0) {
-							$menu_list[$menu->id][$item->id]['children'] = getMenu($local, $item->id);
+							// $menu_list[$menu->id][$item->id] = getMenu($local, $item->id);
+							$menu_list['submenus'][$item->id] = getMenu($local, $item->id);
 						}
 
 					}
@@ -201,8 +217,7 @@ if (!function_exists('getMenu')) {
 
 if (!function_exists('make_menu')) {
 
-	function make_menu($local, $path = null, $id = null)
-	{
+	function make_menu($local, $path = null, $id = null) {
 
 		if (!empty($attributes)) {
 			foreach ($attributes as $ind => $val) {
@@ -214,15 +229,18 @@ if (!function_exists('make_menu')) {
 
 		$items = getMenu($local, $id, $path);
 
+		$menus = [];
+
+		// dump($items);
 		if (count($items) > 0) {
 
-			foreach ($items as $ind => $menus) {
+			foreach ($items as $i => $v) {
 
-				$ul[$ind] = $menus;
+				$menus[$i] = $v;
 
 			}
 
-			return view('navigation', ['ul' => $ul]);
+			return view('navigation', ['menus' => $menus]);
 
 		}
 

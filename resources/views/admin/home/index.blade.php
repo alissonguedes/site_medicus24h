@@ -153,7 +153,7 @@
 
 					$(this).bind('mouseenter', function() {
 						clearTimeout(timeout);
-					})
+					});
 
 				});
 
@@ -172,7 +172,8 @@
 				$('[data-href]').unbind().bind('click', function() {
 					var href = $(this).data('href');
 					location.href = href;
-				})
+				});
+
 			})
 		</script>
 	</x-slot:script>

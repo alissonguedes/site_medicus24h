@@ -1,10 +1,10 @@
-@if (isset($teste))
+{{-- @if (isset($teste))
 	{{ $teste }}
 @endif
 
 @php
 dump($teste)
-@endphp
+@endphp --}}
 {{-- {!! getMenu('main-menu', 'clinica') !!} --}}
 {{-- <ul id="menu-1" class="in scroller">
 	<li><x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">{{ __('Dashboard') }}</x-nav-link></li>

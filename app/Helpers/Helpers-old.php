@@ -8,8 +8,7 @@ use PhpImap\Mailbox;
 
 if (!function_exists('formatBytes')) {
 
-	function formatBytes($size, $precision = 2)
-	{
+	function formatBytes($size, $precision = 2) {
 		if ($size > 0) {
 			$size     = (int) $size;
 			$base     = log($size) / log(1024);
@@ -24,8 +23,7 @@ if (!function_exists('formatBytes')) {
 }
 
 if (!function_exists('data')) {
-	function data($data, $format = 'd.m.Y H:i:s', $new_format = 'd/m/Y H:i:s')
-	{
+	function data($data, $format = 'd.m.Y H:i:s', $new_format = 'd/m/Y H:i:s') {
 		$mes  = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 		$data = date($format, strtotime($data));
 		$data = preg_replace('/\.(\d){2}\./', $new_format . $mes[date('m', strtotime($data)) - 1] . $new_format, $data);
@@ -36,8 +34,7 @@ if (!function_exists('data')) {
 
 if (!function_exists('idade')) {
 
-	function idade($data, $exibir_horas = false)
-	{
+	function idade($data, $exibir_horas = false) {
 
 		if (!$data) {
 			return 'Idade não informada';
@@ -65,8 +62,7 @@ if (!function_exists('idade')) {
 }
 
 if (!function_exists('date_translate')) {
-	function date_translate($input_date, $input_format)
-	{
+	function date_translate($input_date, $input_format) {
 
 		$to_format   = null;
 		$output      = null;
@@ -241,8 +237,7 @@ if (!function_exists('date_translate')) {
 }
 
 if (!function_exists('convert_to_date')) {
-	function convert_to_date($input_date, $to_format = 'Y-m-d', $bd = true)
-	{
+	function convert_to_date($input_date, $to_format = 'Y-m-d', $bd = true) {
 
 		$format   = null;
 		$datetime = explode(' ', $input_date);
@@ -308,8 +303,7 @@ if (!function_exists('convert_to_date')) {
 }
 
 if (!function_exists('convert_time')) {
-	function convert_time($time)
-	{
+	function convert_time($time) {
 		$seconds = intval($time);
 
 		$negative = $seconds < 0;
@@ -339,8 +333,7 @@ if (!function_exists('convert_time')) {
 }
 
 if (!function_exists('get_config')) {
-	function get_config($config)
-	{
+	function get_config($config) {
 		$cfg = new ConfigModel();
 		// return $cfg->getConfigByKey($config)->first()->value ?? null;
 		return $cfg->getConfigByKey($config) ?? null;
@@ -348,8 +341,7 @@ if (!function_exists('get_config')) {
 }
 
 if (!function_exists('mail_config')) {
-	function mail_config($config = '*')
-	{
+	function mail_config($config = '*') {
 		$cfg = new ConfigModel();
 		// return $cfg->getConfigByKey($config)->first()->value ?? null;
 		return $cfg->getMailConfig($config) ?? null;
@@ -357,8 +349,7 @@ if (!function_exists('mail_config')) {
 }
 
 if (!function_exists('lang')) {
-	function lang($return_id = false)
-	{
+	function lang($return_id = false) {
 
 		$sigla = isset($_COOKIE['idioma']) ? $_COOKIE['idioma'] : get_config('language');
 
@@ -381,8 +372,7 @@ if (!function_exists('lang')) {
 
 if (!function_exists('tradutor')) {
 
-	function tradutor($traducao, $lang = null, $except = null)
-	{
+	function tradutor($traducao, $lang = null, $except = null) {
 		$idioma = is_null($lang) ? lang() : $lang;
 
 		// Formata a data e hora de acordo com o Idioma
@@ -390,12 +380,12 @@ if (!function_exists('tradutor')) {
 			$date = (string) $traducao;
 
 			switch ($idioma) {
-				case 'en':$formato = 'Y-m-d h:ia';
-					break;
-				case 'pt-br':$formato = 'd/m/Y H\hi';
-					break;
-				case 'hr':$formato = 'd-m-y h:ia';
-					break;
+			case 'en':$formato = 'Y-m-d h:ia';
+				break;
+			case 'pt-br':$formato = 'd/m/Y H\hi';
+				break;
+			case 'hr':$formato = 'd-m-y h:ia';
+				break;
 			}
 
 			return date($formato, strtotime($date));
@@ -425,8 +415,7 @@ if (!function_exists('tradutor')) {
 }
 
 if (!function_exists('hashCode')) {
-	function hashCode($str, $min = 32, $max = 92)
-	{
+	function hashCode($str, $min = 32, $max = 92) {
 		$pass          = hash('whirlpool', $str);
 		$salt          = hash('sha512', $str);
 		$password      = substr($pass, $min, 92) . substr($salt, $min, 54);
@@ -440,8 +429,7 @@ if (!function_exists('hashCode')) {
 }
 
 if (!function_exists('configuracoes')) {
-	function configuracoes()
-	{
+	function configuracoes() {
 	}
 }
 
@@ -452,8 +440,7 @@ if (!function_exists('configuracoes')) {
  */
 if (!function_exists('limpa_string')) {
 
-	function limpa_string($string, $replace = '-', $to_lower = true)
-	{
+	function limpa_string($string, $replace = '-', $to_lower = true) {
 		$output = [];
 		$a      = ['Á' => 'a', 'À' => 'a', 'Â' => 'a', 'Ä' => 'a', 'Ã' => 'a', 'Å' => 'a', 'á' => 'a', 'à' => 'a', 'â' => 'a', 'ä' => 'a', 'ã' => 'a', 'å' => 'a', 'a' => 'a', 'Ç' => 'c', 'ç' => 'c', 'Ð' => 'd', 'É' => 'e', 'È' => 'e', 'Ê' => 'e', 'Ë' => 'e', 'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e', 'Í' => 'i', 'Î' => 'i', 'Ï' => 'i', 'í' => 'i', 'ì' => 'i', 'î' => 'i', 'ï' => 'i', 'Ñ' => 'n', 'ñ' => 'n', 'Ó' => 'o', 'Ò' => 'o', 'Ô' => 'o', 'Ö' => 'o', 'Õ' => 'o', 'ó' => 'o', 'ò' => 'o', 'ô' => 'o', 'ö' => 'o', 'õ' => 'o', 'ø' => 'o', 'œ' => 'o', 'Š' => 'o', 'Ú' => 'u', 'Ù' => 'u', 'Û' => 'u', 'Ü' => 'u', 'ú' => 'u', 'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'Ý' => 'y', 'Ÿ' => 'y', 'ý' => 'y', 'ÿ' => 'y', 'Ž' => 'z', 'ž' => 'z'];
 		$string = strtr($string, $a);
@@ -475,8 +462,7 @@ if (!function_exists('limpa_string')) {
 
 if (!function_exists('download')) {
 
-	function download($path, $filename)
-	{
+	function download($path, $filename) {
 		$headers = null;
 
 		// $headers .= ('Content-Description: File Transfer');
@@ -549,8 +535,7 @@ if (!function_exists('exibir_endereco')) {
 
 if (!function_exists('base_url')) {
 
-	function base_url()
-	{
+	function base_url() {
 
 		$path     = '/';
 		$base_url = explode('/', request()->getRequestUri());
@@ -576,8 +561,7 @@ if (!function_exists('base_url')) {
 
 if (!function_exists('site_url')) {
 
-	function site_url()
-	{
+	function site_url() {
 
 		return url('/') . '/';
 
@@ -588,8 +572,7 @@ if (!function_exists('site_url')) {
 /** Função para gerar lista de menus editáveis com NestableJS */
 if (!function_exists('Nestable')) {
 
-	function Nestable($list, $children = true)
-	{
+	function Nestable($list, $children = true) {
 
 		$ol = '';
 
@@ -639,8 +622,7 @@ if (!function_exists('Nestable')) {
  */
 if (!function_exists('getMenus')) {
 
-	function getMenus($local, $id, $attributes = [], $path = null)
-	{
+	function getMenus($local, $id, $attributes = [], $path = null) {
 
 		$menuModel   = new MenuModel();
 		$moduloModel = new ModuloModel();
@@ -862,8 +844,7 @@ if (!function_exists('getMenus')) {
 	 * Novo menu
 	 * O menu antigo não separava por grupos
 	 */
-	function getMenus_Original($local, $id, $attributes = [])
-	{
+	function getMenus_Original($local, $id, $attributes = []) {
 
 		// is_null($lang) ? (isset($_COOKIE['idioma']) ? $_COOKIE['idioma'] : get_config('language')) : $lang;
 
@@ -1064,8 +1045,7 @@ if (!function_exists('getMenus')) {
 
 if (!function_exists('getMenuApp')) {
 
-	function getMenuApp($local, $id = null, $path = null)
-	{
+	function getMenuApp($local, $id = null, $path = null) {
 
 		$menu_list   = [];
 		$menuModel   = new MenuModel();
@@ -1377,8 +1357,7 @@ if (!function_exists('getMenuApp')) {
 
 if (!function_exists('make_menu')) {
 
-	function make_menu($local, $id = null, $attributes = [])
-	{
+	function make_menu($local, $id = null, $attributes = []) {
 
 		if (!empty($attributes)) {
 			foreach ($attributes as $ind => $val) {
@@ -1449,8 +1428,7 @@ if (!function_exists('make_menu')) {
 
 if (!function_exists('RecursiveRemove')) {
 
-	function RecursiveRemove($path)
-	{
+	function RecursiveRemove($path) {
 
 		die('Para utilizar esta função, comente esta linha dentro do arquivo.');
 
@@ -1475,8 +1453,7 @@ if (!function_exists('RecursiveRemove')) {
 
 if (!function_exists('go')) {
 
-	function go($url, $params = null)
-	{
+	function go($url, $params = null) {
 
 		$route  = $url;
 		$modulo = new ModuloModel();
@@ -1491,8 +1468,7 @@ if (!function_exists('go')) {
 
 if (!function_exists('gera_cartao')) {
 
-	function gera_cartao($codigo = null, $format = false, $separator = ' ')
-	{
+	function gera_cartao($codigo = null, $format = false, $separator = ' ') {
 
 		$faker = new Faker\Factory();
 
@@ -1515,8 +1491,7 @@ if (!function_exists('gera_cartao')) {
 		return $number;
 	}
 
-	function sumDig($n)
-	{
+	function sumDig($n) {
 		$a = 0;
 		while ($n > 0) {
 			$a = $a + $n % 10;
@@ -1525,8 +1500,7 @@ if (!function_exists('gera_cartao')) {
 		return $a;
 	}
 
-	function isValidImei($n)
-	{
+	function isValidImei($n) {
 
 		$s   = (string) ($n);
 		$len = strlen($s);
@@ -1550,8 +1524,7 @@ if (!function_exists('gera_cartao')) {
 
 if (!function_exists('credit_card')) {
 
-	function credit_card($ncard = null, $min = 16, $max = 16)
-	{
+	function credit_card($ncard = null, $min = 16, $max = 16) {
 
 		if (empty($ncard)) {
 
@@ -1603,8 +1576,7 @@ if (!function_exists('credit_card')) {
 
 if (!function_exists('random')) {
 
-	function random($array = [])
-	{
+	function random($array = []) {
 
 		if (empty($array)) {
 			return 'Conjunto de elementos não foi definido.';
@@ -1623,8 +1595,7 @@ if (!function_exists('Mailbox') && !function_exists('getFolders')) {
 	 * Function to MailBox
 	 * @link https://github.com/gregoirer/laravel-imap/blob/master/README.md
 	 */
-	function Mailbox($folder = 'INBOX', $limit = 10, $page = 1)
-	{
+	function Mailbox($folder = 'INBOX', $limit = 10, $page = 1) {
 
 		$mail = mail_config();
 
@@ -1694,8 +1665,7 @@ if (!function_exists('Mailbox') && !function_exists('getFolders')) {
 
 	}
 
-	function getFolders($folder)
-	{
+	function getFolders($folder) {
 
 		$j = 0;
 
@@ -1846,8 +1816,7 @@ if (!function_exists('includes')) {
 
 	// }
 
-	function includes(string $dir = null, array $array = [])
-	{
+	function includes(string $dir = null, array $array = []) {
 
 		$is_url  = '/^http(s)?\:\/\/([\w]+)?/i';
 		$path    = null;
@@ -1973,8 +1942,7 @@ if (!function_exists('includes')) {
 
 if (!function_exists('getCurrentPath')) {
 
-	function getCurrentPath(string $path = null)
-	{
+	function getCurrentPath(string $path = null) {
 
 		if (!is_null($path)) {
 			return $path;
@@ -2018,8 +1986,7 @@ if (!function_exists('getCurrentPath')) {
 
 if (!function_exists('getThemeFiles')) {
 
-	function getThemeFiles($extension = null, $path = null)
-	{
+	function getThemeFiles($extension = null, $path = null) {
 
 		$route = !is_null($path) ? $path : Route::currentRouteName();
 
@@ -2075,8 +2042,7 @@ if (!function_exists('getThemeFiles')) {
 
 if (!function_exists('hex2RGB')) {
 
-	function hex2RGB($hexStr, $returnAsString = false, $seperator = ',')
-	{
+	function hex2RGB($hexStr, $returnAsString = false, $seperator = ',') {
 		$hexStr   = preg_replace("/[^0-9A-Fa-f]/", '', $hexStr); // Gets a proper hex string
 		$rgbArray = array();
 		if (strlen($hexStr) == 6) { //If a proper hex code, convert using bitwise operation. No overhead... faster
@@ -2097,41 +2063,40 @@ if (!function_exists('hex2RGB')) {
 }
 
 if (!function_exists('format')) {
-	function format($value, $format = 'cpf')
-	{
+	function format($value, $format = 'cpf') {
 
 		// $lenght = 11;
 		$value = preg_replace("/\D/", '', $value);
 		switch ($format) {
-			case 'cpf':
-				return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $value);
-				break;
-			case 'cnpj':
-				$length = 17;
-				return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $value);
-				break;
-			case 'telefone':
-				return preg_replace("/(\d{2})(\d{4})(\d{4})/", "(\$1) (\$2)\.(\$3/)", $value);
-				break;
-			case 'celular':
-				if (preg_match('/^[55]/', $value)) {
-					return preg_replace("/(\d{2})(\d{2})(\d{1})(\d{4})(\d{4})/", "($2) $3 $4.$5", $value);
-				} else if (preg_match('/^[^55]/', $value)) {
-					if (strlen($value) == 11) {
-						if (preg_match('/^[^83]/', $value)) {
-							return preg_replace("/(\d{2})(\d{1})(\d{4})(\d{4})/", "(\$1) \$2 \$3.$4", $value);
-						}
-						return preg_replace("/(\d{2})(\d{1})(\d{4})(\d{4})/", "($1) $2 $3.$4", $value);
-					} else {
-						if (strlen($value) < 11) {
-							if (preg_match('/^[^83]/', $value)) {
-								return preg_replace("/(\d{1})(\d{4})(\d{4})/", "\$1 \$2.\$3", $value);
-							}
-						}
-						return preg_replace("/(\d{2})(\d{4})(\d{4})/", "($1) $2.$3", $value);
+		case 'cpf':
+			return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $value);
+			break;
+		case 'cnpj':
+			$length = 17;
+			return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $value);
+			break;
+		case 'telefone':
+			return preg_replace("/(\d{2})(\d{4})(\d{4})/", "(\$1) (\$2)\.(\$3/)", $value);
+			break;
+		case 'celular':
+			if (preg_match('/^[55]/', $value)) {
+				return preg_replace("/(\d{2})(\d{2})(\d{1})(\d{4})(\d{4})/", "($2) $3 $4.$5", $value);
+			} else if (preg_match('/^[^55]/', $value)) {
+				if (strlen($value) == 11) {
+					if (preg_match('/^[^83]/', $value)) {
+						return preg_replace("/(\d{2})(\d{1})(\d{4})(\d{4})/", "(\$1) \$2 \$3.$4", $value);
 					}
+					return preg_replace("/(\d{2})(\d{1})(\d{4})(\d{4})/", "($1) $2 $3.$4", $value);
+				} else {
+					if (strlen($value) < 11) {
+						if (preg_match('/^[^83]/', $value)) {
+							return preg_replace("/(\d{1})(\d{4})(\d{4})/", "\$1 \$2.\$3", $value);
+						}
+					}
+					return preg_replace("/(\d{2})(\d{4})(\d{4})/", "($1) $2.$3", $value);
 				}
-				break;
+			}
+			break;
 		}
 
 	}

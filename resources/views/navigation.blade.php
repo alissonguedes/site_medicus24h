@@ -1,19 +1,57 @@
-@if (isset($ul))
+@foreach ($menus as $key => $menu)
+	@if ($key != 'submenus')
+		<ul id="menu-{{ $key }}" class="in scroller">
+			@foreach ($menu as $m)
+				<li>
+					@var($in = !in_array($m['id'], array_keys($menus['submenus'])));
+					@var($url = $in ? route('admin.index') : 'javascript:void(0);')
+					<x-nav-link :href="$url">{{ $m['titulo'] }}</x-nav-link>
+				</li>
+			@endforeach
+		</ul>
+	@endif
+@endforeach
 
+@if (isset($menus['submenus']))
+	@foreach ($menus['submenus'] as $key => $sub)
+		@if (!empty($sub))
+			<ul id="menu-{{ $key }}" class="submenu scroller">
+				@foreach ($sub as $s)
+					@php
+						dump($key);
+					@endphp
+					{{-- {!! make_menu('main-menu', 'clinica', $s['id']) !!} --}}
+					{{-- @var($url = !isset($menus['submenu'][$key]) ? url($menu['route']) : 'javascript:void(0);') --}}
+					{{-- <x-nav-link :href="$url">@php echo($menu['titulo']) @endphp</x-nav-link> --}}
+				@endforeach
+			</ul>
+		@endif
+	@endforeach
+@endif
+
+{{-- @if (isset($ul))
 	@foreach ($ul as $ul => $li)
+		<ul id="menu-{{ $ul }}" class="in">
+			@foreach ($li as $i => $l)
+				@if ($l['category'])
+					<li>
+						<h3 style="">{{ $l['titulo'] }}</h3>
+					</li>
+				@else
+					@var($url = empty($l['children']) ? url($l['route']) : 'javascript:void(0);')
+					<li>
+						<x-nav-link :href="$url">{{ $l['titulo'] }}</x-nav-link>
+					</li>
+				@endif
+			@endforeach
+		</ul>
 		@foreach ($li as $i => $l)
-			{{-- <ul id="menu-{{ $ul }}">
-				<li>Teste</li>
-			</ul> --}}
-			@if ($l['category'])
-				<div>
-					<h3 style="font-size: 18px; color: rgba(0, 0, 0, 0.5); font-family: sans-serif; padding: 5px 20px; display: block; background-color:rgba(0, 0, 0, 0.5);">{{ $l['titulo'] }}</h3>
-				</div>
+			@if (!empty($l['children']))
+				{!! make_menu('main-menu', 'clinica', $l['id']) !!}
 			@endif
 		@endforeach
 	@endforeach
-
-@endif
+@endif --}}
 
 {{-- {!! getMenu('main-menu', 'clinica') !!} --}}
 {{-- <ul id="menu-1" class="in scroller">

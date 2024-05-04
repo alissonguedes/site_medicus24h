@@ -474,13 +474,12 @@
 
 	aside ul {
 		position: absolute;
-		top: 50px;
+		top: 0;
 		left: 0;
 		right: 0;
-		bottom: 0;
-		padding-top: 20px;
+		padding-top: 0;
 		padding-bottom: 20px;
-		height: calc(100% - 120px);
+		height: auto;
 		transform: translate(100%, 0);
 		transition: transform 0.6s ease;
 		-webkit-transition: -webkit-transform 0.5s ease;
@@ -556,6 +555,15 @@
 		-moz-transition: all 0.25s;
 		transition: all 0.25s;
 		border-radius: inherit;
+	}
+
+	aside ul li h3 {
+		font-size: 18px;
+		color: rgba(0, 0, 0, 0.5);
+		font-family: sans-serif;
+		padding: 5px 20px;
+		display: block;
+		background-color: rgba(0, 0, 0, 0.5);
 	}
 
 	aside ul li a.submenu-open:after {
