@@ -1,26 +1,33 @@
 @if (isset($menus['menus']))
-
-	{{ '<ul>' }}<br>
-	@for ($i = 0; $i < count($menus['menus']); $i++)
-		&nbsp;&nbsp;&nbsp;&nbsp; {{ '<li>' }}<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ '<a href="#">' . $menus['menus'][$i]['titulo'] . '</a>' }}<br>
-		&nbsp;&nbsp;&nbsp;&nbsp; {{ '</li>' }}<br>
-	@endfor
-	{{ '</ul>' }}<br>
-
+	<ul>
+		@foreach ($menus['menus'] as $menu)
+			<li>
+				<a href="#">{{ $menu['id'] }} - {{ $menu['titulo'] }} </a>
+			</li>
+		@endforeach
+	</ul>
 @endif
 
 @if (isset($menus['submenus']))
 	@foreach ($menus['submenus'] as $sub)
 		@php
-			dump($sub);
-			//     for ($j = 0; $j < count($menus['submenus'][$i]['menus']); $j++) {
-			//         make_menu('main-menu', 'clinica', $menus['submenus'][$i]['menus'][$j]['id']);
-			//     }
+			make_menu('main-menu', 'clinica', $sub);
 		@endphp
 	@endforeach
 @endif
 
+<style>
+	ul {
+		margin: auto;
+		padding: auto;
+	}
+
+	ul li {
+		padding: auto;
+		margin: auto;
+		list-style: initial;
+	}
+</style>
 {{-- <ul id="menu-1" class="in scroller">
 	<li><x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">{{ __('Dashboard') }}</x-nav-link></li>
 	<li><x-nav-link href="javascript:void(0);" class="submenu-open" data-id="#menu-2" :active="request()->routeIs('admin.teste')"> <i class="material-symbols-outlined left">dashboard</i> Menu 2 </x-nav-link></li>
