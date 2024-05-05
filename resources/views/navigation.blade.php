@@ -1,11 +1,36 @@
-@foreach ($menus as $key => $menu)
+@php
+	dump($menus);
+@endphp
+
+@foreach ($menus as $ind => $menu)
+	@php
+		$class = $id_menu == 0 ? 'in' : 'out';
+	@endphp
+	<ul id="menu-{{ $ind }}" class="">
+
+		@foreach ($menu as $m)
+			@if (!empty($m['id']))
+				<li>
+					<a href="#">{{ $m['titulo'] }}</a>
+				</li>
+			@endif
+		@endforeach
+
+	</ul>
+	{{-- {!! make_menu('main-menu', 'clinica', $ind) !!} --}}
+@endforeach
+
+{{-- @foreach ($menus as $key => $menu)
 	@if ($key != 'submenus')
 		<ul id="menu-{{ $key }}" class="in scroller">
 			@foreach ($menu as $m)
 				<li>
-					@var($in = !in_array($m['id'], array_keys($menus['submenus'])));
-					@var($url = $in ? route('admin.index') : 'javascript:void(0);')
-					<x-nav-link :href="$url">{{ $m['titulo'] }}</x-nav-link>
+					@var($in = in_array($m['id'], array_keys($menus['submenus'])))
+					@var($url = $in ? 'javascript:void(0);' : route('admin.index'))
+					@php
+						$data_id = $in ? '#menu-' . $m['id'] : null;
+					@endphp
+					<x-nav-link data-id="{{ $data_id }}" :href="$url">{{ $m['titulo'] }}</x-nav-link>
 				</li>
 			@endforeach
 		</ul>
@@ -15,19 +40,19 @@
 @if (isset($menus['submenus']))
 	@foreach ($menus['submenus'] as $key => $sub)
 		@if (!empty($sub))
-			<ul id="menu-{{ $key }}" class="submenu scroller">
-				@foreach ($sub as $s)
+			@foreach ($sub as $i => $s)
+				<ul id="menu-{{ $key }}" class="submenu scroller">
 					@php
-						dump($key);
+						dump($s);
 					@endphp
 					{{-- {!! make_menu('main-menu', 'clinica', $s['id']) !!} --}}
-					{{-- @var($url = !isset($menus['submenu'][$key]) ? url($menu['route']) : 'javascript:void(0);') --}}
-					{{-- <x-nav-link :href="$url">@php echo($menu['titulo']) @endphp</x-nav-link> --}}
-				@endforeach
-			</ul>
-		@endif
-	@endforeach
+{{-- @var($url = !isset($menus['submenu'][$key]) ? url($menu['route']) : 'javascript:void(0);') --}}
+{{-- <x-nav-link :href="$url">@php echo($menu['titulo']) @endphp</x-nav-link> --}}
+{{-- </ul>
+@endforeach
 @endif
+@endforeach
+@endif --}}
 
 {{-- @if (isset($ul))
 	@foreach ($ul as $ul => $li)

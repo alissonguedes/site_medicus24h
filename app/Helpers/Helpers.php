@@ -4,7 +4,8 @@ use App\Models\Model;
 
 if (!function_exists('lang')) {
 
-	function lang($return_id = false) {
+	function lang($return_id = false)
+	{
 
 		$sigla = isset($_COOKIE['idioma']) ? $_COOKIE['idioma'] : config('site.language');
 
@@ -29,7 +30,8 @@ if (!function_exists('lang')) {
 
 if (!function_exists('getMenu')) {
 
-	function getMenu($local, $id = null, $path = null) {
+	function getMenu($local, $id = null, $path = null)
+	{
 
 		$model = new Model();
 		$model->setConnection(env('DB_SYSTEM_CONNECTION'));
@@ -143,11 +145,11 @@ if (!function_exists('getMenu')) {
 
 						if (!is_null($item->item_type)) {
 
-							$menu_list[$menu->id][$item->id] = [
-								'id'       => $item->id,
-								'titulo'   => $item->item_type,
-								'category' => true,
-							];
+							// $menu_list[$menu->id][$item->id] = [
+							// 	'id'       => $item->id,
+							// 	'titulo'   => $item->item_type,
+							// 	'category' => true,
+							// ];
 
 						}
 
@@ -169,19 +171,25 @@ if (!function_exists('getMenu')) {
 
 						$route = $route->first();
 
-						$menu_list[$menu->id][$item->id] = [
-							'id'            => $item->id,
-							'id_parent'     => $item->id_parent,
-							'id_controller' => $item->controller,
-							'id_route'      => $item->id_route,
-							'route'         => $route->name,
-							'icon'          => $item->icon,
-							'divider'       => $item->divider,
-							'item_type'     => $item->item_type,
-							'titulo'        => $item->titulo,
-							'descricao'     => $item->descricao,
-							'category'      => false,
-							'children'      => [],
+						// $menu_list[$menu->id][$item->id] = [
+						// 	'id'            => $item->id,
+						// 	'id_parent'     => $item->id_parent,
+						// 	'id_controller' => $item->controller,
+						// 	'id_route'      => $item->id_route,
+						// 	'route'         => $route->name,
+						// 	'icon'          => $item->icon,
+						// 	'divider'       => $item->divider,
+						// 	'item_type'     => $item->item_type,
+						// 	'titulo'        => $item->titulo,
+						// 	'descricao'     => $item->descricao,
+						// 	'category'      => false,
+						// 	'children'      => [],
+						// ];
+
+						$menu_list[$menu->id][] = [
+							'id'        => $item->id,
+							'id_parent' => $item->id_parent,
+							'titulo'    => $item->titulo,
 						];
 
 						$submenus = $model->from('tb_acl_menu_item')
@@ -192,14 +200,18 @@ if (!function_exists('getMenu')) {
 								$query->select('id_item')
 									->from('tb_acl_menu_item_menu')
 									->whereColumn('id_item', 'id')
-									->where('status', '1')
-									->where('id_menu', $menu->id);
+									->where('id_menu', $menu->id)
+									->where('status', '1');
 
 							})->get();
 
 						if ($submenus->count() > 0) {
 							// $menu_list[$menu->id][$item->id] = getMenu($local, $item->id);
-							$menu_list['submenus'][$item->id] = getMenu($local, $item->id);
+							// $menu_list[$menu->id][$item->id] = getMenu($local, $item->id);
+							$menu_list[$menu->id][$item->id] = getMenu($local, $item->id);
+							// foreach ($submenus as $sub) {
+							// }
+
 						}
 
 					}
@@ -217,7 +229,8 @@ if (!function_exists('getMenu')) {
 
 if (!function_exists('make_menu')) {
 
-	function make_menu($local, $path = null, $id = null) {
+	function make_menu($local, $path = null, $id = null)
+	{
 
 		if (!empty($attributes)) {
 			foreach ($attributes as $ind => $val) {
@@ -231,18 +244,7 @@ if (!function_exists('make_menu')) {
 
 		$menus = [];
 
-		// dump($items);
-		if (count($items) > 0) {
-
-			foreach ($items as $i => $v) {
-
-				$menus[$i] = $v;
-
-			}
-
-			return view('navigation', ['menus' => $menus]);
-
-		}
+		return view('navigation', ['id_menu' => $id ?? 0, 'menus' => $items]);
 
 	}
 
