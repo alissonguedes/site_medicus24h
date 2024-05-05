@@ -492,7 +492,7 @@
 
 	.sidenav {
 		/* overflow-x: hidden; */
-		overflow: hidden;
+		/* overflow: hidden; */
 	}
 
 	aside ul.in {
