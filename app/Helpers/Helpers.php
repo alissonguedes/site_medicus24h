@@ -143,16 +143,6 @@ if (!function_exists('getMenu')) {
 
 					foreach ($items as $item) {
 
-						if (!is_null($item->item_type)) {
-
-							$menu_list['menus'][$item->id] = [
-								'id'       => $item->id,
-								'titulo'   => $item->item_type,
-								'category' => true,
-							];
-
-						}
-
 						$route = $model->select('name')
 							->from('tb_acl_modulo_routes')
 							->where('id_controller', $item->id_controller)
@@ -169,6 +159,41 @@ if (!function_exists('getMenu')) {
 
 						$route = $route->first();
 
+						$submenus = $model->from('tb_acl_menu_item')
+							->where('id_parent', $item->id)
+							->where('status', '1')
+							->whereIn('id', function ($query) use ($menu) {
+
+								$query->select('id_item')
+									->from('tb_acl_menu_item_menu')
+									->whereColumn('id_item', 'id')
+									->where('id_menu', $menu->id)
+									->where('status', '1');
+
+							})->get();
+
+						if (!is_null($item->item_type)) {
+							$menu_list['menus'][] = [
+								'id'        => $item->id,
+								'id_parent' => $item->id_parent,
+								'titulo'    => $item->item_type,
+								'categoria' => true,
+							];
+						}
+
+						$menu_list['menus'][] = [
+							'id'        => $item->id,
+							'id_parent' => $item->id_parent,
+							'titulo'    => $item->titulo,
+							'categoria' => false,
+							'submenus'  => [],
+						];
+
+						if ($submenus->count() > 0) {
+							$menu_list['submenus'][] = getMenu($local, $item->id);
+						}
+
+						// FUNCIONANDO...
 						// $menu_list[$menu->id][$item->id] = [
 						// 	'id'            => $item->id,
 						// 	'id_parent'     => $item->id_parent,
@@ -184,34 +209,29 @@ if (!function_exists('getMenu')) {
 						// 	'children'      => [],
 						// ];
 
-						$menu_list['menus'][$item->id] = [
-							'id'        => $item->id,
-							'id_parent' => $item->id_parent,
-							'titulo'    => $item->titulo,
-							'route'     => $route->name,
-						];
+						// FUNCIONANDO...
+						// if (!is_null($item->item_type)) {
+						// $menu_list['menus'][$item->id] = [
+						// 	'id'       => $item->id,
+						// 	'titulo'   => $item->item_type,
+						// 	'category' => true,
+						// 	'list'     => [],
+						// ];
+						// }
 
-						$submenus = $model->from('tb_acl_menu_item')
-							->where('id_parent', $item->id)
-							->where('status', '1')
-							->whereIn('id', function ($query) use ($menu) {
+						// FUNCIONANDO...
+						// $menu_list['menus'][$item->id]['list'][] = [
+						// 	'id'        => $item->id,
+						// 	'id_parent' => $item->id_parent,
+						// 	'titulo'    => $item->titulo,
+						// 	'route'     => $route->name,
+						// 	'category'  => false,
+						// ];
 
-								$query->select('id_item')
-									->from('tb_acl_menu_item_menu')
-									->whereColumn('id_item', 'id')
-									->where('id_menu', $menu->id)
-									->where('status', '1');
-
-							})->get();
-
-						if ($submenus->count() > 0) {
-							// $menu_list[$menu->id][$item->id] = getMenu($local, $item->id);
-							// $menu_list[$menu->id][$item->id] = getMenu($local, $item->id);
-							$menu_list['submenus'][$item->id] = getMenu($local, $item->id);
-							// foreach ($submenus as $sub) {
-							// }
-
-						}
+						// FUNCIONANDO...
+						// if ($submenus->count() > 0) {
+						// 	$menu_list['submenus'][$item->id] = getMenu($local, $item->id);
+						// }
 
 					}
 
@@ -242,6 +262,8 @@ if (!function_exists('make_menu')) {
 		$items = getMenu($local, $id, $path);
 
 		$menus = [];
+
+		dump($items);
 
 		return view('navigation', ['id_menu' => $id ?? 0, 'menus' => $items]);
 

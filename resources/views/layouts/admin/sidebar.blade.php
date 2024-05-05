@@ -11,9 +11,8 @@
 
 		@include('admin.logo')
 
-		<div class="main-menu" style="height: calc(100% - 64px); position: relative; width: 100%; overflow: auto;">
-			{!! make_menu('main-menu', 'clinica') !!}
-			{{-- @include('admin.navigation') --}}
+		<div class="main-menu">
+
 		</div>
 
 	</div>

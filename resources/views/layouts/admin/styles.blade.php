@@ -475,24 +475,16 @@
 	aside ul {
 		position: absolute;
 		top: 0;
+		bottom: 0;
 		left: 0;
 		right: 0;
 		padding-top: 0;
 		padding-bottom: 20px;
-		height: auto;
+		height: 100%;
+		background-color: #fff;
 		transform: translate(100%, 0);
 		transition: transform 0.6s ease;
 		-webkit-transition: -webkit-transform 0.5s ease;
-	}
-
-	.sidenav,
-	aside ul {
-		background-color: inherit !important;
-	}
-
-	.sidenav {
-		/* overflow-x: hidden; */
-		/* overflow: hidden; */
 	}
 
 	aside ul.in {
@@ -609,6 +601,13 @@
 		border-right: none;
 		border-bottom: none;
 		left: 30px;
+	}
+
+	.main-menu {
+		height: calc(100% - 64px);
+		position: relative;
+		width: 100%;
+		overflow: hidden;
 	}
 
 	.menu-close {

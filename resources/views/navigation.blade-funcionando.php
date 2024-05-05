@@ -1,24 +1,37 @@
+@php
+	// dump($menus);
+@endphp
+
 @if (isset($menus['menus']))
 
-	{{ '<ul>' }}<br>
-	@for ($i = 0; $i < count($menus['menus']); $i++)
-		&nbsp;&nbsp;&nbsp;&nbsp; {{ '<li>' }}<br>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ '<a href="#">' . $menus['menus'][$i]['titulo'] . '</a>' }}<br>
-		&nbsp;&nbsp;&nbsp;&nbsp; {{ '</li>' }}<br>
-	@endfor
-	{{ '</ul>' }}<br>
+	@php
+		$class = $id_menu == 0 ? 'in' : 'submenu';
+	@endphp
+
+	<ul id="menu-{{ $id_menu }}" class="{{ $class }} scroller">
+		{{-- @if ($id_menu != 0)
+			<li><x-nav-link href="javascript:void(0);" class="menu-close" data-id="#menu-{{ $id_menu }}" :active="request()->routeIs('admin.teste')"> Menu 2</x-nav-link> </li>
+		@endif --}}
+		@foreach ($menus['menus'] as $key => $val)
+			@php
+				$href = isset($menus['submenus'][$val['id']]) ? 'javascript:void(0);' : $val['route'];
+				$data_id = isset($menus['submenus'][$val['id']]) ? '#menu-' . $val['id'] : null;
+			@endphp
+			<li>
+				<x-nav-link :href="$href" :data-id="$data_id" :active="request()->routeIs($val['route'])">{{ $val['titulo'] }}</x-nav-link>
+			</li>
+		@endforeach
+
+	</ul>
 
 @endif
 
 @if (isset($menus['submenus']))
-	@foreach ($menus['submenus'] as $sub)
-		@php
-			dump($sub);
-			//     for ($j = 0; $j < count($menus['submenus'][$i]['menus']); $j++) {
-			//         make_menu('main-menu', 'clinica', $menus['submenus'][$i]['menus'][$j]['id']);
-			//     }
-		@endphp
+
+	@foreach ($menus['submenus'] as $key => $val)
+		{!! make_menu('main-menu', 'clinica', $key) !!}
 	@endforeach
+
 @endif
 
 {{-- <ul id="menu-1" class="in scroller">
