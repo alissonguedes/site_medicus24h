@@ -1046,6 +1046,11 @@ textarea.materialize-textarea:focus:not([readonly]),
         height: calc(100vh - 140px);
     }
 
+    .pace,
+    .progress {
+        top: 52px;
+    }
+
     /*
     nav,
     #input-search-header {
@@ -1091,6 +1096,8 @@ textarea.materialize-textarea:focus:not([readonly]),
 }
 
 @media only screen and (max-width: 992px) {
+
+    .pace,
     .progress {
         left: 0;
     }
