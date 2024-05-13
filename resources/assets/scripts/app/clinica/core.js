@@ -139,23 +139,25 @@ $(document).ready(function () {
 
         $('.card-reveal').show();
 
-        setTimeout(function () {
-            $('.card-reveal').css({
-                'transform': 'translateY(-100%)',
-            });
-        }, 200)
-
         $.ajax({
             url: url,
             method: 'get',
-            // data :
             success: (response) => {
-                console.log(response);
+
                 var form = $(response).find('form.card-reveal');
+
                 $('form.card-reveal').html(form.html());
-                Url.update(url);
+
                 $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+
+                Url.update(url);
+
+                $('.card-reveal').css({
+                    'transform': 'translateY(-100%)',
+                });
+
             }
+
         })
 
     })
@@ -178,18 +180,30 @@ $(document).ready(function () {
         // }, 300);
 
         if (typeof url !== 'undefined') {
+
             $.ajax({
+
                 url: url,
                 method: 'get',
-                // data :
+
                 success: (response) => {
-                    console.log(response);
+
                     var form = $(response).find('form.card-reveal');
+
                     $('form.card-reveal').html(form.html());
-                    Url.update(url);
+
                     $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+
+                    Url.update(url);
+
+                    $('.card-reveal').css({
+                        'transform': 'translateY(-100%)',
+                    });
+
                 }
+
             });
+
         }
 
     });
