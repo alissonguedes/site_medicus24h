@@ -23,9 +23,51 @@
 
 		{{-- BEGIN Body --}}
 		<main id="body">
-			<div class="main-container">
-				{{ $body }}
+
+			<div class="card no-padding no-margin">
+
+				@if (isset($header))
+					<section>
+						<header class="z-depth-0 border-bottom">
+							{{ $header }}
+						</header>
+					</section>
+				@endif
+
+				<div class="card-content scroller">
+					@if (isset($body))
+						{{ $body }}
+					@endif
+				</div>
+
+				@if (isset($form))
+					<form {{ $form->attributes->merge(['class' => 'card-reveal no-padding']) }}>
+
+						@if (isset($form_tabs))
+							<div {{ $form_tabs->attributes->merge(['class' => 'card-tabs']) }}>
+								{{ $form_tabs }}
+							</div>
+						@endif
+
+						<div class="card-content pl-1 pr-1 scroller">
+							{{ $form }}
+						</div>
+
+						@if (isset($card_footer))
+							<div {{ $card_footer->attributes->merge(['class' => 'card-action right-align']) }}>
+								{{ $card_footer }}
+							</div>
+						@endif
+
+					</form>
+				@endif
+
+				@if (isset($footer))
+					{{ $footer }}
+				@endif
+
 			</div>
+
 		</main>
 		{{-- END Body --}}
 

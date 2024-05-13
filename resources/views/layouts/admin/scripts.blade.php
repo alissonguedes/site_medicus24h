@@ -3,6 +3,14 @@
 <script src="{{ asset('assets/node_modules/materialize-css/dist/js/materialize.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/@splidejs/splide/dist/js/splide.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/scripts/menu.js') }}"></script>
+
+<script>
+	var BASE_URL = "{{ base_url() }}";
+	var BASE_PATH = "{{ asset('/') }}";
+	var SITE_URL = "{{ site_url() }}";
+	var SITE_KEY = "{{ env('INVISIBLE_RECAPTCHA_SITEKEY') }}";
+</script>
 
 <script>
 	$(function() {
@@ -30,5 +38,6 @@
 			if ($(this).width() > 1230)
 				$('#menu-nav').show();
 		});
+
 	})
 </script>

@@ -41,11 +41,21 @@
 
 	<body>
 
-		{{ $slot }}
+		<div class="progress">
+			<div class="indeterminate teal lighten-1"></div>
+		</div>
 
-		@if (isset($scripts))
-			{{ $scripts }}
-		@endif
+		{{-- BEGIN #Page --}}
+		<div id="page">
+
+			{{ $slot }}
+
+			@if (isset($scripts))
+				{{ $scripts }}
+			@endif
+
+		</div>
+		{{-- END #Page --}}
 
 	</body>
 

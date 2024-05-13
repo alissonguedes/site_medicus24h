@@ -1,12 +1,14 @@
 <header>
 
+	{{--
 	<div class="navbar-search-wrapper">
 		<input type="search" id="input-search-header" placeholder="Pesquisar..." autocomplete="off">
 	</div>
+	--}}
 
 	<div class="navbar navbar-fixed">
 
-		<nav class="navbar-main navbar-color navbar-dark z-depth-0">
+		<nav class="navbar-main navbar-color navbar-light z-depth-0">
 
 			<div class="nav-wrapper">
 
@@ -24,14 +26,6 @@
 				@endif
 
 				<ul class="navbar-list right">
-					<li>
-						<a href="#" class="waves-effect waves-block waves-light notification-button">
-							<i class="material-symbols-outlined">
-								notifications
-								<small class="notification-badge">+99</small>
-							</i>
-						</a>
-					</li>
 					<li>
 						<a href="#" class="waves-effect waves-block waves-light profile-button">
 							<span class="avatar-status avatar-online">
@@ -58,11 +52,19 @@
 							<span></span>
 						</a>
 					</li>
-					<li class="search">
+					<li>
+						<a href="#" class="waves-effect notification-button">
+							<i class="material-symbols-outlined">
+								notifications
+								<small class="notification-badge">+99</small>
+							</i>
+						</a>
+					</li>
+					{{-- <li class="search">
 						<a id="open-search" class="waves-effect" style="position: relative;">
 							<i class="material-symbols-outlined">search</i>
 						</a>
-					</li>
+					</li> --}}
 					<li>
 						<a class="waves-effect sidenav-trigger" data-target="slide-out">
 							<i class="material-symbols-outlined">menu</i>
@@ -121,7 +123,7 @@
 					</x-responsive-nav-link>
 
 					<!-- Authentication -->
-					<form method="POST" action="{{ route('logout') }}">
+					<form action="{{ route('logout') }}" method="POST">
 						@csrf
 
 						<x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">

@@ -2365,6 +2365,15 @@
 	box-shadow: 0 6px 20px 0 rgba(0, 229, 255, .5) !important
 }
 
+.gradient-45deg-teal-teal {
+	background: -webkit-linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-4)) !important;
+	background: linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-4)) !important;
+}
+
+.gradient-45deg-teal-teal.gradient-shadow {
+	box-shadow: 0 6px 20px 0 var(--teal-lighten-4) !important;
+}
+
 .gradient-45deg-blue-grey-blue-grey {
 	background: -webkit-linear-gradient(45deg, #cfd8dc, #546e7a) !important;
 	background: linear-gradient(45deg, #cfd8dc, #546e7a) !important
@@ -2531,12 +2540,6 @@
 
 .gradient-45deg-semi-dark.gradient-shadow {
 	box-shadow: 0 6px 20px 0 rgba(51, 105, 230, .5) !important
-}
-
-button:focus {
-	outline: none;
-	background-color: var(--blue-lighten-2) !important;
-	color: #fff;
 }
 
 .btn-light-amber,

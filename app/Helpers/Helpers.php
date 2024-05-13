@@ -2,10 +2,106 @@
 
 use App\Models\Model;
 
+/**
+ * Remove caratecres especiais
+ * Converte todos os caracteres de um arquivo para caixa baixa
+ * Remove espaçamentos.
+ */
+if (!function_exists('replace')) {
+
+	function replace($string, $find = ' ', $replace = '-', $to_lower = true) {
+
+		$args = func_get_args();
+
+		if (count($args) < 4) {
+
+			$string = $args[0];
+
+			if (!is_string($args[0])) {
+				$exception = 'O argumento [1] deve ser uma string e está recebendo um valor ' . gettype($args[0]);
+			}
+
+			if (count($args) === 2) {
+				if (is_bool($args[1])) {
+					$to_lower = $args[1];
+				} else {
+					$replace = $args[1] ?? trim($replace);
+					$find    = null;
+				}
+			}
+
+			if (count($args) === 3) {
+				$find = null;
+				if (is_bool($replace)) {
+					$replace  = $args[1];
+					$to_lower = $args[2];
+				}
+			}
+
+			if (strlen($replace) > 1) {
+				$exception = 'O argumento [2] deve conter apenas um carácter.';
+			}
+
+			if (is_bool($replace)) {
+				$to_lower = $replace;
+			}
+
+			if (isset($exception)) {
+				throw new Exception($exception);
+			}
+
+		}
+
+		// echo preg_replace('/^(\d{3})(\d{3})(\d{3})(\d{2})/', '***.$2.$3-**', '06942292451');
+
+		$output = [];
+		$a      = ['Á' => 'a', 'À' => 'a', 'Â' => 'a', 'Ä' => 'a', 'Ã' => 'a', 'Å' => 'a', 'á' => 'a', 'à' => 'a', 'â' => 'a', 'ä' => 'a', 'ã' => 'a', 'å' => 'a', 'a' => 'a', 'Ç' => 'c', 'ç' => 'c', 'Ð' => 'd', 'É' => 'e', 'È' => 'e', 'Ê' => 'e', 'Ë' => 'e', 'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e', 'Í' => 'i', 'Î' => 'i', 'Ï' => 'i', 'í' => 'i', 'ì' => 'i', 'î' => 'i', 'ï' => 'i', 'Ñ' => 'n', 'ñ' => 'n', 'Ó' => 'o', 'Ò' => 'o', 'Ô' => 'o', 'Ö' => 'o', 'Õ' => 'o', 'ó' => 'o', 'ò' => 'o', 'ô' => 'o', 'ö' => 'o', 'õ' => 'o', 'ø' => 'o', 'œ' => 'o', 'Š' => 'o', 'Ú' => 'u', 'Ù' => 'u', 'Û' => 'u', 'Ü' => 'u', 'ú' => 'u', 'ù' => 'u', 'û' => 'u', 'ü' => 'u', 'Ý' => 'y', 'Ÿ' => 'y', 'ý' => 'y', 'ÿ' => 'y', 'Ž' => 'z', 'ž' => 'z'];
+		$string = strtr($string, $a);
+		$regx   = isset($find) && !empty($find) ? $find : [' ', '.', '+', '@', '#', '!', '$', '%', '¨', '&', '*', '(', ')', '_', '-', '+', '=', ';', ':', ',', '\\', '|', '£', '¢', '¬', '/', '?', '°', '´', '`', '{', '}', '[', ']', 'ª', 'º', '~', '^', "\'", '"'];
+
+		$tolowercase = $to_lower ? strtolower($string) : $string;
+		$replacement = str_replace($regx, '|', trim($tolowercase));
+		$explode     = explode('|', $replacement);
+
+		// dd($find, $replace);
+		if ($find === '' && !empty($replace)) {
+
+			unset($regx[0]);
+			$conv       = [];
+			$new_string = str_replace($regx, '', $string);
+			$new_string = explode(' ', $string);
+
+			foreach ($new_string as $s) {
+
+				$str = '';
+
+				for ($i = 0; $i < strlen($s); $i++) {
+					$s   = str_replace($s[$i], $replace, $s);
+					$str = $s;
+				}
+
+				$conv[] = $str;
+
+			}
+
+			return implode(' ', $conv);
+
+		}
+
+		for ($i = 0; $i < count($explode); ++$i) {
+			if (!empty($explode[$i])) {
+				$output[] = trim($explode[$i]);
+			}
+		}
+
+		return implode($replace, $output);
+
+	}
+}
+
 if (!function_exists('lang')) {
 
-	function lang($return_id = false)
-	{
+	function lang($return_id = false) {
 
 		$sigla = isset($_COOKIE['idioma']) ? $_COOKIE['idioma'] : config('site.language');
 
@@ -30,8 +126,7 @@ if (!function_exists('lang')) {
 
 if (!function_exists('getMenu')) {
 
-	function getMenu($local, $id = null, $path = null)
-	{
+	function getMenu($local, $id = null, $path = null) {
 
 		$model = new Model();
 		$model->setConnection(env('DB_SYSTEM_CONNECTION'));
@@ -154,7 +249,7 @@ if (!function_exists('getMenu')) {
 							});
 
 						if ($item->id_route) {
-							$route->where('id', $id_route);
+							$route->where('id', $item->id_route);
 						}
 
 						$route = $route->first();
@@ -173,7 +268,7 @@ if (!function_exists('getMenu')) {
 							})->get();
 
 						if (!is_null($item->item_type)) {
-							$menu_list['menus'][] = [
+							$menu_list[$menu->id][] = [
 								'id'        => $item->id,
 								'id_parent' => $item->id_parent,
 								'titulo'    => $item->item_type,
@@ -181,34 +276,26 @@ if (!function_exists('getMenu')) {
 							];
 						}
 
-						$menu_list['menus'][] = [
-							'id'        => $item->id,
-							'id_parent' => $item->id_parent,
-							'titulo'    => $item->titulo,
-							'categoria' => false,
-							'submenus'  => [],
+						$menu_list[$menu->id][$item->id] = [
+							'id'            => $item->id,
+							'id_parent'     => $item->id_parent,
+							'id_controller' => $item->controller,
+							'id_route'      => $item->id_route,
+							'route'         => $route->name,
+							'icon'          => $item->icon,
+							'divider'       => $item->divider,
+							'item_type'     => $item->item_type,
+							'titulo'        => $item->titulo,
+							'descricao'     => $item->descricao,
+							'categoria'     => false,
+							'children'      => [],
 						];
 
 						if ($submenus->count() > 0) {
-							$menu_list['submenus'][] = getMenu($local, $item->id);
+							$menu_list[$menu->id][$item->id]['children'] = getMenu($local, $item->id);
 						}
 
 						// FUNCIONANDO...
-						// $menu_list[$menu->id][$item->id] = [
-						// 	'id'            => $item->id,
-						// 	'id_parent'     => $item->id_parent,
-						// 	'id_controller' => $item->controller,
-						// 	'id_route'      => $item->id_route,
-						// 	'route'         => $route->name,
-						// 	'icon'          => $item->icon,
-						// 	'divider'       => $item->divider,
-						// 	'item_type'     => $item->item_type,
-						// 	'titulo'        => $item->titulo,
-						// 	'descricao'     => $item->descricao,
-						// 	'category'      => false,
-						// 	'children'      => [],
-						// ];
-
 						// FUNCIONANDO...
 						// if (!is_null($item->item_type)) {
 						// $menu_list['menus'][$item->id] = [
@@ -248,8 +335,7 @@ if (!function_exists('getMenu')) {
 
 if (!function_exists('make_menu')) {
 
-	function make_menu($local, $path = null, $id = null)
-	{
+	function make_menu($local, $path = null, $id = null, $s = null) {
 
 		if (!empty($attributes)) {
 			foreach ($attributes as $ind => $val) {
@@ -266,6 +352,42 @@ if (!function_exists('make_menu')) {
 		// dump($items);
 
 		return view('navigation', ['id_menu' => $id ?? 0, 'menus' => $items]);
+
+	}
+
+}
+
+if (!function_exists('base_url')) {
+
+	function base_url() {
+
+		$path     = '/';
+		$base_url = explode('/', request()->getRequestUri());
+
+		foreach ($base_url as $ind => $base) {
+
+			if ($base_url[$ind] == '') {
+				$base_url[$ind] = '/';
+			}
+
+			$dir = app_path() . '/Http/Controllers/' . ucfirst(str_replace('/', '', $base_url[$ind]));
+			if ($base_url[$ind] != '/' && is_dir($dir)) {
+				$path = $base;
+				break;
+			}
+
+		}
+
+		return url($path) . '/';
+
+	}
+}
+
+if (!function_exists('site_url')) {
+
+	function site_url() {
+
+		return url('/') . '/';
 
 	}
 

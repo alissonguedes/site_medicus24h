@@ -11,7 +11,7 @@
 }
 
 @font-face {
-	font-family: 'Material Symbols';
+	font-family: 'Material Icons';
 	font-style: normal;
 	font-weight: 100 900;
 	src: url('../../fonts/material-icons/material-icons.woff2') format('woff2');
@@ -38,9 +38,9 @@
 	src: url('../../fonts/montserrat/mregular.ttf');
 }
 
+.material-icons,
 .material-symbols {
 	font-family: 'Material Symbols';
-	/* font-weight: normal; */
 	font-weight: var(--weight);
 	font-style: normal;
 	font-size: 24px;
@@ -57,7 +57,6 @@
 
 .material-symbols-outlined {
 	font-family: 'Material Symbols Outlined';
-	/* font-weight: normal; */
 	font-weight: var(--weight);
 	font-style: normal;
 	font-size: 24px;

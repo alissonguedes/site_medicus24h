@@ -1,84 +1,36 @@
-@if (isset($menus['menus']))
-	<ul>
-		@foreach ($menus['menus'] as $menu)
-			<li>
-				<a href="#">{{ $menu['id'] }} - {{ $menu['titulo'] }} </a>
-			</li>
-		@endforeach
-	</ul>
-@endif
+@if (isset($menus))
 
-@if (isset($menus['submenus']))
-	@foreach ($menus['submenus'] as $sub)
-		@php
-			make_menu('main-menu', 'clinica', $sub);
-		@endphp
+	@foreach ($menus as $ind => $item)
+		@php($slide_out = $id_menu == 0 ? '' : null)
+		@php($sidenav = $id_menu == 0 ? 'collapsible' : 'collapsible collapsible-sub')
+
+		<ul class="{{ $sidenav }}" {{ $slide_out }}>
+			@foreach ($item as $i)
+				@if ($i['categoria'])
+					<li class="navigation-header">
+						<a class="navigation-header-text">{{ $i['titulo'] }}</a>
+						<i class="navigation-header-icon material-symbols-outlined">more_horiz</i>
+					</li>
+				@else
+					<li class="bold">
+						@php($href = !empty($i['children']) ? 'javascript:void(0);' : (Route::has($i['route']) ? route($i['route']) : '#'))
+						@php($header = !empty($i['children']) ? 'collapsible-header' : null)
+						@php($icon = !empty($i['icon']) ? $i['icon'] : null)
+						<x-nav-link :href="$href" :class="$header . ' waves-cyan'" :active="request()->routeIs($i['route'])">
+							{{-- {{ Route::getCurrentRoute($i['route'])->uri() }} --}}
+							{{-- @dump(Route::has($i['route']) ? Route::get($i['route']) : 'null') --}}
+							<i class="material-symbols-outlined">{{ $icon }}</i>
+							<span class="menu-title">{{ __($i['titulo']) }}</span>
+						</x-nav-link>
+						@if (!empty($i['children']))
+							<div class="collapsible-body">
+								{!! make_menu('main-menu', 'clinica', $i['id']) !!}
+							</div>
+						@endif
+					</li>
+				@endif
+			@endforeach
+		</ul>
 	@endforeach
+
 @endif
-
-<style>
-	ul {
-		margin: auto;
-		padding: auto;
-	}
-
-	ul li {
-		padding: auto;
-		margin: auto;
-		list-style: initial;
-	}
-</style>
-{{-- <ul id="menu-1" class="in scroller">
-	<li><x-nav-link :href="route('admin.index')" :active="request()->routeIs('admin.index')">{{ __('Dashboard') }}</x-nav-link></li>
-	<li><x-nav-link href="javascript:void(0);" class="submenu-open" data-id="#menu-2" :active="request()->routeIs('admin.teste')"> <i class="material-symbols-outlined left">dashboard</i> Menu 2 </x-nav-link></li>
-	<li><x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')"><i class="material-symbols-outlined left">group</i>Menu 3</x-nav-link> </li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')"><i class="material-symbols-outlined left">event</i>Menu 4</x-nav-link></li>
-	<li><x-nav-link href="javascript:void(0);" class="submenu-open" data-id="#menu-5" :active="request()->routeIs('admin.teste')">Menu 5 </x-nav-link></li>
-</ul>
-
-<ul id="menu-2" class="submenu scroller">
-	<li><x-nav-link href="javascript:void(0);" class="menu-close" data-id="#menu-1" :active="request()->routeIs('admin.teste')"> Menu 2</x-nav-link> </li>
-	<li><x-nav-link href="javascript:void(0);" class="submenu-open" data-id="#menu-6" :active="request()->routeIs('admin.teste')"> <i class="material-symbols-outlined left">dashboard</i> SubMenu 6 </x-nav-link></li>
-	<li><x-nav-link href="javascript:void(0);" class="submenu-open" data-id="#menu-7" :active="request()->routeIs('admin.teste')">SubMenu 7 </x-nav-link></li>
-	<li><x-nav-link href="javascript:void(0);" class="submenu-open" data-id="#menu-8" :active="request()->routeIs('admin.teste')">SubMenu 8 </x-nav-link></li>
-</ul>
-
-<ul id="menu-5" class="submenu scroller">
-	<li><x-nav-link href="javascript:void(0);" class="menu-close" data-id="#menu-1" :active="request()->routeIs('admin.teste')"> Menu 5</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 1</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 2</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 3</x-nav-link></li>
-</ul>
-
-<ul id="menu-6" class="submenu scroller">
-	<li><x-nav-link href="javascript:void(0);" class="menu-close" data-id="#menu-2" :active="request()->routeIs('admin.teste')"> SubMenu 6</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 1</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 2</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 3</x-nav-link></li>
-</ul>
-
-<ul id="menu-7" class="submenu scroller">
-	<li><x-nav-link href="javascript:void(0);" class="menu-close" data-id="#menu-2" :active="request()->routeIs('admin.teste')"> SubMenu 7</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 1</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 2</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 3</x-nav-link></li>
-</ul>
-
-<ul id="menu-8" class="submenu scroller">
-	<li><x-nav-link href="javascript:void(0);" class="menu-close" data-id="#menu-2" :active="request()->routeIs('admin.teste')"> SubMenu 8</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 1</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 2</x-nav-link></li>
-	<li><x-nav-link href="javascript:void(0);" class="submenu-open" data-id="#menu-9" :active="request()->routeIs('admin.teste')">SubMenu 3 </x-nav-link></li>
-</ul>
-
-<ul id="menu-9" class="submenu scroller">
-	<li><x-nav-link href="javascript:void(0);" class="menu-close" data-id="#menu-8" :active="request()->routeIs('admin.teste')"> SubMenu 9</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 1</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 2</x-nav-link></li>
-	<li><x-nav-link href="javascript:void(0);" class="submenu-open" data-id="#menu-10" :active="request()->routeIs('admin.teste')">SubMenu 3 </x-nav-link></li>
-</ul>
-
-<ul id="menu-10" class="submenu scroller">
-	<li><x-nav-link href="javascript:void(0);" class="menu-close" data-id="#menu-9" :active="request()->routeIs('admin.teste')"> SubMenu 10</x-nav-link></li>
-	<li><x-nav-link href="#" :active="request()->routeIs('admin.teste')">SubMenu 1</x-nav-link></li>
-</ul> --}}
