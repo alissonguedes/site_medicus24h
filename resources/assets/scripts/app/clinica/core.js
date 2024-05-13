@@ -54,7 +54,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         var href = $(this).data('href') || $(this).attr('href');
-        var javascript = /^[J|j]ava[s|S]cript/;
+        var javascript = /^[J|j]ava[s|S]cript|^\#/;
 
         if (javascript.test(href)) {
             return;
@@ -87,17 +87,20 @@ $(document).ready(function () {
         }, 100)
     });
 
-
     $('.collapsible').Menu();
     $('select').formSelect();
 
-    $('.sidenav').sidenav({
+    var sidenav = $('.sidenav').sidenav({
         onCloseStart: () => {
             var self = $('aside');
             self.find('ul.submenu').removeClass('in out');
             self.find('ul:not(.submenu)').removeClass('out').addClass('in');
         }
+        // }).find('li').unbind().bind('click', function (e) {
+        //     e.preventDefault();
     });
+
+    sidenav.sidenav('close');
 
     $('.btn-menu').unbind().bind('click', function () {
         $('body').toggleClass('nav-collapsed');

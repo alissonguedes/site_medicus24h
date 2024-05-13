@@ -238,12 +238,15 @@
 		});
 
 		// Ocultar a barra de menus após clicar quando estiver em modo responsivo
-		$('#slide-out').find('li a').bind('click', function () {
+		$('#slide-out').find('li [href],li [data-href]').bind('click', function () {
 
+			var javascript = /^[J|j]ava[s|S]cript/;
+			var href = $(this).data('href') || $(this).attr('href');
 			if (window.innerWidth < 993)
-				if ($(this).Requests('isLink', $(this).attr('href'))) {
-					// $('.sidenav').sidenav('close')
-				}
+				// 	if ($(this).Requests('isLink', $(this).attr('href'))) {
+				if (!javascript.test(href))
+					$('.sidenav').sidenav('close')
+			// 	}
 
 
 		});
