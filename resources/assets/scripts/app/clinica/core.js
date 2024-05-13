@@ -135,32 +135,26 @@ $(document).ready(function () {
 
         $('.card-reveal').show();
 
-        Pace.ignore(function () {
+        $.ajax({
+            url: url,
+            method: 'get',
+            success: (response) => {
 
-            $.ajax({
-                url: url,
-                method: 'get',
-                success: (response) => {
+                var form = $(response).find('form.card-reveal');
 
-                    var form = $(response).find('form.card-reveal');
+                $('form.card-reveal').html(form.html());
+                $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+                Url.update(url);
 
-                    $('form.card-reveal').html(form.html());
+                setTimeout(function () {
 
-                    Url.update(url);
+                    $('.card-reveal').css({
+                        'transform': 'translateY(-100%)',
+                    });
 
-                    setTimeout(function () {
+                }, 500);
 
-                        $('.card-reveal').css({
-                            'transform': 'translateY(-100%)',
-                        });
-
-                    }, 500);
-
-                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
-
-                },
-
-            });
+            },
 
         });
 
@@ -183,41 +177,34 @@ $(document).ready(function () {
         //     t.tabs('updateTabIndicator');
         // }, 300);
 
-        Pace.ignore(function () {
+        if (typeof url !== 'undefined') {
 
-            if (typeof url !== 'undefined') {
+            $.ajax({
 
-                $.ajax({
+                url: url,
+                method: 'get',
 
-                    url: url,
-                    method: 'get',
+                success: (response) => {
 
-                    success: (response) => {
+                    var form = $(response).find('form.card-reveal');
 
-                        var form = $(response).find('form.card-reveal');
+                    $('form.card-reveal').html(form.html());
+                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+                    Url.update(url);
 
-                        $('form.card-reveal').html(form.html());
+                    setTimeout(function () {
 
-                        Url.update(url);
+                        $('.card-reveal').css({
+                            'transform': 'translateY(-100%)',
+                        });
 
-                        setTimeout(function () {
+                    }, 500);
 
-                            $('.card-reveal').css({
-                                'transform': 'translateY(-100%)',
-                            });
+                }
 
-                        }, 500);
+            });
 
-                        $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
-
-                    }
-
-                });
-
-
-            }
-
-        });
+        }
 
     });
 
