@@ -148,7 +148,7 @@ $(document).ready(function () {
 
                     Url.update(url);
 
-                    // $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
 
                     setTimeout(function () {
 
@@ -200,7 +200,7 @@ $(document).ready(function () {
 
                         Url.update(url);
 
-                        // $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+                        $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
 
                         setTimeout(function () {
 
