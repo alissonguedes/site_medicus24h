@@ -47,7 +47,7 @@ $(document).ready(function () {
                 }
 
                 $('.progress').css('display', 'none');
-                $('.animated').removeClass('fadeOut').addClass('fadeIn');
+                $('main .card .animated').removeClass('fadeOut').addClass('fadeIn');
 
             }, 500);
 
