@@ -68,7 +68,7 @@ $(document).ready(function () {
             return;
         }
 
-        $('.animated').removeClass('fadeIn').addClass('fadeOut');
+        $('main .card .animated').removeClass('fadeIn').addClass('fadeOut');
         redirect(href);
 
     });
