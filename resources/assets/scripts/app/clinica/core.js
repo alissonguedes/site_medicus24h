@@ -57,9 +57,7 @@ $(document).ready(function () {
 
         Pace.start();
 
-        setTimeout(function () {
-            redirect(href);
-        }, 2000);
+        redirect(href);
 
     });
 
