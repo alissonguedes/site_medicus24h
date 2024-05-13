@@ -19,7 +19,7 @@ $(document).ready(function () {
         xhr.open(method, url);
 
         xhr.onloadstart = function () {
-            // $('.progress').css('display', 'block');
+            $('.progress').css('display', 'block');
         };
 
         xhr.onprogress = function (event) {
@@ -68,7 +68,6 @@ $(document).ready(function () {
             return;
         }
 
-        Pace.start();
         $('.animated').removeClass('fadeIn').addClass('fadeOut');
         redirect(href);
 
