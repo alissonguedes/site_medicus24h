@@ -127,72 +127,54 @@ $(document).ready(function () {
     });
 
 
-    $('.icon-background').unbind().bind('click', function () {
-
+    $('#card-button,.icon-background').unbind().bind('click', function () {
         var url = $(this).data('url');
         $('.card-reveal').show();
-
-        Url.update(url);
-
         if (typeof url !== 'undefined') {
-
+            Url.update(url);
             $.ajax({
                 url: url,
                 method: 'get',
                 success: (response) => {
                     var form = $(response).find('form.card-reveal');
                     $('form.card-reveal').html(form.html());
-                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
                     $('.card-reveal').css({
                         'transform': 'translateY(-100%)',
                     });
+                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
                 }
-
             });
-
         }
-
     });
 
 
     // activator
 
-    $('#card-button').unbind().bind('click', function () {
+    // $('#card-button').unbind().bind('click', function () {
 
-        var url = $(this).data('url');
-        // var tabs = $(this).parents('.card').find('.card-tabs .tabs');
+    //     var url = $(this).data('url');
+    //     $('.card-reveal').show();
 
-        // var t = tabs.tabs();
-        // var select = tabs.find('a.active').attr('href');
+    //     if (typeof url !== 'undefined') {
+    //         Url.update(url);
 
-        // t.tabs('select', select);
-        // t.tabs('updateTabIndicator');
+    //         $.ajax({
+    //             url: url,
+    //             method: 'get',
+    //             success: (response) => {
+    //                 var form = $(response).find('form.card-reveal');
+    //                 $('form.card-reveal').html(form.html());
+    //                 $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+    //                 $('.card-reveal').css({
+    //                     'transform': 'translateY(-100%)',
+    //                 });
+    //             }
 
-        // setTimeout(function () {
-        //     t.tabs('updateTabIndicator');
-        // }, 300);
-        $('.card-reveal').show();
-        Url.update(url);
+    //         });
 
-        if (typeof url !== 'undefined') {
+    //     }
 
-            $.ajax({
-                url: url,
-                method: 'get',
-                success: (response) => {
-                    var form = $(response).find('form.card-reveal');
-                    $('form.card-reveal').html(form.html());
-                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
-                    $('.card-reveal').css({
-                        'transform': 'translateY(-100%)',
-                    });
-                }
-
-            });
-
-        }
-
-    });
+    // });
 
     // $('aside').find('ul').each(function() {
     // 	var a = $(this).find('li').find('a[href="javascript:void(0);"]');
