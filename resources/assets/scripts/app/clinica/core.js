@@ -148,6 +148,8 @@ $(document).ready(function () {
 
                     Url.update(url);
 
+                    // $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+
                     setTimeout(function () {
 
                         $('.card-reveal').css({
@@ -155,9 +157,6 @@ $(document).ready(function () {
                         });
 
                     }, 200);
-
-
-                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
 
                 },
 
@@ -201,7 +200,7 @@ $(document).ready(function () {
 
                         Url.update(url);
 
-                        $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+                        // $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
 
                         setTimeout(function () {
 
