@@ -176,6 +176,7 @@ $(document).ready(function () {
         // setTimeout(function () {
         //     t.tabs('updateTabIndicator');
         // }, 300);
+        $('.card-reveal').show();
 
         if (typeof url !== 'undefined') {
 
