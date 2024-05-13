@@ -5,10 +5,16 @@ $(document).ready(function () {
     function redirect(url, method = 'get') {
 
         var xhr = new XMLHttpRequest();
+
         xhr.open(method, url);
 
         xhr.onloadstart = function () {
             // $('.progress').css('display', 'block');
+
+            Pace.track(function () {
+                $('.progress').css('display', 'block');
+            });
+
         };
 
         xhr.onprogress = function (event) {
@@ -18,6 +24,7 @@ $(document).ready(function () {
         xhr.onloadend = function (e) {
 
             if (xhr.readyState === 4) {
+
                 var parser = new DOMParser();
                 var content = parser.parseFromString(xhr.response, 'text/html');
                 var response = content;
@@ -49,13 +56,9 @@ $(document).ready(function () {
         var href = $(this).data('href') || $(this).attr('href');
         var javascript = /^[J|j]ava[s|S]cript/;
 
-        console.log(href, javascript.test(href));
-
         if (javascript.test(href)) {
             return;
         }
-
-        Pace.start();
 
         redirect(href);
 

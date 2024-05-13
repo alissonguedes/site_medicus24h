@@ -41,9 +41,9 @@
 
 	<body>
 
-		{{-- <div class="progress">
+		<div class="progress">
 			<div class="indeterminate teal lighten-1"></div>
-		</div> --}}
+		</div>
 
 		{{-- BEGIN #Page --}}
 		<div id="page">
@@ -56,6 +56,23 @@
 
 		</div>
 		{{-- END #Page --}}
+
+		<script>
+			var BASE_URL = "{{ base_url() }}";
+			var BASE_PATH = "{{ asset('/') }}";
+			var SITE_URL = "{{ site_url() }}";
+			var SITE_KEY = "{{ env('INVISIBLE_RECAPTCHA_SITEKEY') }}";
+		</script>
+
+		<!-- Compiled and minified JavaScript -->
+		<script src="{{ asset('assets/node_modules/jquery/dist/jquery.min.js') }}"></script>
+		<script src="{{ asset('assets/node_modules/materialize-css/dist/js/materialize.min.js') }}"></script>
+		<script src="{{ asset('assets/node_modules/@splidejs/splide/dist/js/splide.min.js') }}"></script>
+		<script src="{{ asset('assets/node_modules/pace-js/pace.min.js') }}" data-pace-options='{ "ajax": false }'></script>
+		<script src="{{ asset('assets/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>
+
+		<script src="{{ asset('assets/node_modules/froala-editor/js/froala_editor.pkgd.min.js') }}"></script>
+		<script src="{{ asset('assets/node_modules/froala-editor/js/languages/pt_br.js') }}"></script>
 
 	</body>
 
