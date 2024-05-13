@@ -8,11 +8,11 @@ $(document).ready(function () {
         xhr.open(method, url);
 
         xhr.onloadstart = function () {
-            $('.progress').css('display', 'block');
+            // $('.progress').css('display', 'block');
         };
 
         xhr.onprogress = function (event) {
-            $('.progress').css('display', 'block');
+            // $('.progress').css('display', 'block');
         }
 
         xhr.onloadend = function (e) {
@@ -38,6 +38,7 @@ $(document).ready(function () {
 
         xhr.send();
 
+        // Pace.done();
 
     }
 
@@ -54,7 +55,11 @@ $(document).ready(function () {
             return;
         }
 
-        redirect(href);
+        Pace.start();
+
+        setTimeout(function () {
+            redirect(href);
+        }, 2000);
 
     });
 

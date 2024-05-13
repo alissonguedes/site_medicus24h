@@ -41,9 +41,9 @@
 
 	<body>
 
-		<div class="progress">
+		{{-- <div class="progress">
 			<div class="indeterminate teal lighten-1"></div>
-		</div>
+		</div> --}}
 
 		{{-- BEGIN #Page --}}
 		<div id="page">
