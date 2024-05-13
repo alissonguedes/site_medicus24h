@@ -13,67 +13,67 @@
 	{{-- BEGIN #Page --}}
 	{{-- <div id="page"> --}}
 
-		{{-- BGIN Header --}}
-		@include('layouts.clinica.header')
-		{{-- END Header --}}
+	{{-- BGIN Header --}}
+	@include('layouts.clinica.header')
+	{{-- END Header --}}
 
-		{{-- BGIN Sidebar --}}
-		@include('layouts.clinica.sidebar')
-		{{-- END Sidebar --}}
+	{{-- BGIN Sidebar --}}
+	@include('layouts.clinica.sidebar')
+	{{-- END Sidebar --}}
 
-		{{-- BEGIN Body --}}
-		<main id="body">
+	{{-- BEGIN Body --}}
+	<main id="body" class="">
 
-			<div class="card no-padding no-margin">
+		<div class="card no-padding no-margin">
 
-				@if (isset($header))
-					<section>
-						<header class="z-depth-0 border-bottom">
-							{{ $header }}
-						</header>
-					</section>
+			@if (isset($header))
+				<section>
+					<header class="z-depth-0 border-bottom">
+						{{ $header }}
+					</header>
+				</section>
+			@endif
+
+			<div class="card-content scroller animated fadeIn slow">
+				@if (isset($body))
+					{{ $body }}
 				@endif
-
-				<div class="card-content scroller">
-					@if (isset($body))
-						{{ $body }}
-					@endif
-				</div>
-
-				@if (isset($form))
-					<form {{ $form->attributes->merge(['class' => 'card-reveal no-padding']) }}>
-
-						@if (isset($form_tabs))
-							<div {{ $form_tabs->attributes->merge(['class' => 'card-tabs']) }}>
-								{{ $form_tabs }}
-							</div>
-						@endif
-
-						<div class="card-content pl-1 pr-1 scroller">
-							{{ $form }}
-						</div>
-
-						@if (isset($card_footer))
-							<div {{ $card_footer->attributes->merge(['class' => 'card-action right-align']) }}>
-								{{ $card_footer }}
-							</div>
-						@endif
-
-					</form>
-				@endif
-
-				@if (isset($footer))
-					{{ $footer }}
-				@endif
-
 			</div>
 
-		</main>
-		{{-- END Body --}}
+			@if (isset($form))
+				<form {{ $form->attributes->merge(['class' => 'card-reveal no-padding']) }}>
 
-		{{-- BEGIN Footer --}}
-		@include('layouts.clinica.footer')
-		{{-- END Footer --}}
+					@if (isset($form_tabs))
+						<div {{ $form_tabs->attributes->merge(['class' => 'card-tabs']) }}>
+							{{ $form_tabs }}
+						</div>
+					@endif
+
+					<div class="card-content pl-1 pr-1 scroller">
+						{{ $form }}
+					</div>
+
+					@if (isset($card_footer))
+						<div {{ $card_footer->attributes->merge(['class' => 'card-action right-align']) }}>
+							{{ $card_footer }}
+						</div>
+					@endif
+
+				</form>
+			@endif
+
+			@if (isset($footer))
+				{{ $footer }}
+			@endif
+
+		</div>
+
+	</main>
+	{{-- END Body --}}
+
+	{{-- BEGIN Footer --}}
+	@include('layouts.clinica.footer')
+	{{-- END Footer --}}
 
 	{{-- </div> --}}
 	{{-- END #Page --}}

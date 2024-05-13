@@ -23,23 +23,28 @@ $(document).ready(function () {
 
         xhr.onloadend = function (e) {
 
-            if (xhr.readyState === 4) {
+            setTimeout(() => {
 
-                var parser = new DOMParser();
-                var content = parser.parseFromString(xhr.response, 'text/html');
-                var response = content;
-                var title = response.querySelector('title');
-                var url = xhr.responseURL;
-                if (title)
-                    document.title = title.innerHTML;
+                if (xhr.readyState === 4) {
 
-                $('#page').html($(response).find('#page').html());
+                    var parser = new DOMParser();
+                    var content = parser.parseFromString(xhr.response, 'text/html');
+                    var response = content;
+                    var title = response.querySelector('title');
+                    var url = xhr.responseURL;
+                    if (title)
+                        document.title = title.innerHTML;
 
-                window.history.pushState('', '', url);
+                    $('#page').html($(response).find('#page').html());
 
-            }
+                    window.history.pushState('', '', url);
 
-            $('.progress').css('display', 'none');
+                }
+
+                $('.progress').css('display', 'none');
+                $('.animated').removeClass('fadeOut').addClass('fadeIn');
+
+            }, 500);
 
         }
 
@@ -60,6 +65,7 @@ $(document).ready(function () {
             return;
         }
 
+        $('.animated').removeClass('fadeIn').addClass('fadeOut');
         redirect(href);
 
     });
