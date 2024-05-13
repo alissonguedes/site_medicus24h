@@ -129,13 +129,14 @@ $(document).ready(function () {
 
     });
 
-    $('.icon-background').unbind().bind('click', function () {
 
-        var url = $(this).data('url');
+    Pace.track(function () {
 
-        $('.card-reveal').show();
+        $('.icon-background').unbind().bind('click', function () {
 
-        Pace.ignore(function () {
+            var url = $(this).data('url');
+            $('.card-reveal').show();
+
 
             $.ajax({
                 url: url,
@@ -162,7 +163,8 @@ $(document).ready(function () {
 
         });
 
-    })
+    });
+
 
     // activator
 
