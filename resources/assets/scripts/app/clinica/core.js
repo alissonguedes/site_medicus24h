@@ -19,7 +19,7 @@ $(document).ready(function () {
         xhr.open(method, url);
 
         xhr.onloadstart = function () {
-            $('.progress').css('display', 'block');
+            // $('.progress').css('display', 'block');
         };
 
         xhr.onprogress = function (event) {
@@ -28,28 +28,24 @@ $(document).ready(function () {
 
         xhr.onloadend = function (e) {
 
-            setTimeout(() => {
+            if (xhr.readyState === 4) {
 
-                if (xhr.readyState === 4) {
+                var parser = new DOMParser();
+                var content = parser.parseFromString(xhr.response, 'text/html');
+                var response = content;
+                var title = response.querySelector('title');
+                var url = xhr.responseURL;
+                if (title)
+                    document.title = title.innerHTML;
 
-                    var parser = new DOMParser();
-                    var content = parser.parseFromString(xhr.response, 'text/html');
-                    var response = content;
-                    var title = response.querySelector('title');
-                    var url = xhr.responseURL;
-                    if (title)
-                        document.title = title.innerHTML;
+                $('#page').html($(response).find('#page').html());
 
-                    $('#page').html($(response).find('#page').html());
+                // Url.update(url);
 
-                    Url.update(url);
+            }
 
-                }
-
-                $('.progress').css('display', 'none');
-                $('main .card .animated').removeClass('fadeOut').addClass('fadeIn');
-
-            }, 500);
+            // $('.progress').css('display', 'none');
+            $('main .card .animated').removeClass('fadeOut').addClass('fadeIn');
 
         }
 
@@ -69,6 +65,9 @@ $(document).ready(function () {
         }
 
         $('main .card .animated').removeClass('fadeIn').addClass('fadeOut');
+
+        Url.update(href);
+
         redirect(href);
 
     });
@@ -123,9 +122,7 @@ $(document).ready(function () {
             'transform': 'translateY(0%)',
         });
 
-        Pace.ignore(function () {
-            Url.update(action);
-        });
+        Url.update(action);
 
     });
 
@@ -135,29 +132,25 @@ $(document).ready(function () {
         var url = $(this).data('url');
         $('.card-reveal').show();
 
+        Url.update(url);
 
-        $.ajax({
-            url: url,
-            method: 'get',
-            success: (response) => {
+        if (typeof url !== 'undefined') {
 
-                var form = $(response).find('form.card-reveal');
+            $.ajax({
+                url: url,
+                method: 'get',
+                success: (response) => {
+                    var form = $(response).find('form.card-reveal');
+                    $('form.card-reveal').html(form.html());
+                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+                    $('.card-reveal').css({
+                        'transform': 'translateY(-100%)',
+                    });
+                }
 
-                $('form.card-reveal').html(form.html());
-                $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
-                Url.update(url);
+            });
 
-                // setTimeout(function () {
-
-                $('.card-reveal').css({
-                    'transform': 'translateY(-100%)',
-                });
-
-                // }, 500);
-
-            },
-
-        });
+        }
 
     });
 
@@ -190,11 +183,9 @@ $(document).ready(function () {
                     var form = $(response).find('form.card-reveal');
                     $('form.card-reveal').html(form.html());
                     $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
-                    // setTimeout(function () {
                     $('.card-reveal').css({
                         'transform': 'translateY(-100%)',
                     });
-                    // }, 500);
                 }
 
             });

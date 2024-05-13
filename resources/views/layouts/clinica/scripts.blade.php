@@ -1,5 +1,14 @@
-<script src="{{ asset('assets/scripts/menu.js') }}" defer></script>
-<script src="{{ asset('assets/scripts/app/clinica/core.js') }}" defer></script>
+<!-- Compiled and minified JavaScript -->
+<script src="{{ asset('assets/node_modules/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/node_modules/materialize-css/dist/js/materialize.min.js') }}"></script>
+<script src="{{ asset('assets/node_modules/@splidejs/splide/dist/js/splide.min.js') }}"></script>
+<script src="{{ asset('assets/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>
+
+<script src="{{ asset('assets/node_modules/froala-editor/js/froala_editor.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/node_modules/froala-editor/js/languages/pt_br.js') }}"></script>
+
+<script src="{{ asset('assets/scripts/menu.js') }}"></script>
+<script src="{{ asset('assets/scripts/app/clinica/core.js') }}"></script>
 
 <script>
 	// loadScripts();
