@@ -15,19 +15,23 @@ class PacientesController extends Controller {
 	 * Display a listing of the resource.
 	 */
 	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil) {
+
 		$data['pacientes']    = $paciente->get();
 		$data['paciente']     = $paciente->getWhere(['id' => $request->id]);
 		$data['estado_civil'] = $estadocivil->get();
 		$data['etnias']       = $etnia->get();
 
 		return view('clinica.pacientes.index', $data);
+
 	}
 
 	/**
 	 * Show the form for creating a new resource.
 	 */
 	public function create() {
-		//
+
+		return view('clinica.pacientes.index');
+
 	}
 
 	/**

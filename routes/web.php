@@ -33,6 +33,7 @@ Route::middleware([
 	Route::prefix('/pacientes')->group(function () {
 
 		Route::get('/', [Pacientes::class, 'index'])->name('clinica.pacientes.index');
+		// Route::options('/', [Pacientes::class, 'create'])->name('clinica.pacientes.form');
 		Route::get('/{id}', [Pacientes::class, 'index'])->name('clinica.pacientes.edit');
 		Route::post('/', [Pacientes::class, 'store'])->name('clinica.pacientes.post');
 

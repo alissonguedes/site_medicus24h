@@ -1,3 +1,13 @@
+
+var Url = {
+
+    update: (url) => {
+        window.history.pushState('', '', url);
+    }
+
+}
+
+
 $(document).ready(function () {
 
     var scroller = $('.scroller');
@@ -9,7 +19,6 @@ $(document).ready(function () {
         xhr.open(method, url);
 
         xhr.onloadstart = function () {
-            // $('.progress').css('display', 'block');
 
             Pace.track(function () {
                 $('.progress').css('display', 'block');
@@ -37,7 +46,7 @@ $(document).ready(function () {
 
                     $('#page').html($(response).find('#page').html());
 
-                    window.history.pushState('', '', url);
+                    Url.update(url);
 
                 }
 
@@ -113,28 +122,75 @@ $(document).ready(function () {
     });
 
     $('button[type="reset"]').unbind().bind('click', function () {
+
         var action = $(this).parents('form').attr('action');
+
         $(this).parents('.card-reveal').css({
             'transform': 'translateY(0%)',
         });
-        setTimeout(function () {
-            location.href = action;
-        }, 250);
+
+        Url.update(action);
+
     });
+
+    $('.icon-background').unbind().bind('click', function () {
+
+        var url = $(this).data('url');
+
+        $('.card-reveal').show();
+
+        setTimeout(function () {
+            $('.card-reveal').css({
+                'transform': 'translateY(-100%)',
+            });
+        }, 200)
+
+        $.ajax({
+            url: url,
+            method: 'get',
+            // data :
+            success: (response) => {
+                console.log(response);
+                var form = $(response).find('form.card-reveal');
+                $('form.card-reveal').html(form.html());
+                Url.update(url);
+                $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+            }
+        })
+
+    })
+
+    // activator
 
     $('#card-button').unbind().bind('click', function () {
 
-        var tabs = $(this).parents('.card').find('.card-tabs .tabs');
+        var url = $(this).data('url');
+        // var tabs = $(this).parents('.card').find('.card-tabs .tabs');
 
-        var t = tabs.tabs();
-        var select = tabs.find('a.active').attr('href');
+        // var t = tabs.tabs();
+        // var select = tabs.find('a.active').attr('href');
 
-        t.tabs('select', select);
-        t.tabs('updateTabIndicator');
+        // t.tabs('select', select);
+        // t.tabs('updateTabIndicator');
 
-        setTimeout(function () {
-            t.tabs('updateTabIndicator');
-        }, 300)
+        // setTimeout(function () {
+        //     t.tabs('updateTabIndicator');
+        // }, 300);
+
+        if (typeof url !== 'undefined') {
+            $.ajax({
+                url: url,
+                method: 'get',
+                // data :
+                success: (response) => {
+                    console.log(response);
+                    var form = $(response).find('form.card-reveal');
+                    $('form.card-reveal').html(form.html());
+                    Url.update(url);
+                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
+                }
+            });
+        }
 
     });
 

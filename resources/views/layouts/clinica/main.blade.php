@@ -27,14 +27,14 @@
 		<div class="card no-padding no-margin">
 
 			@if (isset($header))
-				<section>
+				<section class="animated fadeIn">
 					<header class="z-depth-0 border-bottom">
 						{{ $header }}
 					</header>
 				</section>
 			@endif
 
-			<div class="card-content scroller animated fadeIn slow">
+			<div class="card-content scroller animated fadeIn">
 				@if (isset($body))
 					{{ $body }}
 				@endif
