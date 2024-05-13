@@ -148,15 +148,15 @@ $(document).ready(function () {
 
                     Url.update(url);
 
-                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
-
                     setTimeout(function () {
 
                         $('.card-reveal').css({
                             'transform': 'translateY(-100%)',
                         });
 
-                    }, 200);
+                    }, 500);
+
+                    $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
 
                 },
 
@@ -200,15 +200,15 @@ $(document).ready(function () {
 
                         Url.update(url);
 
-                        $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
-
                         setTimeout(function () {
 
                             $('.card-reveal').css({
                                 'transform': 'translateY(-100%)',
                             });
 
-                        }, 200);
+                        }, 500);
+
+                        $.getScript(BASE_PATH + 'assets/scripts/app/clinica/core.js');
 
                     }
 
