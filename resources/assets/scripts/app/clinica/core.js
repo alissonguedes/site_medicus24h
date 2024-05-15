@@ -1,4 +1,3 @@
-
 var Url = {
 
     update: (url) => {
@@ -6,7 +5,6 @@ var Url = {
     }
 
 }
-
 
 $(document).ready(function () {
 
@@ -95,8 +93,40 @@ $(document).ready(function () {
         }, 100)
     });
 
+    $('.tabs .tab a').each(function (index, element) {
+
+        var id = $(this).attr('href');
+
+        if ($(id).find('.input-field').hasClass('error')) {
+            $(this).parents('.tabs, .tab').addClass('error');
+            var tab = $($(this).parents('.tabs').find('.tab.error')[0]); // Exibir sempre a primeira "tab" da lista de erros
+            if (tab.index() > -1) {
+                var atual = $(tab.find(`a[href="${id}"]`)[0]).attr('href');
+                if (typeof atual !== 'undefined')
+                    t.tabs('select', atual.replace('#', ''));
+            }
+        }
+
+
+    });
+
     $('.collapsible').Menu();
     $('select').formSelect();
+
+    $('.input-field').each(function () {
+
+        var field = $(this).find('input,textarea,select');
+
+        if (field.val() != '') {
+            $(this).find('label').addClass('active');
+        }
+
+    });
+
+    $('[data-tooltip]').tooltip({
+        transitionMovement: 10,
+        margin: -5
+    });
 
     var sidenav = $('.sidenav').sidenav({
         onCloseStart: () => {

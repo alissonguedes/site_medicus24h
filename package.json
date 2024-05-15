@@ -13,6 +13,7 @@
     "dependencies": {
         "@splidejs/splide": "^4.1.4",
         "froala-editor": "^4.2.0",
+        "html2canvas": "^1.4.1",
         "jquery": "^3.7.1",
         "materialize-css": "^1.0.0-rc.2",
         "pace-js": "^1.2.4",

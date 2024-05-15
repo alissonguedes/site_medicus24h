@@ -19,7 +19,7 @@
 		</title>
 
 		<!-- Scripts -->
-		@vite(['resources/css/app.css', 'resources/js/app.js'])
+		{{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
 		{{-- <!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.bunny.net">
@@ -47,7 +47,7 @@
 			})
 		</script>
 		<!-- Scripts -->
-		@vite(['resources/css/app.css', 'resources/js/app.js'])
+		{{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
 		<style>
 			p {

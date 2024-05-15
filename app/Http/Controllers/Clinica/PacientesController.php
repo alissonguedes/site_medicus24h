@@ -29,23 +29,39 @@ class PacientesController extends Controller {
 	 * Show the form for creating a new resource.
 	 */
 	public function create() {
-
-		return view('clinica.pacientes.index');
-
+		//
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(PacienteRequest $request) {
+	public function store(PacienteRequest $request, PacienteModel $paciente) {
 
-		request()->validate([
-			'nome' => 'required',
-			'cpf'  => 'required',
-		]);
+		$data = $request->all();
 
-		echo 'Aprovado';
-		dump($request->all());
+		unset($data['id'], $data['_method'], $data['_token']);
+
+		if (empty($data['imagem'])) {
+			unset($data['imagem']);
+		}
+
+		if (empty($data['status'])) {
+			$data['status'] = '0';
+		}
+
+		$data['id_estado_civil'] = $data['estado_civil'] ?? 1;
+		$data['id_etnia']        = $data['etnia'] ?? 1;
+		$data['id_convenio']     = $data['convenio'] ?? 1;
+		$data['observacoes']     = $data['notas'];
+		$data['data_nascimento'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['data_nascimento'])));
+		$data['matricula']       = rand(1000, 9999);
+
+		unset($data['estado_civil'], $data['etnia'], $data['notas'], $data['convenio']);
+
+		$paciente->insert($data);
+
+		return redirect()->route('clinica.pacientes.index')->with(['message' => 'Paciente cadastrado com sucesso!']);
+
 	}
 
 	/**
@@ -59,20 +75,46 @@ class PacientesController extends Controller {
 	 * Show the form for editing the specified resource.
 	 */
 	public function edit(PacienteModel $pacienteModel) {
-		return view('clinica.pacientes.index', $data);
+		//
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(Request $request, PacienteModel $pacienteModel) {
-		//
+	public function update(PacienteRequest $request, PacienteModel $paciente) {
+
+		$data = $request->all();
+
+		unset($data['id'], $data['_method'], $data['_token']);
+
+		if (empty($data['imagem'])) {
+			unset($data['imagem']);
+		}
+
+		if (empty($data['status'])) {
+			$data['status'] = '0';
+		}
+
+		$data['id_estado_civil'] = $data['estado_civil'];
+		$data['id_etnia']        = $data['etnia'];
+		$data['id_convenio']     = $data['convenio'];
+		$data['observacoes']     = $data['notas'];
+		$data['data_nascimento'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['data_nascimento'])));
+
+		unset($data['estado_civil'], $data['etnia'], $data['notas'], $data['convenio']);
+
+		$paciente->where(['id' => $request->id])->update($data);
+
+		return redirect()->route('clinica.pacientes.index')->with(['message' => 'Paciente atualizado com sucesso!']);
+
 	}
 
 	/**
 	 * Remove the specified resource from storage.
 	 */
 	public function destroy(PacienteModel $pacienteModel) {
+
 		//
+
 	}
 }

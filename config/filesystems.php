@@ -73,6 +73,7 @@ return [
 		// base_path('public') => base_path('../public'),
 		// storage_path('assets') => resource_path('assets'),
 		public_path('assets')              => resource_path('assets'),
+		public_path('assets/js')           => resource_path('js'),
 		public_path('assets/node_modules') => base_path('node_modules'),
 		public_path('site.webmanifest')    => public_path('manifest.json'),
 	],

@@ -35,12 +35,21 @@ Route::middleware([
 		Route::get('/', [Pacientes::class, 'index'])->name('clinica.pacientes.index');
 		Route::get('/{id}', [Pacientes::class, 'index'])->name('clinica.pacientes.edit');
 		Route::post('/', [Pacientes::class, 'store'])->name('clinica.pacientes.post');
-
-		Route::put('/', function () {
-			dump(request()->all());
-		})->name('clinica.pacientes.post');
+		Route::put('/', [Pacientes::class, 'update'])->name('clinica.pacientes.post');
 
 	});
+
+	// HomeCare
+
+	// Recursos Médicos
+
+	// Agendamentos
+
+	// Tickets
+
+	// Cadastros
+
+	// Tabelas
 
 });
 

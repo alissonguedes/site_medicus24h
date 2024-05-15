@@ -37,12 +37,15 @@
 
 		<title>{{ config('site.title') . (isset($title) ? ' - ' . $title : null) }}</title>
 
+		{{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+
 	</head>
 
 	<body>
 
 		<div class="progress">
-			<div class="indeterminate teal lighten-1"></div>
+			{{-- <div class="indeterminate teal lighten-1"></div> --}}
+			<div class="indeterminate-center teal lighten-1"></div>
 		</div>
 
 		{{-- BEGIN #Page --}}

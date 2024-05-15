@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="col s12 m12 l7">
 				<div class="input-field @error('nome') error @enderror">
-					<label for="nome">Nome</label>
+					<label for="nome" class="{{ isset($nome) ? 'active' : null }}">Nome</label>
 					<input type="text" name="nome" id="nome" value="{{ old('nome', isset($nome) ? $nome : null) }}" autocapitalize="on">
 					@error('nome')
 						<small class="error">{{ $message }}</small>
@@ -65,7 +65,7 @@
 				<div class="col s12">
 					<div class="col s12 m6 l4">
 						<div class="input-field @error('data_nascimento') error @enderror">
-							<label for="data_nascimento">Data de nascimento</label>
+							<label for="data_nascimento" class="active">Data de nascimento</label>
 							<input type="text" name="data_nascimento" value="{{ old('data_nascimento', isset($data_nascimento) ? $data_nascimento : null) }}" data-mask="date" data-max-date="{{ date('d/m/Y') }}" placeholder="dd/mm/yyyy" maxlength="10">
 							@error('data_nascimento')
 								<small class="error">{{ $message }}</small>

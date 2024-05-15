@@ -10,9 +10,6 @@
 	</x-slot:styles>
 	{{-- END Styles --}}
 
-	{{-- BEGIN #Page --}}
-	{{-- <div id="page"> --}}
-
 	{{-- BGIN Header --}}
 	@include('layouts.clinica.header')
 	{{-- END Header --}}
@@ -59,6 +56,10 @@
 						</div>
 					@endif
 
+					@isset($scripts_form)
+						{{ $scripts_form }}
+					@endisset
+
 				</form>
 			@endif
 
@@ -68,6 +69,14 @@
 
 		</div>
 
+		@if (session()->has('message'))
+			<x-toast class="green darken-2">{{ session()->get('message') }}</x-toast>
+		@endif
+
+		@if (count($errors) > 0)
+			<x-toast class="red darken-2">Existem erros no formulário!</x-toast>
+		@endif
+
 	</main>
 	{{-- END Body --}}
 
@@ -75,10 +84,7 @@
 	@include('layouts.clinica.footer')
 	{{-- END Footer --}}
 
-	{{-- </div> --}}
-	{{-- END #Page --}}
-
-	{{-- BEGIN Scripts  --}}
+	{{-- BEGIN Scripts --}}
 	<x-slot:scripts>
 
 		@include('layouts.clinica.scripts')

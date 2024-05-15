@@ -286,6 +286,7 @@ main>.card>.card-reveal {
     /* transform: translateY(0%) !important; */
     transition: 250ms;
     overflow: hidden;
+    z-index: 999;
 }
 
 main>.card>.card-reveal .card-content {
@@ -456,7 +457,7 @@ small {
     position: absolute;
     height: 5px;
     display: block;
-    width: 100%;
+    width: calc(100% - 300px);
     background-color: #acece6;
     border-radius: 2px;
     margin: 0;
@@ -571,7 +572,6 @@ nav .sidenav-trigger {
 .tabs .tab a {
     color: var(--teal-lighten-1) !important;
 }
-
 
 .tabs .tab a:hover,
 .tabs .tab a.active {
@@ -1105,6 +1105,7 @@ textarea.materialize-textarea:focus:not([readonly]),
     .pace,
     .progress {
         left: 0;
+        width: 100%;
     }
 
     .sidenav-main .sidenav {

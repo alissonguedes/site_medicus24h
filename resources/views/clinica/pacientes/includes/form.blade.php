@@ -1,4 +1,4 @@
-<x-header-page class="" data-trigger="form-paciente" placeholder="Procurar pacientes..." title="Adicionar Paciente" data-url="{{ route('clinica.pacientes.index') }}">add</x-header-page>
+<x-header-page class="" data-trigger="form-paciente" data-url="{{ route('clinica.pacientes.index') }}" placeholder="Procurar pacientes..." title="Adicionar Paciente">add</x-header-page>
 
 @if (request('id'))
 	@php
@@ -127,3 +127,7 @@
 	</x-slot:card_footer>
 
 </x-slot:form>
+
+<x-slot:scripts_form>
+	<script src="{{ asset('assets/js/clinica/js/pacientes/form.js') }}" defer></script>
+</x-slot:scripts_form>

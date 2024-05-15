@@ -65,9 +65,13 @@
 	@include('clinica.pacientes.includes.form')
 
 	<x-slot:script>
+		<x-modal id="form_plano_saude">
+			Teasdfste
+		</x-modal>
 		{{-- <script type="text/javascript" src="{{ asset('assets/node_modules/froala-editor/js/froala_editor.pkgd.min.js') }}"></script> --}}
 		{{-- <script type="text/javascript" src="{{ asset('assets/node_modules/froala-editor/js/languages/pt_br.js') }}"></script> --}}
 		{{-- <script src="{{ asset('assets/scripts/app/clinica/core.js') }}"></script> --}}
+		{{-- <script src="{{ asset('assets/js/clinica/js/pacientes/form.js') }}"></script> --}}
 	</x-slot:script>
 
 </x-clinica-layout>

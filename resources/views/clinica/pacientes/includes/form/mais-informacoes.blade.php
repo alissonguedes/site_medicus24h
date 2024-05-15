@@ -10,7 +10,7 @@
 		<div id="obito" class="switch mt-3">
 			<label>
 				Não
-				<input type="checkbox" name="obito" id="obito" value="1" @checked(isset($obito) && $obito === '1')>
+				<input type="checkbox" name="obito" id="obito" value="1" @checked(old('obito', isset($obito) && $obito === '1'))>
 				<span class="lever"></span>
 				Sim
 			</label>
@@ -19,9 +19,9 @@
 		<div class="row">
 			<div class="col s4 m4 l12">
 				<div class="input-field">
-					<label for="data_obito">Data e hora do óbito</label>
-					<input type="text" name="data_obito" id="data_obito" class="col s8 m4" value="{{ isset($data_obito) ? old($data_obito) ?? $data_obito : null }}" data-mask="date" data-max-date="{{ date('d/m/Y') }}" placeholder="dd/mm/yyyy" @disabled(!isset($obito) || (isset($obito) && $obito == '0'))>
-					<input type="text" name="hora_obito" id="hora_obito" class="col s4 m3" value="{{ isset($hora_obito) ? old($hora_obito) ?? $hora_obito : null }}" data-mask="time" placeholder="00:00" maxlength="5" @disabled(!isset($obito) || (isset($obito) && $obito == '0'))>
+					<label for="data_obito" class="active">Data e hora do óbito</label>
+					<input type="text" name="data_obito" id="data_obito" class="col s8 m4" value="{{ old('data_obito', isset($data_obito) ? $data_obito : null) }}" data-mask="date" data-max-date="{{ date('d/m/Y') }}" placeholder="dd/mm/yyyy" @disabled(!isset($obito) || (isset($obito) && $obito == '0'))>
+					<input type="text" name="hora_obito" id="hora_obito" class="col s4 m3" value="{{ old('hora_obito', isset($hora_obito) ? $hora_obito : null) }}" data-mask="time" placeholder="00:00" maxlength="5" @disabled(!isset($obito) || (isset($obito) && $obito == '0'))>
 				</div>
 			</div>
 		</div>
@@ -31,7 +31,7 @@
 		<div id="status" class="switch mt-3">
 			<label>
 				Não
-				<input type="checkbox" name="status" id="status" value="1" @checked(isset($status) && old('Ativo', $status))>
+				<input type="checkbox" name="status" id="status" value="1" @checked(old('status', isset($status) ? $status === 'Ativo' : 'Ativo'))>
 				<span class="lever"></span>
 				Sim
 			</label>
