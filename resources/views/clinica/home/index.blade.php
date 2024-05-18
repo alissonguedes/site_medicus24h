@@ -3,9 +3,9 @@
 	<x-slot:icon> dashboard </x-slot:icon>
 	<x-slot:title> Dashboard </x-slot:title>
 
-	<x-slot:body>
-		<a href="{{ route('clinica.pacientes.index') }}">Pacientes</a>
-	</x-slot:body>
+	<x-slot:main>
+
+	</x-slot:main>
 
 	<x-slot:script>
 		{{-- <script src="{{ asset('assets/scripts/app/clinica/core.js') }}"></script> --}}

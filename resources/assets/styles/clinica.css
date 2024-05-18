@@ -462,7 +462,6 @@ small {
     border-radius: 2px;
     margin: 0;
     overflow: hidden;
-    /* bottom: -1px; */
     top: 60px;
     left: 300px;
     right: 0;
@@ -692,7 +691,6 @@ nav ul a {
     /* background-color: var(--teal-lighten-1); */
     background: -webkit-linear-gradient(45deg, var(--teal-darken-4), var(--teal-darken-1)) !important;
     background: linear-gradient(45deg, var(--teal-darken-4), var(--teal-darken-1)) !important;
-
     box-shadow: 0 6px 20px 0 var(--teal-lighten-4) !important;
 }
 

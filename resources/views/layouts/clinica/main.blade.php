@@ -21,53 +21,58 @@
 	{{-- BEGIN Body --}}
 	<main id="body" class="">
 
-		<div class="card no-padding no-margin">
+		@if (isset($main))
+			{{ $main }}
+		@else
+			<div class="card no-padding no-margin">
 
-			@if (isset($header))
-				<section class="animated fadeIn">
-					<header class="z-depth-0 border-bottom">
-						{{ $header }}
-					</header>
-				</section>
-			@endif
-
-			<div class="card-content scroller animated fadeIn">
-				@if (isset($body))
-					{{ $body }}
+				@if (isset($header))
+					<section class="animated fadeIn">
+						<header class="z-depth-0 border-bottom">
+							{{ $header }}
+						</header>
+					</section>
 				@endif
+
+				<div class="card-content scroller animated fadeIn">
+					@if (isset($body))
+						{{ $body }}
+					@endif
+				</div>
+
+				@if (isset($form))
+					<form {{ $form->attributes->merge(['class' => 'card-reveal no-padding']) }}>
+
+						@if (isset($form_tabs))
+							<div {{ $form_tabs->attributes->merge(['class' => 'card-tabs']) }}>
+								{{ $form_tabs }}
+							</div>
+						@endif
+
+						<div class="card-content pl-1 pr-1 scroller">
+							{{ $form }}
+						</div>
+
+						@if (isset($card_footer))
+							<div {{ $card_footer->attributes->merge(['class' => 'card-action right-align']) }}>
+								{{ $card_footer }}
+							</div>
+						@endif
+
+						@isset($scripts_form)
+							{{ $scripts_form }}
+						@endisset
+
+					</form>
+				@endif
+
+				@if (isset($footer))
+					{{ $footer }}
+				@endif
+
 			</div>
 
-			@if (isset($form))
-				<form {{ $form->attributes->merge(['class' => 'card-reveal no-padding']) }}>
-
-					@if (isset($form_tabs))
-						<div {{ $form_tabs->attributes->merge(['class' => 'card-tabs']) }}>
-							{{ $form_tabs }}
-						</div>
-					@endif
-
-					<div class="card-content pl-1 pr-1 scroller">
-						{{ $form }}
-					</div>
-
-					@if (isset($card_footer))
-						<div {{ $card_footer->attributes->merge(['class' => 'card-action right-align']) }}>
-							{{ $card_footer }}
-						</div>
-					@endif
-
-					@isset($scripts_form)
-						{{ $scripts_form }}
-					@endisset
-
-				</form>
-			@endif
-
-			@if (isset($footer))
-				{{ $footer }}
-			@endif
-
-		</div>
+		@endif
 
 		@if (session()->has('message'))
 			<x-toast class="green darken-2">{{ session()->get('message') }}</x-toast>
