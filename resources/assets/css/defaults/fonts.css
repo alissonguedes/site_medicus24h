@@ -1,0 +1,95 @@
+:root {
+	--weight: 200;
+}
+
+/* fallback */
+@font-face {
+	font-family: 'Material Symbols Outlined';
+	font-style: normal;
+	font-weight: 100 900;
+	src: url('../../fonts/material-icons/material-icons-outlined.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Material Icons';
+	font-style: normal;
+	font-weight: 100 900;
+	src: url('../../fonts/material-icons/material-icons.woff2') format('woff2');
+}
+
+/* fallback */
+@font-face {
+	font-family: 'Material Symbols';
+	font-style: normal;
+	font-weight: 100 900;
+	src: url('../../fonts/material-icons/material-icons-sharp.woff2') format('woff2');
+	font-variation-settings:
+		'FILL' 1,
+		'wght' 100,
+		'GRAD' 0,
+		'opsz' 24
+}
+
+/* fallback */
+@font-face {
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 100 900;
+	src: url('../../fonts/montserrat/mregular.ttf');
+}
+
+@font-face {
+	font-family: 'Montserrat Bold';
+	font-style: normal;
+	font-weight: 900;
+	src: url('../../fonts/montserrat/mbold.ttf');
+}
+
+.material-icons,
+.material-symbols {
+	font-family: 'Material Symbols';
+	font-weight: var(--weight);
+	font-style: normal;
+	font-size: 24px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+	-webkit-font-feature-settings: 'liga';
+	-webkit-font-smoothing: antialiased;
+}
+
+.material-symbols-outlined {
+	font-family: 'Material Symbols Outlined';
+	font-weight: var(--weight);
+	font-style: normal;
+	font-size: 24px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+	-webkit-font-feature-settings: 'liga';
+	-webkit-font-smoothing: antialiased;
+}
+
+.montserrat {
+	font-family: 'Montserrat';
+	font-weight: 300;
+	font-style: normal;
+	font-size: 24px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	display: inline-block;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+	-webkit-font-feature-settings: 'liga';
+	-webkit-font-smoothing: antialiased;
+}

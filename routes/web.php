@@ -1,8 +1,21 @@
 <?php
 
+use App\Http\Controllers\Admin\ApresentacaoController as Apresentacao;
+use App\Http\Controllers\Admin\A_IbrController as A_Ibr;
+use App\Http\Controllers\Admin\BannersController as Banners;
+use App\Http\Controllers\Admin\PastoresController as Pastores;
+
+// Admin Controllers
 use App\Http\Controllers\Clinica\HomeController as ClinicaHome;
 use App\Http\Controllers\Clinica\PacientesController as Pacientes;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Site\HomeController;
+
+// Main Controllers
+
+// Admin Requests
+
+// Admin Models
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->group(function () {
@@ -14,19 +27,13 @@ Route::prefix('/')->group(function () {
 Route::middleware([
 	'auth',
 	'verified',
-	// Admin
-])->prefix('/admin')->group(function () {
+])->prefix('/clinica')->group(function () {
 
 	Route::get('/', function () {
-		echo 'Página admin';
-	})->name('admin.index');
+		return redirect()->route('clinica.dashboard');
+	})->name('clinica.index');
 
-	// Clínica
-})->prefix('/clinica')->group(function () {
-
-	Route::get('/', [ClinicaHome::class, 'index'])->name('clinica.index');
-	Route::get('/', [ClinicaHome::class, 'index'])->name('clinica.index');
-	Route::get('/dashboard', [ClinicaHome::class, 'index'])->name('dashboard');
+	Route::get('/dashboard', [ClinicaHome::class, 'index'])->name('clinica.dashboard');
 	Route::get('/agenda', [ClinicaHome::class, 'index'])->name('clinica.recursosmedicos.agenda.index');
 
 	// Pacientes
@@ -51,6 +58,119 @@ Route::middleware([
 
 	// Tabelas
 
+	Route::get('/imagem/banner/{file_id}', [Banners::class, 'show'])->name('home.banners.show-image');
+	Route::get('/imagem/post/{file_id}', [Apresentacao::class, 'show'])->name('home.apresentacao.show-image');
+	Route::get('/imagem/pastor/{file_id}', [Pastores::class, 'show'])->name('home.pastores.show-image');
+	Route::get('/imagem/a-ibr/{file_id}', [A_Ibr::class, 'show'])->name('home.a-ibr.show-image');
+
+})->prefix('/admin')->group(function () {
+
+	Route::get('/', function () {
+		return redirect()->route('admin.dashboard');
+	})->name('admin.index');
+
+	Route::get('/dashboard', function () {
+		return view('dashboard');
+	})->name('admin.dashboard');
+
+	/** banners */
+	Route::prefix('/banners')->group(function () {
+
+		Route::get('/', [Banners::class, 'index'])->name('admin.home.banners.index');
+		Route::get('/{search}', [Banners::class, 'search'])->name('admin.home.banners.search');
+		Route::get('/id/{id}', [Banners::class, 'create'])->name('admin.home.banners.edit');
+		// Route::get('/imagem/{file_id}', [Banners::class, 'show'])->name('admin.home.banners.show-image');
+		Route::post('/', [Banners::class, 'store'])->name('admin.home.banners.post');
+		Route::put('/', [Banners::class, 'store'])->name('admin.home.banners.post');
+		Route::delete('/', [Banners::class, 'destroy'])->name('admin.home.banners.delete');
+
+	});
+
+	/** Apresentação */
+	Route::prefix('/apresentacao')->group(function () {
+
+		Route::get('/', [Apresentacao::class, 'index'])->name('admin.home.apresentacao.index');
+		Route::get('/{search}', [Apresentacao::class, 'search'])->name('admin.home.apresentacao.search');
+		Route::get('/id/{id}', [Apresentacao::class, 'create'])->name('admin.home.apresentacao.edit');
+		// Route::get('/imagem/{file_id}', [Apresentacao::class, 'show'])->name('admin.home.apresentacao.show-image');
+		Route::post('/', [Apresentacao::class, 'store'])->name('admin.home.apresentacao.post');
+		Route::put('/', [Apresentacao::class, 'store'])->name('admin.home.apresentacao.post');
+		Route::delete('/', [Apresentacao::class, 'destroy'])->name('admin.home.apresentacao.delete');
+
+	});
+
+	/** Pastores */
+	Route::prefix('/pastores')->group(function () {
+
+		Route::get('/', [Pastores::class, 'index'])->name('admin.home.pastores.index');
+		Route::get('/{search}', [Pastores::class, 'search'])->name('admin.home.pastores.search');
+		Route::get('/id/{id}', [Pastores::class, 'create'])->name('admin.home.pastores.edit');
+		// Route::get('/imagem/{file_id}', [Pastores::class, 'show'])->name('admin.home.pastores.show-image');
+		Route::post('/', [Pastores::class, 'store'])->name('admin.home.pastores.post');
+		Route::put('/', [Pastores::class, 'store'])->name('admin.home.pastores.post');
+		Route::delete('/', [Pastores::class, 'destroy'])->name('admin.home.pastores.delete');
+
+	});
+
+	/** A_Ibr */
+	Route::prefix('/a-ibr')->group(function () {
+
+		Route::get('/', [A_Ibr::class, 'index'])->name('admin.a-ibr.index');
+		Route::get('/{search}', [A_Ibr::class, 'search'])->name('admin.a-ibr.search');
+		Route::get('/id/{id}', [A_Ibr::class, 'create'])->name('admin.a-ibr.edit');
+		// Route::get('/imagem/{file_id}', [A_Ibr::class, 'show'])->name('admin.a-ibr.show-image');
+		Route::post('/', [A_Ibr::class, 'store'])->name('admin.a-ibr.post');
+		Route::put('/', [A_Ibr::class, 'store'])->name('admin.a-ibr.post');
+		Route::delete('/', [A_Ibr::class, 'destroy'])->name('admin.a-ibr.delete');
+
+	});
+
+	/** Ministérios */
+	Route::prefix('/ministerios')->group(function () {
+
+		Route::get('/', [Pastores::class, 'index'])->name('admin.ministerios.index');
+		Route::get('/{search}', [Pastores::class, 'search'])->name('admin.ministerios.search');
+		Route::get('/id/{id}', [Pastores::class, 'create'])->name('admin.ministerios.edit');
+		// Route::get('/imagem/{file_id}', [Pastores::class, 'show'])->name('admin.ministerios.show-image');
+		Route::post('/', [Pastores::class, 'store'])->name('admin.ministerios.post');
+		Route::put('/', [Pastores::class, 'store'])->name('admin.ministerios.post');
+		Route::delete('/', [Pastores::class, 'destroy'])->name('admin.ministerios.delete');
+
+	});
+
+	/** Cultos */
+	Route::prefix('/cultos')->group(function () {
+
+		Route::get('/', [Pastores::class, 'index'])->name('admin.cultos.index');
+		Route::get('/{search}', [Pastores::class, 'search'])->name('admin.cultos.search');
+		Route::get('/id/{id}', [Pastores::class, 'create'])->name('admin.cultos.edit');
+		// Route::get('/imagem/{file_id}', [Pastores::class, 'show'])->name('admin.cultos.show-image');
+		Route::post('/', [Pastores::class, 'store'])->name('admin.cultos.post');
+		Route::put('/', [Pastores::class, 'store'])->name('admin.cultos.post');
+		Route::delete('/', [Pastores::class, 'destroy'])->name('admin.cultos.delete');
+
+	});
+
+	/** Eventos */
+	Route::prefix('/eventos')->group(function () {
+
+		Route::get('/', [Pastores::class, 'index'])->name('admin.eventos.index');
+		Route::get('/{search}', [Pastores::class, 'search'])->name('admin.eventos.search');
+		Route::get('/id/{id}', [Pastores::class, 'create'])->name('admin.eventos.edit');
+		// Route::get('/imagem/{file_id}', [Pastores::class, 'show'])->name('admin.eventos.show-image');
+		Route::post('/', [Pastores::class, 'store'])->name('admin.eventos.post');
+		Route::put('/', [Pastores::class, 'store'])->name('admin.eventos.post');
+		Route::delete('/', [Pastores::class, 'destroy'])->name('admin.eventos.delete');
+
+	});
+
+	Route::middleware('auth')->group(function () {
+		Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+		Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+		Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+	});
+
+	// Clínica
 });
 
 require __DIR__ . '/auth.php';

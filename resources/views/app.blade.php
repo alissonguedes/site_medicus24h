@@ -21,7 +21,7 @@
 		<meta property="og:locale" content="{{ config('site.locale') }}">
 		<meta property="og:site_name" content="{{ config('site.title') }}">
 
-		<link rel="preload" href="{{ asset('img/site/logo/logo-vertical.png') }}" as="image">
+		<link rel="preload" href="{{ asset('img/logo1.png') }}" as="image">
 		<link rel="canonical" href="{{ config('site.url') }}">
 		<link rel="manifest" href="{{ url('/webmainfest') }}">
 		<link rel="shortcut icon" type="image/x-icon" href="{{ url('/favicon.ico') }}" />
@@ -30,6 +30,7 @@
 		<link rel="icon" type="image/png" href="{{ url('/favicon-32x32.png') }}" sizes="32x32">
 		<link rel="icon" type="image/png" href="{{ url('/android-launcherincon-512-512.png') }}" sizes="512x512">
 		<link rel="apple-touch-icon" type="image/png" href="{{ url('/apple-touch-icon.png') }}" sizes="180x180">
+		<link rel="stylesheet" href="{{ asset('assets/node_modules/pace-js/pace-theme-default.min.css') }}">
 
 		@if (isset($styles))
 			{{ $styles }}
@@ -37,21 +38,27 @@
 
 		<title>{{ config('site.title') . (isset($title) ? ' - ' . $title : null) }}</title>
 
-		{{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+		@vite(['resources/css/app.css', 'resources/js/app.js'])
 
 	</head>
 
 	<body>
 
 		<div class="progress">
-			{{-- <div class="indeterminate teal lighten-1"></div> --}}
-			<div class="indeterminate-center teal lighten-1"></div>
+			<div class="indeterminate-center"></div>
 		</div>
 
 		{{-- BEGIN #Page --}}
 		<div id="page">
 
 			{{ $slot }}
+
+			<script>
+				var BASE_URL = "{{ base_url() }}";
+				var BASE_PATH = "{{ asset('/') }}";
+				var SITE_URL = "{{ site_url() }}";
+				var SITE_KEY = "{{ env('INVISIBLE_RECAPTCHA_SITEKEY') }}";
+			</script>
 
 			@if (isset($scripts))
 				{{ $scripts }}
@@ -60,14 +67,7 @@
 		</div>
 		{{-- END #Page --}}
 
-		<script>
-			var BASE_URL = "{{ base_url() }}";
-			var BASE_PATH = "{{ asset('/') }}";
-			var SITE_URL = "{{ site_url() }}";
-			var SITE_KEY = "{{ env('INVISIBLE_RECAPTCHA_SITEKEY') }}";
-		</script>
-
-		<script src="{{ asset('assets/node_modules/pace-js/pace.min.js') }}" data-pace-options='{ "ajax": false }'></script>
+		<script src="{{ asset('assets/node_modules/pace-js/pace.min.js') }}"></script>
 
 	</body>
 

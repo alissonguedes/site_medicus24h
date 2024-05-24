@@ -8,5 +8,5 @@
 <script src="{{ asset('assets/node_modules/froala-editor/js/froala_editor.pkgd.min.js') }}"></script>
 <script src="{{ asset('assets/node_modules/froala-editor/js/languages/pt_br.js') }}"></script>
 
-<script src="{{ asset('assets/scripts/menu.js') }}"></script>
-<script src="{{ asset('assets/scripts/app/clinica/core.js') }}"></script>
+<script src="{{ asset('assets/js/menu.js') }}"></script>
+<script src="{{ asset('assets/js/core.js') }}"></script>

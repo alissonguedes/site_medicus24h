@@ -24,24 +24,22 @@
 		@if (isset($main))
 			{{ $main }}
 		@else
-			<div class="card no-padding no-margin">
+			<div class="card card-panel no-padding no-margin">
 
 				@if (isset($header))
-					<section class="animated fadeIn">
-						<header class="z-depth-0 border-bottom">
-							{{ $header }}
-						</header>
+					<section class="card-header animated fadeIn">
+						{{ $header }}
 					</section>
 				@endif
 
-				<div class="card-content scroller animated fadeIn">
+				<div class="card-content animated fadeIn">
 					@if (isset($body))
 						{{ $body }}
 					@endif
 				</div>
 
 				@if (isset($form))
-					<form {{ $form->attributes->merge(['class' => 'card-reveal no-padding']) }}>
+					<form enctype="multipart/form-data" {{ $form->attributes->merge(['class' => 'card-reveal no-padding']) }}>
 
 						@if (isset($form_tabs))
 							<div {{ $form_tabs->attributes->merge(['class' => 'card-tabs']) }}>
@@ -49,7 +47,7 @@
 							</div>
 						@endif
 
-						<div class="card-content pl-1 pr-1 scroller">
+						<div class="card-content">
 							{{ $form }}
 						</div>
 
@@ -75,7 +73,7 @@
 		@endif
 
 		@if (session()->has('message'))
-			<x-toast class="green darken-2">{{ session()->get('message') }}</x-toast>
+			<x-toast class="green darken-4">{{ session()->get('message') }}</x-toast>
 		@endif
 
 		@if (count($errors) > 0)

@@ -8,7 +8,7 @@
 
 	<div class="navbar navbar-fixed">
 
-		<nav class="navbar-main navbar-color navbar-light z-depth-0">
+		<nav class="navbar-main navbar-color white z-depth-0">
 
 			<div class="nav-wrapper">
 
@@ -27,46 +27,45 @@
 
 				<ul class="navbar-list right">
 					<li>
-						<a href="#" class="waves-effect waves-block waves-light profile-button">
-							<span class="avatar-status avatar-online">
-								<img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt="">
-								<i></i>
-							</span>
-						</a>
+						<!-- Authentication -->
+						<form action="{{ route('logout') }}" method="post">
+							@csrf
+							<x-nav-link class="waves-effect waves-green profile-button" onclick="event.preventDefault(); this.closest('form').submit();">
+								<i class="material-symbols-outlined">logout</i>
+								{{-- <span class="avatar-status avatar-online">
+									<img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt="">
+								</span> --}}
+							</x-nav-link>
+						</form>
 					</li>
 				</ul>
 
 				<ul class="navbar-nav right">
 					<li>
-						<a class="waves-effect">
-							<i class="material-symbols-outlined">event</i>
+						<a href="{{ site_url('/') }}" class="waves-effect waves-green" target="_blank">
+							<i class="material-symbols-outlined">web</i>
 						</a>
 					</li>
 					<li>
-						<a class="waves-effect">
+						<a class="waves-effect waves-green">
 							<i class="material-symbols-outlined">mail</i>
 						</a>
 					</li>
 					<li class="logo animated infinite slow hide-on-large-only">
-						<a href="{{ route('clinica.index') }}">
+						<a href="{{ route('admin.dashboard') }}">
 							<span></span>
 						</a>
 					</li>
 					<li>
-						<a href="#" class="waves-effect notification-button">
+						<a href="#" class="waves-effect waves-green notification-button">
 							<i class="material-symbols-outlined">
 								notifications
 								<small class="notification-badge">+99</small>
 							</i>
 						</a>
 					</li>
-					{{-- <li class="search">
-						<a id="open-search" class="waves-effect" style="position: relative;">
-							<i class="material-symbols-outlined">search</i>
-						</a>
-					</li> --}}
 					<li>
-						<a class="waves-effect sidenav-trigger" data-target="slide-out">
+						<a class="waves-effect waves-green sidenav-trigger">
 							<i class="material-symbols-outlined">menu</i>
 						</a>
 					</li>
@@ -86,7 +85,7 @@
 			<div class="hide">
 				<x-dropdown align="right" width="48">
 					<x-slot name="trigger">
-						<button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+						<button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
 							<div>{{ Auth::user()->name }}</div>
 
 							<div class="ms-1">
@@ -123,7 +122,7 @@
 					</x-responsive-nav-link>
 
 					<!-- Authentication -->
-					<form action="{{ route('logout') }}" method="POST">
+					<form action="{{ route('logout') }}" method="post">
 						@csrf
 
 						<x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
