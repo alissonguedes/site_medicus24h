@@ -113,6 +113,9 @@
 	--blue-darken-3: #1565c0 !important;
 	--blue-darken-4: #0d47a1 !important;
 
+	--gradient-45deg-blue-light-blue: -webkit-linear-gradient(45deg, var(--blue-darken-3), var(--blue-lighten-3)) !important;
+	--gradient-45deg-blue-light-blue: linear-gradient(45deg, var(--blue-darken-3), var(--blue-lighten-3)) !important;
+
 	/** Teal **/
 	--teal: #009688 !important;
 	--teal-lighten-1: #1ea1ad !important;
@@ -132,6 +135,12 @@
 	--teal-accent-2: #64ffda !important;
 	--teal-accent-3: #1de9b6 !important;
 	--teal-accent-4: #00bfa5 !important;
+
+	/* background: -webkit-linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-4)) !important;
+	background: linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-4)) !important; */
+
+	--gradient-45deg-teal-teal: -webkit-linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-1)) !important;
+	--gradient-45deg-teal-teal: linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-1)) !important;
 
 	/** Green **/
 	--green: #4caf50 !important;
@@ -199,6 +208,9 @@
 	--orange-lighten-3: #ffcc80 !important;
 	--orange-lighten-4: #ffe0b2 !important;
 	--orange-lighten-5: #fff3e0 !important;
+
+	--gradient-45deg-deep-orange-orange: -webkit-linear-gradient(45deg, #bf360c, #f57c00) !important;
+	--gradient-45deg-deep-orange-orange: linear-gradient(45deg, #bf360c, #f57c00) !important;
 
 	/** Yellow */
 
@@ -2499,8 +2511,7 @@
 }
 
 .gradient-45deg-teal-teal {
-	background: -webkit-linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-4)) !important;
-	background: linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-4)) !important;
+	background: var(--gradient-45deg-teal-teal);
 }
 
 .gradient-45deg-teal-teal.gradient-shadow {
@@ -2640,8 +2651,7 @@
 }
 
 .gradient-45deg-deep-orange-orange {
-	background: -webkit-linear-gradient(45deg, #bf360c, #f57c00) !important;
-	background: linear-gradient(45deg, #bf360c, #f57c00) !important
+	background: var(--gradient-45deg-deep-orange-orange) !important;
 }
 
 .gradient-45deg-deep-orange-orange.gradient-shadow {

@@ -9,7 +9,7 @@
 			@if (isset($pacientes) && $pacientes->count() > 0)
 				@foreach ($pacientes as $row)
 					<div class="col s12 m6 l4 card-width">
-						<div class="profile-card card card-border center-align border-radius-6 z-depth-0 gradient-shadow">
+						<div class="profile-card card card-border center-align border-radius-6 z-depth-0 gradient-45deg-teal-teal gradientshadow">
 							<div class="card-content white-text">
 
 								@php
@@ -57,12 +57,7 @@
 						</div>
 					</div>
 				@endforeach
-			@else
-				<div class="col s12">
-					Nenhum banner cadastrado.
-				</div>
 			@endif
-
 		</div>
 
 	</x-slot:body>
@@ -70,12 +65,13 @@
 	@include('clinica.pacientes.includes.form')
 
 	<x-slot:script>
-		{{-- <script>
-			$('.materialboxed').materialbox();
-		</script> --}}
 		<x-modal id="form_plano_saude">
 			Teasdfste
 		</x-modal>
+		{{-- <script type="text/javascript" src="{{ asset('assets/node_modules/froala-editor/js/froala_editor.pkgd.min.js') }}"></script> --}}
+		{{-- <script type="text/javascript" src="{{ asset('assets/node_modules/froala-editor/js/languages/pt_br.js') }}"></script> --}}
+		{{-- <script src="{{ asset('assets/scripts/app/clinica/core.js') }}"></script> --}}
+		{{-- <script src="{{ asset('assets/js/clinica/js/pacientes/form.js') }}"></script> --}}
 	</x-slot:script>
 
 </x-clinica-layout>
