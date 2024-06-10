@@ -1061,15 +1061,15 @@ ul.list-type-bullet {
 }
 
 .file-field.input-field .btn {
-	background-color: var(--blue);
+	background-color: var(--light-green);
 }
 
 .file-field.input-field .btn span {
-	color: var(--blue-darken-4) !important;
+	color: var(--light-green-darken-4) !important;
 }
 
 [type="submit"] {
-	background-color: var(--blue) !important;
+	background-color: var(--light-green) !important;
 	color: #000000;
 	border-radius: 24px;
 	float: right;
@@ -1077,9 +1077,9 @@ ul.list-type-bullet {
 
 [type="reset"] {
 	background-color: transparent !important;
-	border: 1px solid var(--blue);
+	border: 1px solid var(--light-green);
 	border-radius: 24px;
-	color: var(--blue);
+	color: var(--light-green);
 	float: left;
 }
 

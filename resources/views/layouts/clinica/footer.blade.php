@@ -1,3 +1,5 @@
-{{-- <footer class="footer footer-fixed center-align hide-on-small-only">
-	<div class="logo-footer"> </div>
-</footer> --}}
+<footer class="footer footer-fixed teal lighten-1 center-align white-text hide-on-small-only">
+
+	<img src="{{ asset('assets/fstrong/logobranca.png') }}" class="logo" alt="">
+
+</footer>
