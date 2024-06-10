@@ -65,12 +65,17 @@ Route::middleware([
 
 })->prefix('/admin')->group(function () {
 
-	Route::get('/', function () {
+	Route::get('/index', function () {
 		return redirect()->route('admin.dashboard');
 	})->name('admin.index');
 
+	Route::get('/', function () {
+		// return redirect()->route('admin.dashboard');
+		return redirect()->route('clinica.dashboard');
+	})->name('dashboard');
+
 	Route::get('/dashboard', function () {
-		return view('dashboard');
+		// return view('admin.dashboard');
 	})->name('admin.dashboard');
 
 	/** banners */

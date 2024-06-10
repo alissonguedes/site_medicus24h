@@ -41,21 +41,25 @@
 				@if (isset($form))
 					<form enctype="multipart/form-data" {{ $form->attributes->merge(['class' => 'card-reveal no-padding']) }}>
 
-						@if (isset($form_tabs))
-							<div {{ $form_tabs->attributes->merge(['class' => 'card-tabs']) }}>
-								{{ $form_tabs }}
-							</div>
-						@endif
+						<div class="card card-panel">
 
-						<div class="card-content">
-							{{ $form }}
+							@if (isset($form_tabs))
+								<div {{ $form_tabs->attributes->merge(['class' => 'card-tabs']) }}>
+									{{ $form_tabs }}
+								</div>
+							@endif
+
+							<div class="card-content">
+								{{ $form }}
+							</div>
+
+							@if (isset($card_footer))
+								<div {{ $card_footer->attributes->merge(['class' => 'card-action right-align']) }}>
+									{{ $card_footer }}
+								</div>
+							@endif
+
 						</div>
-
-						@if (isset($card_footer))
-							<div {{ $card_footer->attributes->merge(['class' => 'card-action right-align']) }}>
-								{{ $card_footer }}
-							</div>
-						@endif
 
 						@isset($scripts_form)
 							{{ $scripts_form }}

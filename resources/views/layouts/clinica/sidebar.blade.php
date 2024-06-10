@@ -1,4 +1,4 @@
-<aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-rounded">
+<aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-color sidenav-active-rounded">
 
 	<div id="slide-out" class="sidenav sidenav-fixed sidenav-collapsible leftside-navigation menu-shadow" data-menu="menu-navigation" data-collapsible="accordion">
 

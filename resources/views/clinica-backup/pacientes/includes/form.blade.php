@@ -1,4 +1,4 @@
-<x-header-page data-href="{{ route('clinica.pacientes.index') }}" placeholder="Pesquisar banners..." title="Adicionar Banner">add</x-header-page>
+<x-header-page class="" data-trigger="form-paciente" data-url="{{ route('clinica.pacientes.index') }}" placeholder="Procurar pacientes..." title="Adicionar Paciente">add</x-header-page>
 
 @if (request('id'))
 	@php
@@ -45,16 +45,12 @@
 		$data_obito = $paciente->data_obito;
 		$hora_obito = $paciente->hora_obito;
 		$etnia = $paciente->etnia;
-		$imagem = route('clinica.pacientes.show-image', $id) . '?action=preview';
 	@endphp
 @endif
 
-<x-slot:form action="{{ route('clinica.pacientes.post') }}" method="post" style="{{ $errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);' }}" autocomplete="off">
+<x-slot:form action="{{ route('clinica.pacientes.post') }}" method="post" style="{{ $errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);' }}">
 
 	@csrf
-
-	<input type="hidden" name="tipo" value="paciente">
-
 	@if (request('id'))
 		<input type="hidden" name="_method" value="put">
 		<input type="hidden" name="id" value="{{ $id }}">
@@ -118,11 +114,11 @@
 	<x-slot:card_footer>
 		<div class="row">
 			<div class="col s12 right-align">
-				<button type="reset" class="btn waves-effect">
+				<button type="reset" class="btn grey-text text-darken-4 white waves-effect mr-3 left">
 					<i class="material-symbols-outlined left">cancel</i>
 					<span>Cancelar</span>
 				</button>
-				<button type="submit" class="btn waves-effect">
+				<button type="submit" class="btn green waves-effect">
 					<i class="material-symbols-outlined left">save</i>
 					<span>Salvar</span>
 				</button>
@@ -132,6 +128,6 @@
 
 </x-slot:form>
 
-{{-- <x-slot:scripts_form>
+<x-slot:scripts_form>
 	<script src="{{ asset('assets/js/clinica/js/pacientes/form.js') }}" defer></script>
-</x-slot:scripts_form> --}}
+</x-slot:scripts_form>
