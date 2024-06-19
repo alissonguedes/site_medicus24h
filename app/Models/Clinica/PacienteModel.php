@@ -7,13 +7,15 @@ use Illuminate\Support\Facades\DB;
 
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class PacienteModel extends Model {
+class PacienteModel extends Model
+{
 
 	// use HasFactory;
 
 	protected $table = 'tb_paciente';
 
-	public function getColumns() {
+	public function getColumns()
+	{
 
 		return $this->select(
 			'id', 'nome', 'codigo', 'imagem', 'associado', 'id_estado_civil', 'id_etnia',
@@ -33,7 +35,8 @@ class PacienteModel extends Model {
 
 	}
 
-	public function get($data = null) {
+	public function get($data = null)
+	{
 
 		$get = $this->getColumns();
 
@@ -84,11 +87,31 @@ class PacienteModel extends Model {
 
 	}
 
-	public function getWhere($data = null, $where = null) {
+	public function getWhere($data = null, $where = null)
+	{
 
 		$where = is_array($data) ? $data : [$data => $where];
 
 		return $this->getColumns()->where($where)->first();
+
+	}
+
+	public function search($search, $both = true)
+	{
+
+		return $this->getColumns()
+			->whereAny([
+				'nome',
+				'email',
+				DB::raw('REGEXP_REPLACE(codigo, "[^\\x20-\\x7E]", "")'),
+				DB::raw('REGEXP_REPLACE(matricula, "[^\\x20-\\x7E]", "")'),
+				DB::raw('REGEXP_REPLACE(rg, "[^\\x20-\\x7E]", "")'),
+				DB::raw('REGEXP_REPLACE(cpf, "[^\\x20-\\x7E]", "")'),
+				DB::raw('REGEXP_REPLACE(cns, "[^\\x20-\\x7E]", "")'),
+				DB::raw('REGEXP_REPLACE(telefone, "[^\\x20-\\x7E]", "")'),
+				DB::raw('REGEXP_REPLACE(celular, "[^\\x20-\\x7E]", "")'),
+			], 'like', ($both ? '%' : null) . $search . '%')
+			->get();
 
 	}
 

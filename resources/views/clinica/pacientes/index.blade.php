@@ -37,18 +37,17 @@
 								</p>
 								<div class="row mt-5">
 									<div class="col s4">
-										<h5 class="icon-background pointer circle white-text gradient-45deg-indigo-light-blue z-depth-3 mx-auto waves-effect waves-light" data-href="#" data-tooltip="Prontuário">
+										<h5 class="icon-background pointer circle white-text gradient-45deg-indigo-light-blue z-depth-3 mx-auto waves-effect waves-light" data-tooltip="Prontuário">
 											<i class="material-symbols-outlined">assignment_ind</i>
 										</h5>
 									</div>
 									<div class="col s4">
-										<h5 class="icon-background pointer circle white-text gradient-45deg-deep-orange-orange z-depth-3 mx-auto waves-effect waves-light" data-href="#" data-tooltip="Agendamento" data-target="agendamento" data-trigger="form-sidenav">
+										<h5 class="icon-background pointer circle white-text gradient-45deg-deep-orange-orange z-depth-3 mx-auto waves-effect waves-light" data-tooltip="Agendamento" data-target="agendamento" data-trigger="form-sidenav">
 											<i class="material-symbols-outlined">event</i>
 										</h5>
 									</div>
 									<div class="col s4">
-										{{-- <h5 class="icon-background pointer circle white-text gradient-45deg-indigo-blue z-depth-3 mx-auto waves-effect waves-light" data-href="{{ route('clinica.pacientes.edit', $row->id) }}" data-tooltip="Editar"> --}}
-										<h5 class="icon-background pointer circle white-text gradient-45deg-indigo-blue z-depth-3 mx-auto waves-effect waves-light" data-url="{{ route('clinica.pacientes.edit', $row->id) }}" data-tooltip="Editar">
+										<h5 class="icon-background edit pointer circle white-text gradient-45deg-indigo-blue z-depth-3 mx-auto waves-effect waves-light" data-href="{{ route('clinica.pacientes.edit', $row->id) }}" data-tooltip="Editar">
 											<i class="material-symbols-outlined">edit</i>
 										</h5>
 									</div>
@@ -59,7 +58,7 @@
 				@endforeach
 			@else
 				<div class="col s12">
-					Nenhum banner cadastrado.
+					Nenhum paciente cadastrado.
 				</div>
 			@endif
 
@@ -68,14 +67,5 @@
 	</x-slot:body>
 
 	@include('clinica.pacientes.includes.form')
-
-	<x-slot:script>
-		{{-- <script>
-			$('.materialboxed').materialbox();
-		</script> --}}
-		<x-modal id="form_plano_saude">
-			Teasdfste
-		</x-modal>
-	</x-slot:script>
 
 </x-clinica-layout>

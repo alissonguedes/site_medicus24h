@@ -40,7 +40,8 @@ Route::middleware([
 	Route::prefix('/pacientes')->group(function () {
 
 		Route::get('/', [Pacientes::class, 'index'])->name('clinica.pacientes.index');
-		Route::get('/{id}', [Pacientes::class, 'index'])->name('clinica.pacientes.edit');
+		Route::get('/{search}', [Pacientes::class, 'search'])->name('clinica.pacientes.search');
+		Route::get('/id/{id}', [Pacientes::class, 'index'])->name('clinica.pacientes.edit');
 		Route::post('/', [Pacientes::class, 'store'])->name('clinica.pacientes.post');
 		Route::put('/', [Pacientes::class, 'update'])->name('clinica.pacientes.post');
 
@@ -62,6 +63,7 @@ Route::middleware([
 	Route::get('/imagem/post/{file_id}', [Apresentacao::class, 'show'])->name('home.apresentacao.show-image');
 	Route::get('/imagem/pastor/{file_id}', [Pastores::class, 'show'])->name('home.pastores.show-image');
 	Route::get('/imagem/a-ibr/{file_id}', [A_Ibr::class, 'show'])->name('home.a-ibr.show-image');
+	Route::get('/imagem/paciente/{file_id}', [Pacientes::class, 'show'])->name('clinica.pacientes.show-image');
 
 })->prefix('/admin')->group(function () {
 

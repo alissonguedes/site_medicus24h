@@ -4,15 +4,15 @@
 		@php($slide_out = $id_menu == 0 ? '' : null)
 		@php($sidenav = $id_menu == 0 ? 'collapsible' : 'collapsible collapsible-sub')
 
-		<ul class="{{ $sidenav }}" {{ $slide_out }}>
+		<ul class="in {{ $sidenav }}" {{ $slide_out }}>
 			@foreach ($item as $i)
 				@if ($i['categoria'])
 					<li class="navigation-header">
 						<a class="navigation-header-text">{{ $i['titulo'] }}</a>
-						<i class="navigation-header-icon material-symbols-outlined">more_horiz</i>
+						<i class="navigation-header-icon material-symbols-outlined hide">more_horiz</i>
 					</li>
 				@else
-					<li class="bold">
+					<li class="">
 						@php($href = !empty($i['children']) ? 'javascript:void(0);' : (Route::has($i['route']) ? route($i['route']) : '#'))
 						@php($header = !empty($i['children']) ? 'collapsible-header' : null)
 						@php($icon = !empty($i['icon']) ? $i['icon'] : null)

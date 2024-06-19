@@ -2511,7 +2511,8 @@
 }
 
 .gradient-45deg-teal-teal {
-	background: var(--gradient-45deg-teal-teal);
+	background: -webkit-linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-4)) !important;
+	background: linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-4)) !important;
 }
 
 .gradient-45deg-teal-teal.gradient-shadow {
@@ -2525,6 +2526,11 @@
 
 .gradient-45deg-blue-grey-blue-grey.gradient-shadow {
 	box-shadow: 0 6px 20px 0 rgba(84, 110, 122, .5) !important
+}
+
+.gradient-0deg-grey-grey {
+	background: -webkit-linear-gradient(0deg, #cdcdcd 0%, #ffffff 45%);
+	background: linear-gradient(0deg, #cdcdcd 0%, #ffffff 45%);
 }
 
 .gradient-45deg-indigo-blue.gradient-shadow,
@@ -2651,7 +2657,8 @@
 }
 
 .gradient-45deg-deep-orange-orange {
-	background: var(--gradient-45deg-deep-orange-orange) !important;
+	background: -webkit-linear-gradient(45deg, #bf360c, #f57c00) !important;
+	background: linear-gradient(45deg, #bf360c, #f57c00) !important
 }
 
 .gradient-45deg-deep-orange-orange.gradient-shadow {

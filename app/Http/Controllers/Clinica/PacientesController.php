@@ -9,12 +9,14 @@ use App\Models\Clinica\EtniaModel;
 use App\Models\Clinica\PacienteModel;
 use Illuminate\Http\Request;
 
-class PacientesController extends Controller {
+class PacientesController extends Controller
+{
 
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil) {
+	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil)
+	{
 
 		$data['pacientes']    = $paciente->get();
 		$data['paciente']     = $paciente->getWhere(['id' => $request->id]);
@@ -26,16 +28,30 @@ class PacientesController extends Controller {
 	}
 
 	/**
+	 * Search banners
+	 */
+	public function search(Request $request, PacienteModel $paciente)
+	{
+
+		$data['pacientes'] = $paciente->search($request->search);
+
+		return view('clinica.pacientes.index', $data);
+
+	}
+
+	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create() {
+	public function create()
+	{
 		//
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(PacienteRequest $request, PacienteModel $paciente) {
+	public function store(PacienteRequest $request, PacienteModel $paciente)
+	{
 
 		$data = $request->all();
 
@@ -67,21 +83,24 @@ class PacientesController extends Controller {
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(PacienteModel $pacienteModel) {
+	public function show(PacienteModel $pacienteModel)
+	{
 		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(PacienteModel $pacienteModel) {
+	public function edit(PacienteModel $pacienteModel)
+	{
 		//
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(PacienteRequest $request, PacienteModel $paciente) {
+	public function update(PacienteRequest $request, PacienteModel $paciente)
+	{
 
 		$data = $request->all();
 
@@ -112,7 +131,8 @@ class PacientesController extends Controller {
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(PacienteModel $pacienteModel) {
+	public function destroy(PacienteModel $pacienteModel)
+	{
 
 		//
 

@@ -53,8 +53,6 @@
 
 	@csrf
 
-	<input type="hidden" name="tipo" value="paciente">
-
 	@if (request('id'))
 		<input type="hidden" name="_method" value="put">
 		<input type="hidden" name="id" value="{{ $id }}">

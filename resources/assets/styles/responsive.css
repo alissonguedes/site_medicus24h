@@ -1,0 +1,113 @@
+@media only screen and (max-width: 992px) {
+
+	header {
+		height: 56px;
+	}
+
+	.container {
+		width: 100%;
+	}
+
+	nav .brand-logo {
+		left: 0;
+		-webkit-transform: none;
+		transform: none;
+		padding-left: 30px;
+		width: 180px;
+	}
+
+	.btn-menu-nav {
+		margin-right: 30px;
+	}
+
+	.card-panel .card-content::before {
+		width: 0px;
+		height: 0px;
+	}
+
+	.card-panel .card-content img {
+		margin-left: 0px;
+		border-radius: 24px;
+	}
+
+
+	#outros-servicos .header,
+	#outros-servicos .footer {
+		height: 60px;
+	}
+
+}
+
+@media screen and (max-width: 1290px) {
+
+	.navbar-main {
+		display: none;
+		padding-right: 0px !important;
+		top: 60px !important;
+		float: right;
+		background: #fff;
+		left: 0;
+		right: 0;
+		position: absolute;
+		height: auto;
+		z-index: 998;
+		top: 0;
+	}
+
+	.navbar-main li {
+		float: none;
+	}
+
+	nav ul li a {
+		color: var(--red-lighten-1);
+	}
+
+	nav ul li a:hover,
+	nav ul li a.active {
+		color: #fff;
+	}
+
+	nav ul li a::before {
+		padding-left: 10px;
+		left: 0 !important;
+		right: 0 !important;
+		transform: none !important;
+	}
+
+	.btn-menu-nav {
+		display: block;
+	}
+
+	.espec {
+		margin: 0;
+	}
+
+
+	#outros-servicos .container {
+		padding-top: 30px;
+	}
+
+	#outros-servicos .header .espec {
+		top: -80px;
+		position: relative
+	}
+
+	#outros-servicos .header,
+	#outros-servicos .footer {
+		height: 150px;
+	}
+
+
+	.card-panel.profile .card-content .img {
+		max-height: 310px;
+	}
+}
+
+@media screen and (min-width: 1360px) {
+
+	#outros-servicos .header,
+	#outros-servicos .footer {
+		height: 250px;
+	}
+
+}

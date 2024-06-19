@@ -64,6 +64,12 @@
 				{{ $scripts }}
 			@endif
 
+			@if (isset($sidebar))
+				<aside {{ $sidebar->attributes->merge(['class' => 'sidenav-main nav-expanded nav-lock nav-collapsible']) }}>
+					{{ $sidebar }}
+				</aside>
+			@endif
+
 		</div>
 		{{-- END #Page --}}
 

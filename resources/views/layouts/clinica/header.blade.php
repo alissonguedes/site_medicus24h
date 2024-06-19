@@ -53,7 +53,7 @@
 					</li>
 					<li class="logo animated infinite slow hide-on-large-only">
 						<a href="{{ route('admin.dashboard') }}">
-							<span></span>
+							<img src="{{ asset('assets/img/logo/coracao.png') }}" alt="" width="35px">
 						</a>
 					</li>
 					<li>

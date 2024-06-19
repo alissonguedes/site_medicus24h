@@ -1,9 +1,12 @@
 'use strict';
 
+(function($) {
 
-(function ($) {
+	var main_menu = '.main-menu';
+	var menu = $('body').find(main_menu);
 
-	var scroller = new PerfectScrollbar('.main-menu');
+	if (typeof menu !== 'undefined' && menu.length > 0)
+		var scroller = new PerfectScrollbar(main_menu);
 
 	function Menu(element, options) {
 
@@ -13,15 +16,16 @@
 		this.menuCollapse($this);
 		this.animations($this);
 
-		scroller.update();
-
-		$(window).bind('resize', function () {
+		if (typeof scroller !== 'undefined') {
 			scroller.update();
-		});
+			$(window).bind('resize', function() {
+				scroller.update();
+			});
+		}
 
 	}
 
-	Menu.prototype.initialize = function (element, options) {
+	Menu.prototype.initialize = function(element, options) {
 
 		var self = this;
 
@@ -36,7 +40,7 @@
 			let cursor = link === href ? 'default' : 'pointer';
 			let links = [];
 
-			$this.find('li a').each(function () {
+			$this.find('li a').each(function() {
 
 				// var href = $(this).attr('href').split(BASE_URL).splice(1).toString();
 				var href = $(this).attr('href');
@@ -92,13 +96,13 @@
 		var button_sidebar = $('.nav-collapsible .navbar-toggler');
 
 		button_sidebar.unbind()
-			.on('click', function () {
+			.on('click', function() {
 				self.toggleMenu($this);
 			});
 
 	}
 
-	Menu.prototype.menuCollapse = function (element) {
+	Menu.prototype.menuCollapse = function(element) {
 
 		var $this = element;
 		var $navbar = $('.navbar .nav-collapsible');
@@ -112,7 +116,7 @@
 
 	}
 
-	Menu.prototype.toggleMenu = function (element) {
+	Menu.prototype.toggleMenu = function(element) {
 
 		var $this = element;
 		var value = null;
@@ -150,11 +154,9 @@
 
 	}
 
-	Menu.prototype.navCollapse = function (element) {
+	Menu.prototype.navCollapse = function(element) {
 
 		var $this = element;
-
-		// console.log($this);
 
 		if (!$this.hasClass('nav-lock')) {
 
@@ -170,7 +172,7 @@
 				.addClass('close')
 				.removeClass('open');
 
-			setTimeout(function () {
+			setTimeout(function() {
 				if (1 < n) {
 					var e = $this.find('.collapsible');
 					M.Collapsible.getInstance(e).close($('.collapsible .close').index());
@@ -181,7 +183,7 @@
 
 	}
 
-	Menu.prototype.animations = function (element) {
+	Menu.prototype.animations = function(element) {
 
 		var self = this;
 		var $this = element;
@@ -193,20 +195,28 @@
 		M.Collapsible.init(collapsible, {
 			accordion: true,
 			onOpenEnd: () => {
-				scroller.update();
+				if (typeof scroller !== 'undefined') {
+					scroller.update();
+				}
 			},
 			onCloseEnd: () => {
-				scroller.update();
+				if (typeof scroller !== 'undefined') {
+					scroller.update();
+				}
 			}
 		});
 
 		M.Collapsible.init(expandeble, {
 			accordion: true,
 			onOpenEnd: () => {
-				scroller.update();
+				if (typeof scroller !== 'undefined') {
+					scroller.update();
+				}
 			},
 			onCloseEnd: () => {
-				scroller.update();
+				if (typeof scroller !== 'undefined') {
+					scroller.update();
+				}
 			}
 		});
 
@@ -214,22 +224,22 @@
 			accordion: true,
 			onOpenStart: () => {
 				$('.collapsible > li.open').removeClass('open');
-				setTimeout(function () {
+				setTimeout(function() {
 					$('#slide-out > li.active > a').parent().addClass('open');
 				}, 100);
 			},
 		});
 
-		$this.mouseleave(function () {
+		$this.mouseleave(function() {
 			// Adiciona ou remove a class `nav-expanded` ou `nav-collapsed`
 			// Função $this.mouseenter(function(){ ..
 			// self.navCollapse($this);
 		});
 
-		$this.mouseenter(function () {
+		$this.mouseenter(function() {
 			$this.hasClass('nav-lock') || $this.addClass('nav-expanded').removeClass('nav-collapsed'),
 				$('#slide-out > li.close > a').parent().addClass('open').removeClass('close'),
-				setTimeout(function () {
+				setTimeout(function() {
 					if (1 < $('.collapsible .open').children().length) {
 						var e = $this.find('.collapsible');
 						M.Collapsible.getInstance(e).open($('.collapsible .open').index());
@@ -238,7 +248,7 @@
 		});
 
 		// Ocultar a barra de menus após clicar quando estiver em modo responsivo
-		$('#slide-out').find('li [href],li [data-href]').bind('click', function () {
+		$('#slide-out').find('li [href],li [data-href]').bind('click', function() {
 
 			var javascript = /^[J|j]ava[s|S]cript/;
 			var href = $(this).data('href') || $(this).attr('href');
@@ -258,11 +268,11 @@
 		if (0 < i.find("a.active").length &&
 			(i.find("a.active").closest("div.collapsible-body").show(),
 				i.find("a.active").closest("div.collapsible-body").closest("li")
-					.addClass("active")),
+				.addClass("active")),
 			t = 0 < $(".sidenav-main li a.active").parent("li.active").parent("ul.collapsible-sub").length ?
-				$(".sidenav-main li a.active").parent("li.active").parent("ul.collapsible-sub").position() :
-				$(".sidenav-main li a.active").parent("li.active").position(),
-			setTimeout(function () {
+			$(".sidenav-main li a.active").parent("li.active").parent("ul.collapsible-sub").position() :
+			$(".sidenav-main li a.active").parent("li.active").position(),
+			setTimeout(function() {
 				void 0 !== t && $(".sidenav-main ul").stop().animate({
 					scrollTop: t.top - 300
 				}, 600)
@@ -270,15 +280,15 @@
 
 	}
 
-	Menu.prototype.menuCollapse = function (element) {
+	Menu.prototype.menuCollapse = function(element) {
 
 	}
 
 	window.Menu = Menu;
 
-	$.fn.Menu = function (options) {
+	$.fn.Menu = function(options) {
 
-		return this.each(function () {
+		return this.each(function() {
 
 			new Menu(this, options);
 
