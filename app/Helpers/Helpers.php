@@ -271,7 +271,7 @@ if (!function_exists('getMenu')) {
 							})->get();
 
 						if (!is_null($item->item_type)) {
-							$menu_list[$menu->id][] = [
+							$menu_list[] = [
 								'id'        => $item->id,
 								'id_parent' => $item->id_parent,
 								'titulo'    => $item->item_type,
@@ -279,7 +279,7 @@ if (!function_exists('getMenu')) {
 							];
 						}
 
-						$menu_list[$menu->id][$item->id] = [
+						$menu_list[$item->id] = [
 							'id'            => $item->id,
 							'id_parent'     => $item->id_parent,
 							'id_controller' => $item->controller,
@@ -295,7 +295,7 @@ if (!function_exists('getMenu')) {
 						];
 
 						if ($submenus->count() > 0) {
-							$menu_list[$menu->id][$item->id]['children'] = getMenu($local, $item->id);
+							$menu_list[$item->id]['children'] = getMenu($local, $item->id);
 						}
 
 						// FUNCIONANDO...

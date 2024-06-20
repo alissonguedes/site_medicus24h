@@ -1,37 +1,31 @@
 @if (isset($menus))
 
-	@foreach ($menus as $ind => $item)
-		@php($slide_out = $id_menu == 0 ? '' : null)
-		@php($sidenav = $id_menu == 0 ? 'collapsible' : 'collapsible collapsible-sub')
+	@php($slide_out = $id_menu == 0 ? 'data-collapsible="accordion"' : null)
+	@php($sidenav = $id_menu == 0 ? 'collapsible' : 'collapsible collapsible-sub')
 
-		<ul class="in {{ $sidenav }}" {{ $slide_out }}>
-			@foreach ($item as $i)
-				@if ($i['categoria'])
-					<li class="navigation-header">
-						<a class="navigation-header-text">{{ $i['titulo'] }}</a>
-						<i class="navigation-header-icon material-symbols-outlined hide">more_horiz</i>
-					</li>
-				@else
-					<li class="">
-						@php($href = !empty($i['children']) ? 'javascript:void(0);' : (Route::has($i['route']) ? route($i['route']) : '#'))
-						@php($header = !empty($i['children']) ? 'collapsible-header' : null)
-						@php($icon = !empty($i['icon']) ? $i['icon'] : null)
-						<x-nav-link :href="$href" :class="$header . ' waves-cyan'" :active="request()->routeIs($i['route'])">
-							{{-- {{ Route::getCurrentRoute($i['route'])->uri() }} --}}
-							{{-- @dump(Route::has($i['route']) ? Route::get($i['route']) : 'null') --}}
-							<i class="material-symbols-outlined">{{ $icon }}</i>
-							<span class="menu-title">{{ __($i['titulo']) }}</span>
-						</x-nav-link>
-						@if (!empty($i['children']))
-							<div class="collapsible-body">
-								{{-- {!! make_menu('main-menu', 'clinica', $i['children'], $i['id']) !!} --}}
-								{!! make_menu('main-menu', 'clinica', $i['children']) !!}
-							</div>
-						@endif
-					</li>
-				@endif
-			@endforeach
-		</ul>
-	@endforeach
+	<ul class="in {{ $sidenav }}" {{ $slide_out }}>
+		@foreach ($menus as $key => $val)
+			@if ($val['categoria'])
+				<li class="navigation-header">
+					{{ $val['titulo'] }}
+				</li>
+			@else
+				<li class="">
+					@php($href = !empty($val['children']) ? 'javascript:void(0);' : (Route::has($val['route']) ? route($val['route']) : '#'))
+					@php($header = !empty($val['children']) ? 'collapsible-header' : null)
+					@php($icon = !empty($val['icon']) ? $val['icon'] : null)
+					<x-nav-link :href="$href" :class="$header . ' waves-cyan'" :active="request()->routeIs($val['route'])">
+						<i class="material-symbols-outlined">{{ $icon }}</i>
+						<span class="menu-title">{{ __($val['titulo']) }}</span>
+					</x-nav-link>
+					@if (!empty($val['children']))
+						<div class="collapsible-body">
+							{!! make_menu('main-menu', 'clinica', $val['id']) !!}
+						</div>
+					@endif
+				</li>
+			@endif
+		@endforeach
+	</ul>
 
 @endif

@@ -10,10 +10,10 @@
 <script src="{{ asset('assets/node_modules/froala-editor/js/languages/pt_br.js') }}"></script>
 
 <script src="{{ asset('assets/js/core.js') }}"></script>
-{{-- <script src="{{ asset('assets/js/menu.js') }}"></script> --}}
+<script src="{{ asset('assets/js/menu.js') }}"></script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
 
-<script>
+{{-- <script>
 	document.addEventListener(
 		"DOMContentLoaded", () => {
 			new Mmenu("#menu", {
@@ -40,4 +40,4 @@
 			});
 		}
 	);
-</script>
+</script> --}}

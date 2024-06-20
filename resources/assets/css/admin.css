@@ -397,7 +397,7 @@ footer .logo-footer {
 }
 
 .sidenav ul {
-	position: absolute;
+	/* position: absolute; */
 	top: 0;
 	left: 0;
 	right: 0;
@@ -475,6 +475,11 @@ footer .logo-footer {
 	margin-right: 16px;
 }
 
+.sidenav .collapsible-header,
+.sidenav.fixed .collapsible-header {
+	padding: 0 20px;
+}
+
 .sidenav .collapsible-header:after {
 	font-family: 'Material Symbols';
 }
@@ -517,12 +522,63 @@ footer .logo-footer {
 	background: var(--gradient-45deg-teal-teal);
 }
 
+.sidenav .navigation-header {
+	font-size: .85rem;
+	font-weight: 600;
+	margin-top: 10px;
+	padding: 0 23px !important;
+	color: #969696;
+	text-transform: uppercase;
+}
+
 .sidenav li.navigation-header a {
 	background-color: transparent !important;
 }
 
+.sidenav .navigation-header .navigation-header-icon {
+	display: none
+}
+
+.sidenav .navigation-header .navigation-header-text {
+	font-size: .85rem;
+	font-weight: 600;
+	line-height: 30px;
+	height: 30px;
+	color: #969696;
+}
+
+.sidenav .navigation-header .navigation-header-text:hover {
+	background-color: transparent !important
+}
+
+.sidenav-active-rounded .sidenav .collapsible-header:after,
+.sidenav-active-square .sidenav .collapsible-header:after {
+	right: 16px;
+}
+
+.sidenav .collapsible-header:after {
+	font-family: 'Material Icons';
+	font-size: 18px;
+	position: absolute;
+	right: 0;
+	content: 'keyboard_arrow_right';
+	transition: transform .3s ease-in-out, opacity .25s ease-in-out .1s, -webkit-transform .3s ease-in-out;
+	color: #afafaf;
+}
+
+.sidenav .collapsible-body,
+.sidenav.fixed .collapsible-body {
+	border: 0;
+	background-color: transparent;
+	border-radius: inherit;
+}
+
+.sidenav li.active>.collapsible-header:after {
+	content: 'keyboard_arrow_down';
+}
+
 .sidenav li:hover a:not(.active) {
-	background: var(--grey-lighten-5);
+	/* background: var(--grey-lighten-5); */
 }
 
 .dark-theme .sidenav li a:not(.active),
@@ -596,7 +652,7 @@ footer .logo-footer {
 .btn-menu:hover,
 .btn-menu:focus,
 .sidenav li:hover>span {
-	background-color: rgba(0, 0, 0, 0.05) !important;
+	/* background-color: rgba(0, 0, 0, 0.05) !important; */
 }
 
 .dark-theme .btn-menu:hover,
