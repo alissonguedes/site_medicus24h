@@ -24,8 +24,7 @@
 						</x-nav-link>
 						@if (!empty($i['children']))
 							<div class="collapsible-body">
-								{{-- {!! make_menu('main-menu', 'clinica', $i['children'], $i['id']) !!} --}}
-								{!! make_menu('main-menu', 'clinica', $i['children']) !!}
+								{!! make_menu('main-menu', 'clinica', $i['id']) !!}
 							</div>
 						@endif
 					</li>

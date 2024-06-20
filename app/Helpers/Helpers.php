@@ -299,7 +299,6 @@ if (!function_exists('getMenu')) {
 						}
 
 						// FUNCIONANDO...
-						// FUNCIONANDO...
 						// if (!is_null($item->item_type)) {
 						// $menu_list['menus'][$item->id] = [
 						// 	'id'       => $item->id,
@@ -353,7 +352,7 @@ if (!function_exists('make_menu')) {
 
 		$menus = [];
 
-		// dump($items);
+		dump($items);
 
 		return view('navigation', ['id_menu' => $id ?? 0, 'menus' => $items]);
 

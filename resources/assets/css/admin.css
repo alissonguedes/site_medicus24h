@@ -28,14 +28,14 @@ body::after {
 }
 
 body::before {
-	background-image: url("../img/clinica/bg-white-landscape.jpg");
+	background-image: url("../img/app/bg-white-landscape.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 }
 
 body::after {
 	opacity: 0.7;
-	background-color: var(--blue-lighten-1);
+	background-color: var(--teal-lighten-1);
 }
 
 .btn i,
@@ -61,12 +61,12 @@ body::after {
 
 nav ul a,
 a {
-	color: var(--blue-lighten-1);
+	color: var(--teal-lighten-1);
 }
 
 .dark-theme nav ul a,
 .dark-theme a {
-	color: var(--blue-lighten-3);
+	color: var(--teal-lighten-3);
 }
 
 main,
@@ -165,15 +165,12 @@ nav i {
 	position: relative;
 }
 
-.navbar .notification-button,
-.navbar .toggle-fullscreen {
+nav ul a,
+.sidenav li>a,
+.sidenav li>a>i {
 	line-height: 1;
 	position: relative;
 	overflow: hidden;
-}
-
-.navbar .notification-button i {
-	position: relative;
 }
 
 .navbar .notification-badge {
@@ -202,7 +199,7 @@ nav i {
 	border-radius: 50%;
 	color: #ffffff;
 	background: var(--gradient-45deg-deep-orange-orange);
-	box-shadow: 0 0 10px 0 var(--blue-lighten-4);
+	box-shadow: 0 0 10px 0 var(--teal-lighten-4);
 	width: 24px;
 	height: 24px;
 	line-height: 24px;
@@ -273,11 +270,11 @@ nav i {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	color: var(--blue-lighten-1);
+	color: var(--teal-lighten-1);
 }
 
 .dark-theme .navbar h1 {
-	color: var(--blue-lighten-3);
+	color: var(--teal-lighten-3);
 }
 
 .navbar h1 .icon,
@@ -362,8 +359,8 @@ footer .logo-footer {
 .progress .indeterminate::before,
 .progress .indeterminate-center::before,
 .pace .pace-progress {
-	background: -webkit-linear-gradient(45deg, var(--blue), var(--blue));
-	background: linear-gradient(45deg, var(--blue), var(--blue));
+	background: -webkit-linear-gradient(45deg, var(--teal), var(--teal));
+	background: linear-gradient(45deg, var(--teal), var(--teal));
 }
 
 /** SideNav */
@@ -517,7 +514,7 @@ footer .logo-footer {
 
 .sidenav li a.active {
 	color: #fff;
-	background: var(--gradient-45deg-blue-light-blue);
+	background: var(--gradient-45deg-teal-teal);
 }
 
 .sidenav li.navigation-header a {
@@ -653,7 +650,7 @@ footer .logo-footer {
 }
 
 .application-logo:before {
-	border-bottom: 5px solid var(--blue-lighten-1);
+	border-bottom: 5px solid var(--teal-lighten-1);
 }
 
 .navbar-main:after {
@@ -775,8 +772,8 @@ main {
 .icon-background {
 	width: 50px;
 	height: 50px;
-	margin: 8px;
-	padding-top: 12px;
+	margin: 16px;
+	padding-top: 14px;
 }
 
 .icon-background .material-symbols-outlined {
@@ -798,7 +795,7 @@ main {
 	padding: 0;
 	border-bottom-width: 10px;
 	border-top-width: 10px;
-	border-color: var(--blue-lighten-1);
+	border-color: var(--teal-darken-3);
 	border-style: solid none solid;
 }
 
@@ -852,7 +849,7 @@ main .card-panel>.card-header~.card-content {
 }
 
 #card-button {
-	background: var(--gradient-45deg-blue-light-blue);
+	background: var(--gradient-45deg-deep-orange-orange);
 }
 
 #search-on-page {
@@ -909,8 +906,8 @@ main .card-panel>.card-header~.card-content {
 
 .card-content .card {
 	overflow: hidden;
-	background: -webkit-linear-gradient(45deg, var(--blue-darken-4), var(--blue-lighten-1));
-	background: linear-gradient(45deg, var(--blue-darken-4), var(--blue-lighten-1));
+	background: -webkit-linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-1));
+	background: linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-1));
 }
 
 .dark-theme .card-content .card {
@@ -1186,7 +1183,7 @@ textarea.materialize-textarea:not([readonly]),
 .select-wrapper:not(.browser-default) input.select-dropdown.ql-container:not([readonly]),
 .chips.focus:not([readonly]),
 .input-field:not(.browser-default) .ql-container:not([readonly]) {
-	background-image: linear-gradient(var(--blue), var(--blue)), linear-gradient(var(--grey-lighten-2), var(--grey-lighten-2));
+	background-image: linear-gradient(var(--teal), var(--teal)), linear-gradient(var(--grey-lighten-2), var(--grey-lighten-2));
 	color: var(--grey-darken-3);
 }
 
@@ -1204,6 +1201,15 @@ textarea.materialize-textarea:not([readonly]),
 
 .input-field>label:not(.label-icon) {
 	color: var(--teal-lighten-1);
+}
+
+[type="reset"] {
+	border: 1px solid var(--teal);
+	color: var(--teal);
+}
+
+[type="submit"] {
+	background-color: var(--teal) !important;
 }
 
 /** Editor */
@@ -1550,7 +1556,7 @@ textarea.materialize-textarea:not([readonly]),
 		border-radius: 50%;
 		color: #ffffff;
 		background: var(--gradient-45deg-deep-orange-orange);
-		box-shadow: 0 0 10px 0 var(--blue-lighten-4);
+		box-shadow: 0 0 10px 0 var(--teal-lighten-4);
 		width: 24px;
 		height: 24px;
 		line-height: 24px;

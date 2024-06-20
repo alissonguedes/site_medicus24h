@@ -21,9 +21,9 @@
 								<img src="{{ asset($row->imagem ?? (!isset($row->sexo) || (isset($row->sexo) && is_null($row->sexo)) ? 'assets/img/avatar/avatar-0.png' : ($row->sexo == 'M' ? 'assets/img/avatar/homem.png' : 'assets/img/avatar/mulher.png'))) }}" class="responsive-img circle z-depth-4" style="{{ $style ?? null }}" alt="" width="100">
 								<h5 class="title white-text mt-0 uppercase" style="max-width: 100%">{{ $row->nome ?? null }}</h5>
 
-								@if (isset($row->status) && $row->status === '0')
-									<div class="btn btn-floating gradient-45deg-red-pink" style="position: absolute; right: 18px; top: 18px; font-size: 24px;">
-										<i class="material-symbols-outlined teal-text" style="font-size: inherit; color: #fff !important;">lock</i>
+								@if (isset($row->status) && $row->status === 'Inativo')
+									<div class="btn btn-floating z-depth-0 transparent" style="position: absolute; right: 18px; top: 18px; font-size: 24px;" data-tooltip="Paciente inativo">
+										<i class="material-symbols-outlined teal-text" style="font-size: inherit; font-weight: 400; color: #fff !important;">lock</i>
 									</div>
 								@endif
 
@@ -37,17 +37,17 @@
 								</p>
 								<div class="row mt-5">
 									<div class="col s4">
-										<h5 class="icon-background pointer circle white-text gradient-45deg-indigo-light-blue z-depth-3 mx-auto waves-effect waves-light" data-tooltip="Prontuário">
+										<h5 class="icon-background gradient-45deg-deep-orange-orange pointer circle white-text z-depth-3 mx-auto waves-effect waves-light" data-tooltip="Prontuário">
 											<i class="material-symbols-outlined">assignment_ind</i>
 										</h5>
 									</div>
 									<div class="col s4">
-										<h5 class="icon-background pointer circle white-text gradient-45deg-deep-orange-orange z-depth-3 mx-auto waves-effect waves-light" data-tooltip="Agendamento" data-target="agendamento" data-trigger="form-sidenav">
+										<h5 class="icon-background gradient-45deg-deep-orange-orange pointer circle white-text z-depth-3 mx-auto waves-effect waves-light" data-tooltip="Agendamento" data-target="agendamento" data-trigger="form-sidenav">
 											<i class="material-symbols-outlined">event</i>
 										</h5>
 									</div>
 									<div class="col s4">
-										<h5 class="icon-background edit pointer circle white-text gradient-45deg-indigo-blue z-depth-3 mx-auto waves-effect waves-light" data-href="{{ route('clinica.pacientes.edit', $row->id) }}" data-tooltip="Editar">
+										<h5 class="icon-background gradient-45deg-deep-orange-orange edit pointer circle white-text z-depth-3 mx-auto waves-effect waves-light" data-href="{{ route('clinica.pacientes.edit', $row->id) }}" data-tooltip="Editar">
 											<i class="material-symbols-outlined">edit</i>
 										</h5>
 									</div>
