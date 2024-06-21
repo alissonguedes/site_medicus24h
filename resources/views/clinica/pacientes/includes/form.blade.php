@@ -117,12 +117,12 @@
 		<div class="row">
 			<div class="col s12 right-align">
 				<button type="reset" class="btn btn-large waves-effect">
-					<i class="material-symbols-outlined left">cancel</i>
-					<span>Cancelar</span>
+					<i class="material-symbols-outlined hide-on-small-only left">cancel</i>
+					<span class="">Cancelar</span>
 				</button>
 				<button type="submit" class="btn btn-large waves-effect">
-					<i class="material-symbols-outlined left">save</i>
-					<span>Salvar</span>
+					<i class="material-symbols-outlined hide-on-small-only left">save</i>
+					<span class="">Salvar</span>
 				</button>
 			</div>
 		</div>

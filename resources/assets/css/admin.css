@@ -282,7 +282,8 @@ nav ul a,
 	margin: 0;
 	padding: 0;
 	vertical-align: middle;
-	font-size: 28px;
+	/* font-size: 28px; */
+	font-size: 48px;
 	color: inherit;
 	top: -3px;
 	position: relative;
@@ -845,7 +846,7 @@ main {
 	margin: 0;
 	margin-bottom: 120px;
 	width: auto;
-	height: calc(100vh - 160px);
+	height: calc(100vh - 130px);
 	max-width: 100%;
 	border-radius: 24px;
 	padding: 0;
@@ -1147,8 +1148,8 @@ main .card-panel>.card-header~.card-content {
 /** Profile Card */
 
 .profile-card {
-	min-height: 465px;
-	max-height: 465px;
+	min-height: 420px;
+	max-height: 420px;
 }
 
 .profile-card .title {
@@ -1519,7 +1520,7 @@ textarea.materialize-textarea:not([readonly]),
 		right: 2%;
 		width: 94%;
 		height: 52px;
-		background-color: var(--light-green);
+		background-color: var(--red-darken-3);
 		color: #fff;
 		margin: 0 auto;
 		padding: 0px 5px 0 5px !important;
@@ -1613,7 +1614,7 @@ textarea.materialize-textarea:not([readonly]),
 		right: -5px;
 		border-radius: 50%;
 		color: #ffffff;
-		background: var(--gradient-45deg-deep-orange-orange);
+		background: var(--gradient-45deg-teal-teal);
 		box-shadow: 0 0 10px 0 var(--teal-lighten-4);
 		width: 24px;
 		height: 24px;
@@ -1625,14 +1626,14 @@ textarea.materialize-textarea:not([readonly]),
 
 	.sonar::before {
 		top: 10px;
-		right: 9px;
+		right: 11px;
 		width: 10px;
 		height: 10px;
 	}
 
 	.sonar::after {
 		top: 3px;
-		right: 2px;
+		right: 4px;
 		width: 24px;
 		height: 24px;
 	}
@@ -1652,6 +1653,10 @@ textarea.materialize-textarea:not([readonly]),
 	main {
 		padding-left: 20px;
 		padding-right: 20px;
+	}
+
+	.card-panel {
+		height: calc(100vh - 220px);
 	}
 
 	.card.horizontal {

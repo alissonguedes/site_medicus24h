@@ -52,8 +52,8 @@
 						</a>
 					</li>
 					<li class="logo animated infinite slow hide-on-large-only">
-						<a href="{{ route('admin.dashboard') }}">
-							<img src="{{ asset('assets/img/logo/coracao.png') }}" alt="" width="35px">
+						<a href="{{ route('clinica.dashboard') }}">
+							<img src="{{ asset('assets/img/logo/coracao-white.png') }}" alt="" width="35px">
 						</a>
 					</li>
 					<li>
