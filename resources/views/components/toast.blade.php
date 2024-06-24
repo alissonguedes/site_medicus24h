@@ -11,19 +11,27 @@
 
 <script>
 	setTimeout(function() {
-		$('#toast-container').fadeOut(1000);
-		setTimeout(function() {
-			$('#toast-container').remove();
-		}, 1500)
-	}, 10000)
+		// $('#toast-container').fadeOut(1000);
+		$('#toast-container').animate({
+			marginRight: '-100%',
+			'opacity': 0,
+		}, {
+			complete: () => {
+				$('#toast-container').remove();
+			}
+		}, 2000);
+	}, 5000)
 </script>
 
 <style>
 	#toast-container {
-		top: auto;
+		top: 40px;
+		right: 30px;
+		/*
 		right: auto;
 		left: 20px;
 		bottom: 20px;
+		*/
 		z-index: 9999999;
 	}
 </style>

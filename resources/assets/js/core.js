@@ -123,3 +123,43 @@ $('#input-search-header').bind('keyup', function() {
 	})
 
 }, 500));
+
+$(function() {
+
+
+	new Mmenu("#mmenu", {
+		"offCanvas": {
+			"position": "left-front"
+		},
+		"setSelected": {
+			'current': 'detect',
+			// "hover": true,
+			// "parent": true
+		},
+		sidebar: {
+			collapsed: {
+				use: true
+			},
+			expanded: {
+				use: true
+			}
+		},
+		// "navbars": [{
+		// 	"position": "top",
+		// 	"content": [
+		// 		"breadcrumbs",
+		// 		"close"
+		// 	]
+		// }],
+		// "theme": "black",
+		// "navbars": [{
+		// 	"position": "bottom",
+		// 	"content": [
+		// 		"<a class='fa fa-envelope' href='#/'></a>",
+		// 		"<a class='fa fa-twitter' href='#/'></a>",
+		// 		"<a class='fa fa-facebook' href='#/'></a>"
+		// 	]
+		// }]
+	});
+
+})

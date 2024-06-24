@@ -243,21 +243,22 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.editor').each(function() {
-		var height = $(this).attr('rows') || $(this).parent().parent().height();
-		var placeholder = ($(this).attr('placeholder') || 'Escreva aqui') + '...';
-		new FroalaEditor(this, {
-			// theme: 'light',
-			language: 'pt_br',
-			height: 300,
-			placeholderText: placeholder,
-			key: '1C%kZV[IX)_SL}UJHAEFZMUJOYGYQE[\\ZJ]RAe)+%$==',
-			toolbarSticky: false,
-			attribution: false,
-			toolbarBottom: false,
-			wordCounterCount: true,
-			charCounterCount: true,
+	if (typeof FroalaEditor !== 'undefined')
+		$('.editor').each(function() {
+			var height = $(this).attr('rows') || $(this).parent().parent().height();
+			var placeholder = ($(this).attr('placeholder') || 'Escreva aqui') + '...';
+			new FroalaEditor(this, {
+				// theme: 'light',
+				language: 'pt_br',
+				height: 300,
+				placeholderText: placeholder,
+				key: '1C%kZV[IX)_SL}UJHAEFZMUJOYGYQE[\\ZJ]RAe)+%$==',
+				toolbarSticky: false,
+				attribution: false,
+				toolbarBottom: false,
+				wordCounterCount: true,
+				charCounterCount: true,
+			});
 		});
-	});
 
 });

@@ -256,6 +256,12 @@ nav ul a,
 
 /** Page Title */
 
+.mm-page {
+	margin: 0;
+	transform: none !important;
+	width: 100% !important;
+}
+
 .navbar h1 {
 	position: absolute;
 	left: 0;
@@ -679,6 +685,140 @@ footer .logo-footer {
 	background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
+/** MMenu */
+
+.mm-menu {
+	top: 65px;
+	height: calc(100% - 65px);
+	left: 0;
+	z-index: 9999999999;
+	transform: none;
+	transition: 300ms;
+	width: 300px !important;
+}
+
+.mm-listitem,
+.mm-listitem::after,
+.mm-listitem a {
+	border: 0 !important;
+}
+
+.mm-listitem {
+	margin: 10px 0;
+}
+
+.mm-listitem:not(.mm-listitem--selected) a:not(.mm-btn--next) {
+	background-color: var(--grey-lighten-3);
+}
+
+.mm-listitem.mm-listitem--selected a {
+	background-image: var(--gradient-45deg-teal-teal);
+	color: #ffffff;
+	box-shadow: 0 0 10px 0px var(--teal);
+}
+
+.sidenav-active-rounded .mm-listitem a {
+	margin-right: 20px;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+	padding-right: 20px;
+}
+
+.sidenav-active-rounded .mm-listitem a {
+	width: calc(100% - 20px);
+}
+
+.nav-collapsed .sidenav-active-rounded .mm-listitem a {
+	margin: 0;
+	border-radius: 0;
+}
+
+.nav-collapsed .menu-title {
+	display: none;
+}
+
+.sidenav-active-rounded .mm-btn--next::after,
+.sidenav-active-rounded .mm-btn--prev::before {
+	/* margin-right: 10px; */
+}
+
+#mm-1 .mm-navbar {
+	display: none;
+}
+
+.mm-listitem.menu-title {
+
+	font-size: .85rem;
+	font-weight: 600;
+	margin-top: 10px;
+	padding: 0 23px !important;
+	color: #969696;
+	text-transform: uppercase;
+}
+
+.mm-listitem__text {
+	text-overflow: unset;
+	display: flex;
+	align-items: center;
+	padding-left: 16px;
+}
+
+.mm-listitem__text i {
+	margin-right: 20px;
+}
+
+.mm-btn--next {
+	position: absolute;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	color: #fff;
+}
+
+.nav-collapsed .mm-btn--next::after {
+	border: none;
+}
+
+.mm-wrapper--sidebar-expanded .mm-menu--sidebar-expanded {
+	border-color: var(--grey-lighten-2);
+}
+
+.dark-theme .mm-btn--next:after,
+.dark-theme .mm-btn--prev:before {
+	border-color: var(--grey-darken-2);
+}
+
+.dark-theme .mm-panel {
+	background-color: #000000 !important;
+}
+
+.dark-theme .mm-listitem {
+	color: var(--grey-darken-1);
+}
+
+.dark-theme .mm-listitem--selected>.mm-listitem__text {
+	background: var(--grey-darken-5);
+	color: var(--grey-lighten-1);
+}
+
+.dark-theme .mm-navbar {
+	text-align: left;
+	color: var(--grey-darken-3);
+	background: var(--grey-darken-5);
+}
+
+.dark-theme .mm-menu--position-bottom.mm-menu--opened,
+.dark-theme .mm-menu--position-left-front.mm-menu--opened,
+.dark-theme .mm-menu--position-right-front.mm-menu--opened,
+.dark-theme .mm-menu--position-top.mm-menu--opened {
+	border-color: var(--grey-darken-4);
+}
+
+.mm-navbar>* {
+	justify-content: start;
+}
+
 /** Logo */
 
 .application-logo {
@@ -692,7 +832,9 @@ footer .logo-footer {
 	display: block;
 	z-index: 999998;
 	padding: 10px 0;
-	width: 100%;
+	/* width: 100%; */
+	width: 300px;
+	/* left: -8px; */
 }
 
 .application-logo:before,
@@ -749,14 +891,25 @@ footer .logo-footer {
 
 /** Layout Collapsed */
 
-.nav-collapsed aside {
-	width: 60px;
+.nav-collapsed aside,
+.nav-collapsed #mmenu {
+	width: 60px !important;
 }
 
 .nav-collapsed main,
 .nav-collapsed .navbar .navbar-main {
 	padding-left: 90px;
 }
+
+.nav-collapsed .application-logo {
+	display: none;
+}
+
+.nav-collapsed .navbar h1 {
+	left: 0px;
+}
+
+/*
 
 .nav-collapsed footer {
 	width: calc(100% - 60px);
@@ -765,7 +918,7 @@ footer .logo-footer {
 .nav-collapsed .progress {
 	left: 60px;
 	width: calc(100% - 60px);
-}
+} */
 
 .nav-collapsed .sidenav li:hover>a,
 .nav-collapsed .sidenav li>a.active {
@@ -794,7 +947,7 @@ footer .logo-footer {
 }
 
 .nav-collapsed header .navbar .navbar-main {
-	padding-left: 70px;
+	/* padding-left: 70px; */
 }
 
 .nav-collapsed .sidenav .application-logo img,
@@ -1148,8 +1301,9 @@ main .card-panel>.card-header~.card-content {
 /** Profile Card */
 
 .profile-card {
-	min-height: 420px;
-	max-height: 420px;
+	/* min-height: 420px; */
+	/* max-height: 420px; */
+	max-height: 450px;
 }
 
 .profile-card .title {
