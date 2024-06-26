@@ -162,4 +162,12 @@ $(function() {
 		// }]
 	});
 
+
+	// $('#mm-open-menu').on('click', function() {
+	// 	$('#mmenu').css({
+	// 		'width': '300px !important',
+	// 		'display': 'block'
+	// 	})
+	// })
+
 })

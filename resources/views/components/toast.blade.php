@@ -27,11 +27,6 @@
 	#toast-container {
 		top: 40px;
 		right: 30px;
-		/*
-		right: auto;
-		left: 20px;
-		bottom: 20px;
-		*/
 		z-index: 9999999;
 	}
 </style>
