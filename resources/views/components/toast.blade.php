@@ -3,8 +3,6 @@
 	    'class' => 'toast animated fadeIn z-depth-3 white-text',
 	    'style' => 'top: 0px; opacity: 1;',
 	]) }}>
-		{{-- <span>I am toast content</span> --}}
-		{{-- <button class="btn-flat toast-action">Undo</button> --}}
 		{{ $slot }}
 	</div>
 </div>
