@@ -2,20 +2,22 @@
 
 namespace App\Models\Clinica;
 
+use App\Http\Requests\Clinica\PacienteRequest;
 use App\Models\Clinica\Model;
+use App\Models\FileModel;
 use Illuminate\Support\Facades\DB;
 
-// use Illuminate\Database\Eloquent\Factories\HasFactory;
+class PacienteModel extends Model {
 
-class PacienteModel extends Model
-{
+	protected $table    = 'tb_paciente';
+	protected $fillable = ['id', 'nome', 'codigo', 'imagem', 'associado', 'id_estado_civil', 'id_etnia',
+		'sexo', 'data_nascimento', 'cpf', 'rg', 'cns', 'mae', 'pai', 'notas_gerais',
+		'notas_alergias', 'notas_clinicas', 'logradouro', 'numero', 'complemento', 'cidade',
+		'bairro', 'cep', 'uf', 'pais', 'email', 'telefone', 'celular', 'receber_notificacoes',
+		'receber_email', 'receber_sms', 'obito', 'status',
+		'matricula', 'id_tipo_convenio', 'id_acomodacao', 'validade'];
 
-	// use HasFactory;
-
-	protected $table = 'tb_paciente';
-
-	public function getColumns()
-	{
+	public function getColumns() {
 
 		return $this->select(
 			'id', 'nome', 'codigo', 'imagem', 'associado', 'id_estado_civil', 'id_etnia',
@@ -35,8 +37,7 @@ class PacienteModel extends Model
 
 	}
 
-	public function get($data = null)
-	{
+	public function get($data = null) {
 
 		$get = $this->getColumns();
 
@@ -87,17 +88,15 @@ class PacienteModel extends Model
 
 	}
 
-	public function getWhere($data = null, $where = null)
-	{
+	public function getWhere($data = null, $where = null) {
 
 		$where = is_array($data) ? $data : [$data => $where];
 
-		return $this->getColumns()->where($where)->first();
+		return $this->getColumns()->where('is_deleted', false)->where($where)->first();
 
 	}
 
-	public function search($search, $both = true)
-	{
+	public function search($search, $both = true) {
 
 		return $this->getColumns()
 			->whereAny([
@@ -111,7 +110,51 @@ class PacienteModel extends Model
 				DB::raw('REGEXP_REPLACE(telefone, "[^\\x20-\\x7E]", "")'),
 				DB::raw('REGEXP_REPLACE(celular, "[^\\x20-\\x7E]", "")'),
 			], 'like', ($both ? '%' : null) . $search . '%')
+			->where('is_deleted', false)
 			->get();
+
+	}
+
+	public function cadastra(PacienteRequest $request) {
+
+		$data = $request->all();
+		unset($data['id'], $data['_method'], $data['_token']);
+
+		$data['id_estado_civil'] = $data['estado_civil'] ?? 1;
+		$data['id_etnia']        = $data['etnia'] ?? 1;
+		$data['id_convenio']     = $data['convenio'] ?? 1;
+		$data['observacoes']     = $data['notas'];
+		$data['data_nascimento'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['data_nascimento'])));
+		$data['matricula']       = rand(1000, 9999);
+		$imagem                  = $request->file('imagem');
+
+		if (empty($data['imagem'])) {
+			unset($data['imagem']);
+		}
+
+		if (empty($data['status'])) {
+			$data['status'] = '0';
+		}
+
+		unset($data['estado_civil'], $data['etnia'], $data['notas'], $data['convenio']);
+
+		$id_paciente = $this->updateOrCreate(['cpf' => $data['cpf']], $data);
+
+		FileModel::addAttachments($imagem, $id_paciente->id);
+
+	}
+
+	public function removePaciente($id) {
+
+		$id = [$id];
+
+		return $this->whereIn('id', $id)
+			->update([
+				'is_deleted' => '1',
+				'deleted_at' => DB::raw('NOW()'),
+			]);
+
+		return true;
 
 	}
 

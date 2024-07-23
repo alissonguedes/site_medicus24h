@@ -9,8 +9,7 @@ use App\Models\Model;
  */
 if (!function_exists('replace')) {
 
-	function replace($string, $find = ' ', $replace = '-', $to_lower = true)
-	{
+	function replace($string, $find = ' ', $replace = '-', $to_lower = true) {
 
 		$args = func_get_args();
 
@@ -102,8 +101,7 @@ if (!function_exists('replace')) {
 
 if (!function_exists('lang')) {
 
-	function lang($return_id = false)
-	{
+	function lang($return_id = false) {
 
 		$sigla = isset($_COOKIE['idioma']) ? $_COOKIE['idioma'] : config('site.language');
 
@@ -128,8 +126,7 @@ if (!function_exists('lang')) {
 
 if (!function_exists('getMenu')) {
 
-	function getMenu($local, $id = null, $path = null)
-	{
+	function getMenu($local, $id = null, $path = null) {
 
 		$model = new Model();
 		$model->setConnection(env('DB_SYSTEM_CONNECTION'));
@@ -337,8 +334,7 @@ if (!function_exists('getMenu')) {
 
 if (!function_exists('make_menu')) {
 
-	function make_menu($local, $path = null, $id = null, $s = null)
-	{
+	function make_menu($local, $path = null, $id = null, $s = null) {
 
 		if (!empty($attributes)) {
 			foreach ($attributes as $ind => $val) {
@@ -362,8 +358,7 @@ if (!function_exists('make_menu')) {
 
 if (!function_exists('base_url')) {
 
-	function base_url()
-	{
+	function base_url() {
 
 		$path     = '/';
 		$base_url = explode('/', request()->getRequestUri());
@@ -389,11 +384,30 @@ if (!function_exists('base_url')) {
 
 if (!function_exists('site_url')) {
 
-	function site_url()
-	{
+	function site_url() {
 
 		return url('/') . '/';
 
 	}
 
+}
+
+if (!function_exists('getImg')) {
+
+	function getImg($img) {
+
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $img);
+		// curl_setopt($curl, CURLOPT_USERAGENT, 'Opera/9.80 (Windows NT 6.2; Win64; x64) Presto/2.12.388 Version/12.15');
+		// curl_setopt($curl, CURLOPT_HTTPHEADER, ['User-Agent: Opera/9.80 (Windows NT 6.2; Win64; x64) Presto/2.12.388 Version/12.15', 'Referer: http://someaddress.tld', 'Content-Type: multipart/form-data']);
+		// curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // stop verifying certificate
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_POST, false);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		$r = curl_exec($curl);
+		curl_close($curl);
+
+		return !empty($r);
+
+	}
 }

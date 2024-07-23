@@ -3,26 +3,36 @@
 	<x-slot:icon> people </x-slot:icon>
 	<x-slot:title> Pacientes </x-slot:title>
 
+	{{-- <x-slot:info>Total: {{ $pacientes->count() }}</x-slot:info> --}}
+
 	<x-slot:body>
 
 		<div class="row">
 			@if (isset($pacientes) && $pacientes->count() > 0)
 				@foreach ($pacientes as $row)
-					<div class="col s12 m6 l4 card-width">
+					<div id="paciente_{{ $row->id }}" class="col s12 m6 l4 card-width">
 						<div class="profile-card card card-border center-align border-radius-6 z-depth-0 gradient-shadow">
 							<div class="card-content white-text">
 
 								@php
+
 									if (!isset($row->status) || (isset($row->status) && $row->status === '0')):
 									    $style = 'opacity: 0.6; filter: grayscale(1)';
 									endif;
+
+									$target = route('clinica.show-image-profile', ['paciente', $row->id]);
+
+									$img = !getImg($target) ? (!isset($row->sexo) || (isset($row->sexo) && empty($row->sexo)) ? asset('assets/img/avatar/avatar-0.png') : ($row->sexo == 'M' ? asset('assets/img/avatar/homem.png') : asset('assets/img/avatar/mulher.png'))) : $target;
 								@endphp
 
-								<img src="{{ asset($row->imagem ?? (!isset($row->sexo) || (isset($row->sexo) && is_null($row->sexo)) ? 'assets/img/avatar/avatar-0.png' : ($row->sexo == 'M' ? 'assets/img/avatar/homem.png' : 'assets/img/avatar/mulher.png'))) }}" class="responsive-img circle z-depth-4" style="{{ $style ?? null }}" alt="" width="100">
+								<div class="center-align responsive-img circle z-depth-4" style="position: relative; margin: auto; overflow: hidden; width: 100px; height: 100px;">
+									<img src="{{ $img }}" class="" style="width: 100%;" alt="">
+								</div>
+
 								<h5 class="title white-text mt-0 uppercase" style="max-width: 100%">{{ $row->nome ?? null }}</h5>
 
 								@if (isset($row->status) && $row->status === 'Inativo')
-									<div class="btn btn-floating z-depth-0 transparent" style="position: absolute; right: 18px; top: 18px; font-size: 24px;" data-tooltip="Paciente inativo">
+									<div class="btn btn-floating z-depth-0 transparent" data-tooltip="Paciente inativo" style="position: absolute; right: 18px; top: 18px; font-size: 24px;">
 										<i class="material-symbols-outlined teal-text" style="font-size: inherit; font-weight: 400; color: #fff !important;">lock</i>
 									</div>
 								@endif

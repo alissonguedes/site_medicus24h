@@ -5,7 +5,7 @@
 </div>
 
 <div class="row">
-	<div class="col s12 m4 l4">
+	{{-- <div class="col s12 m4 l4">
 		<label for="obito" class="active">Quadro clínico evoluiu para óbito</label>
 		<div id="obito" class="switch mt-3">
 			<label>
@@ -25,7 +25,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --}}
 	<div class="col s12 m4 l4">
 		<label for="status" class="active">Paciente ativo</label>
 		<div id="status" class="switch mt-3">
@@ -36,5 +36,36 @@
 				Sim
 			</label>
 		</div>
+	</div>
+</div>
+
+<hr class="border mt-4 mb-4">
+
+<form action="{{ route('clinica.pacientes.delete') }}" method="post" id="delete_data" data-target="paciente">
+
+	<div class="row">
+		<div class="col s12">
+			<label for="">Excluir este paciente:</label>
+		</div>
+		<div class="col s12 mt-1">
+			<input type="hidden" name="id" value="{{ $id ?? null }}">
+			<button type="button" class="btn delete left waves-effect" data-target="paciente" style="align-items: center; display: flex; background-color: var(--red) !important;">
+				<i class="material-symbols-outlined">delete</i>
+				Excluir
+			</button>
+		</div>
+	</div>
+
+</form>
+
+<div id="confirm_delete" class="modal modal-fixed-footer">
+	<div class="modal-content">
+		<h3>ATENÇÃO!!!</h3>
+		<p>Tem certeza que deseja excluir este paciente?</p>
+		<p>Esta ação não poderá ser defeita.</p>
+	</div>
+	<div class="modal-footer">
+		<button type="button" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
+		<button type="button" id="confirm" class="btn red waves-effect">Confirmar</button>
 	</div>
 </div>

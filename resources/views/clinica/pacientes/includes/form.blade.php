@@ -1,11 +1,12 @@
-<x-header-page data-href="{{ route('clinica.pacientes.index') }}" placeholder="Pesquisar banners..." title="Adicionar Banner">add</x-header-page>
+<x-header-page data-href="{{ route('clinica.pacientes.index') }}" placeholder="Pesquisar pacientes..." title="Adicionar Paciente">add</x-header-page>
 
 @if (request('id'))
 	@php
 		$id = $paciente->id;
 		$nome = $paciente->nome;
 		$codigo = $paciente->codigo;
-		$imagem = $paciente->imagem;
+		$img = route('clinica.show-image-profile', ['paciente', $id]);
+		$imagem = getImg($img) ? $img : asset('assets/img/avatar/avatar-0.png');
 		$associado = $paciente->associado;
 		$id_estado_civil = $paciente->id_estado_civil;
 		$id_etnia = $paciente->id_etnia;
@@ -45,13 +46,14 @@
 		$data_obito = $paciente->data_obito;
 		$hora_obito = $paciente->hora_obito;
 		$etnia = $paciente->etnia;
-		$imagem = route('clinica.pacientes.show-image', $id) . '?action=preview';
+		// $imagem = route('clinica.pacientes.show-image', $id) . '?action=preview';
 	@endphp
 @endif
 
 <x-slot:form action="{{ route('clinica.pacientes.post') }}" method="post" style="{{ $errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);' }}" autocomplete="off">
 
 	@csrf
+	<input type="hidden" name="categoria" value="paciente">
 
 	@if (request('id'))
 		<input type="hidden" name="_method" value="put">
@@ -128,8 +130,7 @@
 		</div>
 	</x-slot:card_footer>
 
-</x-slot:form>
+	@pushOnce('scripts')
+	@endPushOnce
 
-{{-- <x-slot:scripts_form>
-	<script src="{{ asset('assets/js/clinica/js/pacientes/form.js') }}" defer></script>
-</x-slot:scripts_form> --}}
+</x-slot:form>

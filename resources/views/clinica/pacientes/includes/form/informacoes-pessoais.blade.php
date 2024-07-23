@@ -3,11 +3,13 @@
 		<h6>Informações pessoais</h6>
 	</div>
 </div>
+
 <div class="row">
+
 	<div class="col s12 m3 l2">
 		<div class="profile flex flex-column flex-center">
 			<div class="profile-image circle z-depth-2">
-				<img src="{{ isset($img_profile) ? old($img_profile) ?? $img_profile : asset('assets/img/avatar/avatar-0.png') }}" style=" opacity: 0.45; filter: grayscale(1); " alt="">
+				<img src="{{ $imagem ?? null }}" style="@if (isset($img) && !getImg($img)) opacity: 0.45; filter: grayscale(1); @endif" alt="">
 			</div>
 			<div class="change-photo btn btn-floating z-depth-3 waves-effect blue lighten-1">
 				<label for="imagem" class="material-symbols-outlined white-text cursor-pointer" style="line-height: inherit;">photo_camera</label>
@@ -15,7 +17,9 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="col s12 m9 l10">
+
 		<div class="row">
 			<div class="col s12 m12 l7">
 				<div class="input-field @error('nome') error @enderror">
@@ -66,7 +70,7 @@
 					<div class="col s12 m6 l4">
 						<div class="input-field @error('data_nascimento') error @enderror">
 							<label for="data_nascimento" class="active">Data de nascimento</label>
-							<input type="text" name="data_nascimento" value="{{ old('data_nascimento', isset($data_nascimento) ? $data_nascimento : null) }}" data-mask="date" data-max-date="{{ date('d/m/Y') }}" placeholder="dd/mm/yyyy" maxlength="10">
+							<input type="text" name="data_nascimento" class="datepicker" value="{{ old('data_nascimento', isset($data_nascimento) ? $data_nascimento : null) }}" data-mask="date" data-max-date="{{ date('d/m/Y') }}" placeholder="dd/mm/yyyy" maxlength="10">
 							@error('data_nascimento')
 								<small class="error">{{ $message }}</small>
 							@enderror

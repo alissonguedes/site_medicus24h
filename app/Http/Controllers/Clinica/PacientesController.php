@@ -7,21 +7,24 @@ use App\Http\Requests\Clinica\PacienteRequest;
 use App\Models\Clinica\EstadocivilModel;
 use App\Models\Clinica\EtniaModel;
 use App\Models\Clinica\PacienteModel;
+use App\Models\FileModel;
 use Illuminate\Http\Request;
 
-class PacientesController extends Controller
-{
+class PacientesController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil)
-	{
+	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil) {
 
-		$data['pacientes']    = $paciente->get();
-		$data['paciente']     = $paciente->getWhere(['id' => $request->id]);
 		$data['estado_civil'] = $estadocivil->get();
 		$data['etnias']       = $etnia->get();
+		$data['pacientes']    = $paciente->get();
+		$data['paciente']     = $paciente->getWhere(['id' => $request->id]);
+
+		if ($request->id && empty($data['paciente'])) {
+			return redirect()->route('clinica.pacientes.index');
+		}
 
 		return view('clinica.pacientes.index', $data);
 
@@ -30,8 +33,7 @@ class PacientesController extends Controller
 	/**
 	 * Search banners
 	 */
-	public function search(Request $request, PacienteModel $paciente)
-	{
+	public function search(Request $request, PacienteModel $paciente) {
 
 		$data['pacientes'] = $paciente->search($request->search);
 
@@ -42,39 +44,18 @@ class PacientesController extends Controller
 	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create()
-	{
+	public function create() {
 		//
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(PacienteRequest $request, PacienteModel $paciente)
-	{
+	public function store(PacienteRequest $request, PacienteModel $paciente) {
 
 		$data = $request->all();
 
-		unset($data['id'], $data['_method'], $data['_token']);
-
-		if (empty($data['imagem'])) {
-			unset($data['imagem']);
-		}
-
-		if (empty($data['status'])) {
-			$data['status'] = '0';
-		}
-
-		$data['id_estado_civil'] = $data['estado_civil'] ?? 1;
-		$data['id_etnia']        = $data['etnia'] ?? 1;
-		$data['id_convenio']     = $data['convenio'] ?? 1;
-		$data['observacoes']     = $data['notas'];
-		$data['data_nascimento'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['data_nascimento'])));
-		$data['matricula']       = rand(1000, 9999);
-
-		unset($data['estado_civil'], $data['etnia'], $data['notas'], $data['convenio']);
-
-		$paciente->insert($data);
+		$paciente->cadastra($request);
 
 		return redirect()->route('clinica.pacientes.index')->with(['message' => 'Paciente cadastrado com sucesso!']);
 
@@ -83,24 +64,21 @@ class PacientesController extends Controller
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(PacienteModel $pacienteModel)
-	{
+	public function show(Request $request, FileModel $file, int $file_id) {
 		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(PacienteModel $pacienteModel)
-	{
+	public function edit(PacienteModel $pacienteModel) {
 		//
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(PacienteRequest $request, PacienteModel $paciente)
-	{
+	public function update(PacienteRequest $request, PacienteModel $paciente) {
 
 		$data = $request->all();
 
@@ -131,10 +109,24 @@ class PacientesController extends Controller
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(PacienteModel $pacienteModel)
-	{
+	public function destroy(Request $request, PacienteModel $paciente) {
 
-		//
+		// $this->authorize('delete', PacienteModel::class);
+
+		if ($paciente->removePaciente($request->id)) {
+			$status  = 'success';
+			$message = 'Paciente removido com sucesso!';
+		} else {
+			$status  = 'error';
+			$message = $paciente->getErros();
+		}
+
+		return response()->json([
+			'status'  => $status,
+			'message' => $message,
+			'type'    => 'redirect',
+			'url'     => url()->route('clinica.pacientes.index'),
+		]);
 
 	}
 }

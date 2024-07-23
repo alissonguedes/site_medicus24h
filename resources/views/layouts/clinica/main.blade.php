@@ -27,12 +27,12 @@
 			<div class="card card-panel no-padding no-margin">
 
 				@if (isset($header))
-					<section class="card-header animated fadeIn">
+					<section class="card-header">
 						{{ $header }}
 					</section>
 				@endif
 
-				<div class="card-content animated fadeIn">
+				<div class="card-content">
 					@if (isset($body))
 						{{ $body }}
 					@endif

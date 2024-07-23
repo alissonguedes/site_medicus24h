@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ApresentacaoController as Apresentacao;
 use App\Http\Controllers\Admin\A_IbrController as A_Ibr;
 use App\Http\Controllers\Admin\BannersController as Banners;
 use App\Http\Controllers\Admin\PastoresController as Pastores;
+use App\Http\Controllers\APIController as API;
 
 // Admin Controllers
 use App\Http\Controllers\Clinica\HomeController as ClinicaHome;
@@ -24,6 +25,8 @@ Route::prefix('/')->group(function () {
 
 });
 
+Route::get('/profile/image/preview/{file_categ}/{file_id}', [API::class, 'show_image_profile'])->name('clinica.show-image-profile');
+
 Route::middleware([
 	'auth',
 	'verified',
@@ -43,7 +46,8 @@ Route::middleware([
 		Route::get('/{search}', [Pacientes::class, 'search'])->name('clinica.pacientes.search');
 		Route::get('/id/{id}', [Pacientes::class, 'index'])->name('clinica.pacientes.edit');
 		Route::post('/', [Pacientes::class, 'store'])->name('clinica.pacientes.post');
-		Route::put('/', [Pacientes::class, 'update'])->name('clinica.pacientes.post');
+		Route::put('/', [Pacientes::class, 'store'])->name('clinica.pacientes.post');
+		Route::delete('/', [Pacientes::class, 'destroy'])->name('clinica.pacientes.delete');
 
 	});
 
