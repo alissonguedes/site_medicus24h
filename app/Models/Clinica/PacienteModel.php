@@ -125,8 +125,18 @@ class PacienteModel extends Model {
 		$data['id_convenio']     = $data['convenio'] ?? 1;
 		$data['observacoes']     = $data['notas'];
 		$data['data_nascimento'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['data_nascimento'])));
-		$data['matricula']       = rand(1000, 9999);
 		$imagem                  = $request->file('imagem');
+		$matricula               = $data['matricula'] ?? gera_cartao(null, true);
+		$data['matricula']       = $matricula;
+
+		if (request()->method() == 'PUT') {
+
+			// if (!empty($data['matricula'])) {
+			// 	unset($data['matricula']);
+			// }
+
+			unset($data['codigo']);
+		}
 
 		if (empty($data['imagem'])) {
 			unset($data['imagem']);

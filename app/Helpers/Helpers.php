@@ -411,3 +411,63 @@ if (!function_exists('getImg')) {
 
 	}
 }
+
+/**
+ * Gera o número do Cartão / Matrícula do paciente
+ */
+
+if (!function_exists('gera_cartao')) {
+
+	function gera_cartao($codigo = null, $format = false, $separator = ' ') {
+
+		$faker = new Faker\Factory();
+
+		if (empty($codigo)) {
+
+			$codigo = $faker->create('pt_BR')->imei();
+
+		}
+
+		if (!isValidImei($codigo)) {
+			return $codigo . ' -> not Valid';
+		}
+
+		if ($format) {
+			$number = substr($codigo, 0, 3) . $separator . substr($codigo, 3, 3) . $separator . substr($codigo, 6, 6) . $separator . substr($codigo, 12, 3);
+		} else {
+			$number = $codigo;
+		}
+
+		return $number;
+	}
+
+	function sumDig($n) {
+		$a = 0;
+		while ($n > 0) {
+			$a = $a + $n % 10;
+			$n = $n / 10;
+		}
+		return $a;
+	}
+
+	function isValidImei($n) {
+
+		$s   = (string) ($n);
+		$len = strlen($s);
+
+		if ($len != 15) {
+			return false;
+		}
+		$sum = 0;
+		for ($i = $len; $i >= 1; $i--) {
+			$d = (int) ($n % 10);
+			if ($i % 2 === 0) {
+				$d = 2 * $d;
+			}
+			$sum += sumDig($d);
+			$n = $n / 10;
+		}
+		return ($sum % 10 === 0);
+	}
+
+}

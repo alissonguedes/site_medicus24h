@@ -58,13 +58,13 @@
 
 </form>
 
-<div id="confirm_delete" class="modal modal-fixed-footer">
+<div id="confirm_delete" class="modal modal-fixedfooter">
 	<div class="modal-content">
 		<h3>ATENÇÃO!!!</h3>
 		<p>Tem certeza que deseja excluir este paciente?</p>
 		<p>Esta ação não poderá ser defeita.</p>
 	</div>
-	<div class="modal-footer">
+	<div class="modal-footer border-top grey-border border-lighten-3">
 		<button type="button" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
 		<button type="button" id="confirm" class="btn red waves-effect">Confirmar</button>
 	</div>
