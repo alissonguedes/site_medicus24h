@@ -7,10 +7,9 @@ use App\Http\Requests\Clinica\PacienteRequest;
 use App\Models\Clinica\EstadocivilModel;
 use App\Models\Clinica\EtniaModel;
 use App\Models\Clinica\PacienteModel;
-use App\Models\FileModel;
 use Illuminate\Http\Request;
 
-class PacientesController extends Controller
+class HomecareController extends Controller
 {
 
 	/**
@@ -19,16 +18,16 @@ class PacientesController extends Controller
 	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil)
 	{
 
+		$data['pacientes'] = $paciente->where('id', function ($query) {
+			$query->select('id_paciente')->from('tb_paciente_homecare')
+				->whereColumn('id_paciente', 'id');
+		})->get();
+
+		$data['paciente']     = $paciente->getWhere(['id' => $request->id]);
 		$data['estado_civil'] = $estadocivil->get();
 		$data['etnias']       = $etnia->get();
-		$data['pacientes']    = $paciente->get();
-		$data['paciente']     = $paciente->getWhere(['id' => $request->id]);
 
-		if ($request->id && empty($data['paciente'])) {
-			return redirect()->route('clinica.pacientes.index');
-		}
-
-		return view('clinica.pacientes.index', $data);
+		return view('clinica.homecare.index', $data);
 
 	}
 
@@ -40,7 +39,7 @@ class PacientesController extends Controller
 
 		$data['pacientes'] = $paciente->search($request->search);
 
-		return view('clinica.pacientes.index', $data);
+		return view('clinica.homecare.index', $data);
 
 	}
 
@@ -60,16 +59,35 @@ class PacientesController extends Controller
 
 		$data = $request->all();
 
-		$paciente->cadastra($request);
+		unset($data['id'], $data['_method'], $data['_token']);
 
-		return redirect()->route('clinica.pacientes.index')->with(['message' => 'Paciente cadastrado com sucesso!']);
+		if (empty($data['imagem'])) {
+			unset($data['imagem']);
+		}
+
+		if (empty($data['status'])) {
+			$data['status'] = '0';
+		}
+
+		$data['id_estado_civil'] = $data['estado_civil'] ?? 1;
+		$data['id_etnia']        = $data['etnia'] ?? 1;
+		$data['id_convenio']     = $data['convenio'] ?? 1;
+		$data['observacoes']     = $data['notas'];
+		$data['data_nascimento'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['data_nascimento'])));
+		$data['matricula']       = rand(1000, 9999);
+
+		unset($data['estado_civil'], $data['etnia'], $data['notas'], $data['convenio']);
+
+		$paciente->insert($data);
+
+		return redirect()->route('clinica.homecare.index')->with(['message' => 'Paciente cadastrado com sucesso!']);
 
 	}
 
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(Request $request, FileModel $file, int $file_id)
+	public function show(PacienteModel $pacienteModel)
 	{
 		//
 	}
@@ -110,32 +128,17 @@ class PacientesController extends Controller
 
 		$paciente->where(['id' => $request->id])->update($data);
 
-		return redirect()->route('clinica.pacientes.index')->with(['message' => 'Paciente atualizado com sucesso!']);
+		return redirect()->route('clinica.homecare.index')->with(['message' => 'Paciente atualizado com sucesso!']);
 
 	}
 
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(Request $request, PacienteModel $paciente)
+	public function destroy(PacienteModel $pacienteModel)
 	{
 
-		// $this->authorize('delete', PacienteModel::class);
-
-		if ($paciente->removePaciente($request->id)) {
-			$status  = 'success';
-			$message = 'Paciente removido com sucesso!';
-		} else {
-			$status  = 'error';
-			$message = $paciente->getErros();
-		}
-
-		return response()->json([
-			'status'  => $status,
-			'message' => $message,
-			'type'    => 'redirect',
-			'url'     => url()->route('clinica.pacientes.index'),
-		]);
+		//
 
 	}
 }

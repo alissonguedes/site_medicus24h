@@ -59,6 +59,15 @@ body::after {
 
 /** Commons */
 
+hr {
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	border-bottom: 1px solid;
+	border-color: var(--grey-lighten-2);
+	margin: 30px 0;
+}
+
 nav ul a,
 a {
 	color: var(--teal-lighten-1);
@@ -1047,6 +1056,7 @@ body:has(footer) main .card-panel {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	z-index: 999;
 }
 
 .card-header {
@@ -1304,7 +1314,7 @@ main .card-panel>.card-header~.card-content {
 
 .card-panel form.card-reveal>.card>.card-tabs~.card-content {
 	top: 57px;
-	height: calc(100% - 125px);
+	height: calc(100% - 144px);
 }
 
 /** Profile Card */
@@ -1640,6 +1650,20 @@ textarea.materialize-textarea:not([readonly]),
 	border-bottom-left-radius: 0;
 	border-left: 0;
 	padding-left: 0;
+}
+
+/** Tables */
+
+table.bordered {
+	border: 1px solid;
+	border-color: var(--grey-lighten-2);
+}
+
+table.bordered th,
+table.bordered tr,
+table.bordered td {
+	border: 1px solid;
+	border-color: inherit;
 }
 
 /** Responsive layout */

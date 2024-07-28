@@ -1,4 +1,4 @@
-<x-header-page data-href="{{ route('clinica.pacientes.index') }}" placeholder="Pesquisar pacientes..." title="Adicionar Paciente">
+<x-header-page data-href="{{ route('clinica.homecare.index') }}" placeholder="Pesquisar pacientes..." title="Adicionar Paciente">
 	<x-slot:add_button>
 		add
 	</x-slot:add_button>
@@ -9,8 +9,7 @@
 		$id = $paciente->id;
 		$nome = $paciente->nome;
 		$codigo = $paciente->codigo;
-		$img = route('clinica.show-image-profile', ['paciente', $id]);
-		$imagem = getImg($img) ? $img : asset('assets/img/avatar/avatar-0.png');
+		$imagem = $paciente->imagem;
 		$associado = $paciente->associado;
 		$id_estado_civil = $paciente->id_estado_civil;
 		$id_etnia = $paciente->id_etnia;
@@ -50,14 +49,13 @@
 		$data_obito = $paciente->data_obito;
 		$hora_obito = $paciente->hora_obito;
 		$etnia = $paciente->etnia;
-		// $imagem = route('clinica.pacientes.show-image', $id) . '?action=preview';
+		$imagem = route('clinica.pacientes.show-image', $id) . '?action=preview';
 	@endphp
 @endif
 
 <x-slot:form action="{{ route('clinica.pacientes.post') }}" method="post" style="{{ $errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);' }}" autocomplete="off">
 
 	@csrf
-	<input type="hidden" name="categoria" value="paciente">
 
 	@if (request('id'))
 		<input type="hidden" name="_method" value="put">
@@ -71,7 +69,6 @@
 			<li class="tab"><a href="#endereco">Endereço</a></li>
 			<li class="tab"><a href="#convenio">Convênio</a></li>
 			<li class="tab"><a href="#observacoes">Observações</a></li>
-			<li class="tab"><a href="#gestao_de_cuidados">Gestao de Cuidados</a></li>
 			<li class="tab"><a href="#outras_informacoes">Outras informações</a></li>
 		</ul>
 	</x-slot:form_tabs>
@@ -110,12 +107,6 @@
 			</div>
 			<!-- END #observacoes -->
 
-			<!-- BEGIN #homecare -->
-			<div id="homecare">
-				@include('clinica.pacientes.includes.form.gestao_de_cuidados')
-			</div>
-			<!-- END #homecare -->
-
 			<!-- BEGIN #outras_informacoes -->
 			<div id="outras_informacoes">
 				@include('clinica.pacientes.includes.form.mais-informacoes')
@@ -141,7 +132,8 @@
 		</div>
 	</x-slot:card_footer>
 
-	@pushOnce('scripts')
-	@endPushOnce
-
 </x-slot:form>
+
+{{-- <x-slot:scripts_form>
+	<script src="{{ asset('assets/js/clinica/js/pacientes/form.js') }}" defer></script>
+</x-slot:scripts_form> --}}
