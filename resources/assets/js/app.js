@@ -165,7 +165,7 @@ $(document).ready(function () {
 
 	});
 
-	$('#card-button,.icon-background').unbind().bind('click', function () {
+	$('#card-button,.icon-background,.edit').unbind().bind('click', function () {
 		var url = $(this).data('href');
 		$('form.card-reveal').show();
 		if (typeof url !== 'undefined') {
