@@ -50,7 +50,6 @@
 		$data_obito = $paciente->data_obito;
 		$hora_obito = $paciente->hora_obito;
 		$etnia = $paciente->etnia;
-		// $imagem = route('clinica.pacientes.show-image', $id) . '?action=preview';
 	@endphp
 @endif
 

@@ -1,7 +1,7 @@
 <x-clinica-layout>
 
 	<x-slot:icon> real_estate_agent </x-slot:icon>
-	<x-slot:title> Homecare </x-slot:title>
+	<x-slot:title> Programas </x-slot:title>
 
 	<x-slot:body>
 
@@ -64,7 +64,7 @@
 				@endforeach
 			@else
 				<div class="col s12">
-					Nenhum paciente cadastrado nesta modalidade.
+					Nenhum programa cadastrado.
 				</div>
 			@endif
 
@@ -72,6 +72,6 @@
 
 	</x-slot:body>
 
-	@include('clinica.homecare.includes.form-homecare')
+	@include('clinica.homecare.includes.form')
 
 </x-clinica-layout>

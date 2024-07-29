@@ -1,13 +1,16 @@
-<x-admin-layout>
+<x-clinica-layout>
 
-	<x-slot:icon> dashboard </x-slot:icon>
-	<x-slot:title> Dashboard </x-slot:title>
+	<x-slot:icon> people </x-slot:icon>
+	<x-slot:title> Pacientes </x-slot:title>
 
-	<x-slot:main>
-	</x-slot:main>
+	{{-- <x-slot:info>Total: {{ $pacientes->count() }}</x-slot:info> --}}
 
-	<x-slot:script>
-		{{-- <script src="{{ asset('assets/scripts/app/clinica/core.js') }}"></script> --}}
-	</x-slot:script>
+	<x-slot:body>
 
-</x-admin-layout>
+		{{-- {!! make_menu('main-menu', 'clinica') !!} --}}
+
+	</x-slot:body>
+
+	@include('clinica.pacientes.includes.form')
+
+</x-clinica-layout>

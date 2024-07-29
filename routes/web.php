@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\PastoresController as Pastores;
 use App\Http\Controllers\APIController as API;
 
 // Clinica Controllers
-use App\Http\Controllers\Clinica\HomecareController as Homecare;
+use App\Http\Controllers\Clinica\Homecare\GestaoDeCuidadosController as Homecare;
 use App\Http\Controllers\Clinica\HomeController as ClinicaHome;
 use App\Http\Controllers\Clinica\PacientesController as Pacientes;
 
@@ -58,8 +58,23 @@ Route::middleware([
 	// HomeCare
 	Route::prefix('/homecare')->group(function () {
 
-		Route::get('/', [Homecare::class, 'index'])->name('clinica.homecare.index');
-		Route::get('/gestao-de-cuidados', [Homecare::class, 'index'])->name('clinica.homecare.gestao-de-cuidados');
+		Route::get('/', function () {
+
+			return redirect()->route('clinica.homecare.gestao-de-cuidados');
+
+		})->name('clinica.homecare.index');
+
+		Route::prefix('/gestao-de-cuidados')->group(function () {
+
+			Route::get('/', [Homecare::class, 'index'])->name('clinica.homecare.gestao-de-cuidados');
+			Route::get('/{search}', [Homecare::class, 'search'])->name('clinica.homecare.gestao-de-cuidados.search');
+			Route::get('/id/{id}', [Homecare::class, 'index'])->name('clinica.homecare.gestao-de-cuidados.edit');
+			Route::post('/', [Homecare::class, 'store'])->name('clinica.homecare.gestao-de-cuidados.post');
+			Route::put('/', [Homecare::class, 'update'])->name('clinica.homecare.gestao-de-cuidados.post');
+			Route::delete('/', [Homecare::class, 'destroy'])->name('clinica.homecare.gestao-de-cuidados.delete');
+
+		});
+
 		Route::get('/tarefas', [Homecare::class, 'index'])->name('clinica.homecare.tarefas');
 		Route::get('/pacientes', [Homecare::class, 'index'])->name('clinica.homecare.pacientes');
 

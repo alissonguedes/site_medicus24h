@@ -103,6 +103,12 @@ main,
 	padding: 30px 30px 30px 330px;
 }
 
+.noUi-origin,
+.noUi-handle-touch-area,
+.noUi-handle {
+	cursor: pointer !important;
+}
+
 /** Main */
 
 main {
@@ -1267,6 +1273,8 @@ main .card-panel>.card-header~.card-content {
 
 .card-tabs {
 	border-bottom: 1px solid var(--grey-lighten-2);
+	z-index: 1;
+	position: relative;
 }
 
 .card-tabs .tabs {

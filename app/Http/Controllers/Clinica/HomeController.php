@@ -12,7 +12,7 @@ class HomeController extends Controller {
 	 */
 	public function index() {
 
-		return view('clinica.home.index');
+		return view('clinica.dashboard');
 
 	}
 

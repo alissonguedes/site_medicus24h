@@ -17,6 +17,7 @@
         "jquery": "^3.7.1",
         "materialize-css": "^1.0.0-rc.2",
         "mmenu-js": "^9.3.0",
+        "nouislider": "^15.8.1",
         "pace-js": "^1.2.4",
         "perfect-scrollbar": "^1.5.5"
     }

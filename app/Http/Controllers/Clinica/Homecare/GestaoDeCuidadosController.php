@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Clinica;
+namespace App\Http\Controllers\Clinica\Homecare;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Clinica\PacienteRequest;
+use App\Http\Requests\Clinica\GestaoDeCuidadoRequest;
 use App\Models\Clinica\EstadocivilModel;
 use App\Models\Clinica\EtniaModel;
 use App\Models\Clinica\PacienteModel;
 use Illuminate\Http\Request;
 
-class HomecareController extends Controller
-{
+class GestaoDeCuidadosController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil)
-	{
+	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil) {
 
 		$data['pacientes'] = $paciente->where('id', function ($query) {
 			$query->select('id_paciente')->from('tb_paciente_homecare')
@@ -34,8 +32,7 @@ class HomecareController extends Controller
 	/**
 	 * Search banners
 	 */
-	public function search(Request $request, PacienteModel $paciente)
-	{
+	public function search(Request $request, PacienteModel $paciente) {
 
 		$data['pacientes'] = $paciente->search($request->search);
 
@@ -46,16 +43,14 @@ class HomecareController extends Controller
 	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create()
-	{
+	public function create() {
 		//
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(PacienteRequest $request, PacienteModel $paciente)
-	{
+	public function store(GestaoDeCuidadoRequest $request, PacienteModel $paciente) {
 
 		$data = $request->all();
 
@@ -87,24 +82,21 @@ class HomecareController extends Controller
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(PacienteModel $pacienteModel)
-	{
+	public function show(PacienteModel $pacienteModel) {
 		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(PacienteModel $pacienteModel)
-	{
+	public function edit(PacienteModel $pacienteModel) {
 		//
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(PacienteRequest $request, PacienteModel $paciente)
-	{
+	public function update(PacienteRequest $request, PacienteModel $paciente) {
 
 		$data = $request->all();
 
@@ -135,8 +127,7 @@ class HomecareController extends Controller
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(PacienteModel $pacienteModel)
-	{
+	public function destroy(PacienteModel $pacienteModel) {
 
 		//
 

@@ -10,7 +10,7 @@
 
 		<div class="row">
 
-			<div class="col s12 m4 l4 mb-1">
+			<div class="col s12 mb-1">
 
 				<div class="input-field">
 
@@ -118,18 +118,18 @@
 								<thead>
 									<tr>
 										<th class="center-align">Descrição</th>
-										<th class="center-align">Programa</th>
-										<th class="center-align">Data de entrada</th>
-										<th class="center-align">Data de saída/alta</th>
-										<th class="center-align">Recorrência</th>
+										<th class="center-align">Prazo de conclusão</th>
+										<th class="center-align">Responsáveis</th>
+										<th class="center-align">Tipo da tarefa</th>
+										<th class="center-align"></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<td class="center-align">Aplicação de insulina</td>
-										<td class="center-align">Aplicação de medicamentos</td>
-										<td class="center-align">28/07/2024</td>
-										<td class="center-align">Não</td>
+										<td class="center-align">30 dias</td>
+										<td class="center-align">Selecionar manualmente</td>
+										<td class="center-align">Por Agendamento</td>
 										<td class="center-align">Sim</td>
 									</tr>
 								</tbody>
@@ -179,3 +179,5 @@
 		Tarefas
 	</div>
 </div>
+
+<script src="{{ asset('assets/js/clinica/pacientes/modal_programa.js') }}"></script>
