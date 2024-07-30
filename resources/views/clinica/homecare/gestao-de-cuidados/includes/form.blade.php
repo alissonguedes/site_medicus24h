@@ -45,7 +45,7 @@
 					<label for="titulo">Nome do programa</label>
 					<input type="text" name="titulo" id="titulo" value="{{ old('titulo', $titulo ?? null) }}">
 					@error('titulo')
-						{{ $message }}
+						<div class="error">{{ $message }}</div>
 					@enderror
 				</div>
 			</div>
@@ -53,11 +53,11 @@
 
 		<div class="row">
 			<div class="col s12">
-				<div class="input-field @error('titulo') error @enderror">
+				<div class="input-field @error('descricao') error @enderror">
 					<label for="descricao">Descrição do programa</label>
 					<input type="text" name="descricao" id="descricao" value="{{ old('descricao', $descricao ?? null) }}">
 					@error('descricao')
-						{{ $message }}
+						<div class="error">{{ $message }}</div>
 					@enderror
 				</div>
 			</div>
@@ -73,7 +73,7 @@
 						<option value="F" @selected(old() ? old('sexo') == 'F' : $sexo == 'F' ?? null)>Mulheres</option>
 					</select>
 					@error('sexo')
-						{{ $message }}
+						<div class="error">{{ $message }}</div>
 					@enderror
 				</div>
 			</div>
@@ -82,11 +82,11 @@
 		<div class="row">
 			<div class="col s12">
 				<div class="range-field @error('faixa_etaria') error @enderror">
-					<label for="faixa_etaria">Faixa etária</label>
+					<label for="faixa_etaria" class="active">Faixa etária</label>
 					<input type="hidden" name="faixa_etaria" value="{{ $idade_minima ?? null }} - {{ $idade_maxima ?? null }}">
-					<div id="faixa_etaria" class="mt-2 mb-2"></div>
+					<div id="faixa_etaria" class="mt-3 mb-1"></div>
 					@error('faixa_etaria')
-						{{ $message }}
+						<div class="error">{{ $message }}</div>
 					@enderror
 				</div>
 				<div class="label">
@@ -137,7 +137,7 @@
 							@foreach ($profissionais as $value)
 								@if ($responsaveis || old('responsaveis'))
 									@php
-										$selected = old() ? in_array($value['id'], old('responsaveis')) : in_array($value['id'], $responsaveis);
+										$selected = old() ? (old('responsaveis') ? in_array($value['id'], old('responsaveis')) : old('responsaveis')) : in_array($value['id'], $responsaveis);
 									@endphp
 								@endif
 
@@ -148,7 +148,7 @@
 
 					</select>
 					@error('responsaveis')
-						{{ $message }}
+						<div class="error">{{ $message }}</div>
 					@enderror
 				</div>
 			</div>
