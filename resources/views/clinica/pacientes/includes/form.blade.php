@@ -109,11 +109,11 @@
 			</div>
 			<!-- END #observacoes -->
 
-			<!-- BEGIN #homecare -->
+			{{-- <!-- BEGIN #homecare -->
 			<div id="homecare">
 				@include('clinica.pacientes.includes.form.gestao_de_cuidados')
 			</div>
-			<!-- END #homecare -->
+			<!-- END #homecare --> --}}
 
 			<!-- BEGIN #outras_informacoes -->
 			<div id="outras_informacoes">

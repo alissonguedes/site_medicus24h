@@ -9,6 +9,7 @@ use App\Http\Controllers\APIController as API;
 
 // Clinica Controllers
 use App\Http\Controllers\Clinica\Homecare\GestaoDeCuidadosController as Homecare;
+use App\Http\Controllers\Clinica\Homecare\PacientesController as PacientesHomecare;
 use App\Http\Controllers\Clinica\HomeController as ClinicaHome;
 use App\Http\Controllers\Clinica\PacientesController as Pacientes;
 
@@ -75,8 +76,11 @@ Route::middleware([
 
 		});
 
-		Route::get('/tarefas', [Homecare::class, 'index'])->name('clinica.homecare.tarefas');
-		Route::get('/pacientes', [Homecare::class, 'index'])->name('clinica.homecare.pacientes');
+		// Route::get('/tarefas', [Homecare::class, 'index'])->name('clinica.homecare.tarefas');
+
+		Route::prefix('/pacientes')->group(function () {
+			Route::get('/', [PacientesHomecare::class, 'index'])->name('clinica.homecare.pacientes');
+		});
 
 	});
 

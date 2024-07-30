@@ -76,12 +76,12 @@
 
 		@endif
 
-		@if (session()->has('message'))
-			<x-toast class="green darken-4">{{ session()->get('message') }}</x-toast>
-		@endif
-
 		@if (count($errors) > 0)
 			<x-toast class="red darken-2">Existem erros no formulário!</x-toast>
+		@endif
+
+		@if (session('message'))
+			<x-toast class="green darken-4">{{ session('message') }}</x-toast>
 		@endif
 
 	</main>

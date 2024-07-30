@@ -20,19 +20,19 @@ class GestaoDeCuidadosController extends Controller
 		$data['programas'] = $programa->get();
 		$data['programa']  = $programa->where(['id' => $request->id])->get()->first();
 
-		return view('clinica.homecare.index', $data);
+		return view('clinica.homecare.gestao-de-cuidados.index', $data);
 
 	}
 
 	/**
 	 * Search banners
 	 */
-	public function search(Request $request, PacienteModel $paciente)
+	public function search(Request $request, ProgramaModel $programa)
 	{
 
-		$data['pacientes'] = $paciente->search($request->search);
+		$data['programas'] = $programa->where('titulo', 'like', '%' . $request->search)->get();
 
-		return view('clinica.homecare.index', $data);
+		return view('clinica.homecare.gestao-de-cuidados.index', $data);
 
 	}
 
@@ -80,7 +80,7 @@ class GestaoDeCuidadosController extends Controller
 
 		}
 
-		return redirect()->route('clinica.homecare.index')->with(['message' => 'Programa cadastrado com sucesso!']);
+		return redirect()->route('clinica.homecare.gestao-de-cuidados')->with(['message' => 'Programa cadastrado com sucesso!']);
 
 	}
 
@@ -97,39 +97,7 @@ class GestaoDeCuidadosController extends Controller
 	 */
 	public function edit(ProgramaModel $programa)
 	{
-
-		$data = $request->all();
-
-		$responsaveis      = $data['responsaveis'];
-		$faixa_etaria      = explode(' - ', $data['faixa_etaria']);
-		$data['idade_min'] = $faixa_etaria[0];
-		$data['idade_max'] = $faixa_etaria[1];
-		$data['publico']   = $data['sexo'];
-
-		unset($data['sexo'], $data['responsaveis'], $data['faixa_etaria'], $data['_token'], $data['id'], $data['_method']);
-
-		$id_programa = $programa->where('id', $data['id'])->update($data);
-
-		// Cadastrar os responsáveis pelo programa
-		// foreach ($responsaveis as $r) {
-
-		// 	$id_responsavel = $r;
-
-		// 	$issetResponsavel = $programa->select('id_programa', 'id_profissional')->from('tb_programas_responsavel')
-		// 		->where('id_programa', $id_programa)
-		// 		->where('id_profissional', $id_responsavel)
-		// 		->get()
-		// 		->first();
-
-		// 	if (!isset($issetResponsavel)) {
-		// 		$programa->from('tb_programas_responsavel')
-		// 			->insert(['id_programa' => $id_programa, 'id_profissional' => $id_responsavel]);
-		// 	}
-
-		// }
-
-		// return redirect()->route('clinica.homecare.index')->with(['message' => 'Programa cadastrado com sucesso!']);
-
+		//
 	}
 
 	/**
@@ -171,7 +139,7 @@ class GestaoDeCuidadosController extends Controller
 
 		}
 
-		return redirect()->route('clinica.homecare.index')->with(['message' => 'Programa alterado com sucesso!']);
+		return redirect()->route('clinica.homecare.gestao-de-cuidados')->with(['message' => 'Programa alterado com sucesso!']);
 
 	}
 
@@ -180,8 +148,7 @@ class GestaoDeCuidadosController extends Controller
 	 */
 	public function destroy(PacienteModel $pacienteModel)
 	{
-
 		//
-
 	}
+
 }

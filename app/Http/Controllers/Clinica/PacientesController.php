@@ -106,7 +106,7 @@ class PacientesController extends Controller
 		$data['observacoes']     = $data['notas'];
 		$data['data_nascimento'] = date('Y-m-d', strtotime(str_replace('/', '-', $data['data_nascimento'])));
 
-		unset($data['estado_civil'], $data['etnia'], $data['notas'], $data['convenio']);
+		unset($data['estado_civil'], $data['etnia'], $data['notas'], $data['convenio'], $data['categoria']);
 
 		$paciente->where(['id' => $request->id])->update($data);
 

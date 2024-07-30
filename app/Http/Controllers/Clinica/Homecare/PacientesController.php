@@ -10,75 +10,85 @@ use App\Models\Clinica\PacienteModel;
 use App\Models\FileModel;
 use Illuminate\Http\Request;
 
-class PacientesController extends Controller {
+class PacientesController extends Controller
+{
 
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil) {
+	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil)
+	{
 
 		$data['estado_civil'] = $estadocivil->get();
 		$data['etnias']       = $etnia->get();
-		$data['pacientes']    = $paciente->get();
-		$data['paciente']     = $paciente->getWhere(['id' => $request->id]);
+		$data['pacientes']    = $paciente->from('tb_paciente_homecare AS H')
+			->join('tb_paciente AS P', 'P.id', 'H.id_paciente')
+			->get();
+		$data['paciente'] = $paciente->getWhere(['id' => $request->id]);
 
 		if ($request->id && empty($data['paciente'])) {
-			return redirect()->route('clinica.pacientes.index');
+			return redirect()->route('clinica.homecare.pacientes.index');
 		}
 
-		return view('clinica.pacientes.index', $data);
+		return view('clinica.homecare.pacientes.index', $data);
 
 	}
 
 	/**
 	 * Search banners
 	 */
-	public function search(Request $request, PacienteModel $paciente) {
+	public function search(Request $request, PacienteModel $paciente)
+	{
 
 		$data['pacientes'] = $paciente->search($request->search);
 
-		return view('clinica.pacientes.index', $data);
+		return view('clinica.homecare.pacientes.index', $data);
 
 	}
 
 	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create() {
+	public function create()
+	{
 		//
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(PacienteRequest $request, PacienteModel $paciente) {
+	public function store(PacienteRequest $request, PacienteModel $paciente)
+	{
 
 		$data = $request->all();
 
 		$paciente->cadastra($request);
 
-		return redirect()->route('clinica.pacientes.index')->with(['message' => 'Paciente cadastrado com sucesso!']);
+		return redirect()->route('clinica.homecare.pacientes')->with(['message' => 'Paciente cadastrado com sucesso!']);
 
 	}
 
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(Request $request, FileModel $file, int $file_id) {
+	public function show(Request $request, FileModel $file, int $file_id)
+	{
 		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(PacienteModel $pacienteModel) {
+	public function edit(PacienteModel $pacienteModel)
+	{
 		//
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(PacienteRequest $request, PacienteModel $paciente) {
+	public function update(PacienteRequest $request, PacienteModel $paciente)
+	{
 
 		$data = $request->all();
 
@@ -102,14 +112,15 @@ class PacientesController extends Controller {
 
 		$paciente->where(['id' => $request->id])->update($data);
 
-		return redirect()->route('clinica.pacientes.index')->with(['message' => 'Paciente atualizado com sucesso!']);
+		return redirect()->route('clinica.homecare.pacientes')->with(['message' => 'Paciente atualizado com sucesso!']);
 
 	}
 
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(Request $request, PacienteModel $paciente) {
+	public function destroy(Request $request, PacienteModel $paciente)
+	{
 
 		// $this->authorize('delete', PacienteModel::class);
 

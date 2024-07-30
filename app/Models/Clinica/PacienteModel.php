@@ -7,7 +7,8 @@ use App\Models\Clinica\Model;
 use App\Models\FileModel;
 use Illuminate\Support\Facades\DB;
 
-class PacienteModel extends Model {
+class PacienteModel extends Model
+{
 
 	protected $table    = 'tb_paciente';
 	protected $fillable = ['id', 'nome', 'codigo', 'imagem', 'associado', 'id_estado_civil', 'id_etnia',
@@ -17,7 +18,8 @@ class PacienteModel extends Model {
 		'receber_email', 'receber_sms', 'obito', 'status',
 		'matricula', 'id_tipo_convenio', 'id_acomodacao', 'validade'];
 
-	public function getColumns() {
+	public function getColumns()
+	{
 
 		return $this->select(
 			'id', 'nome', 'codigo', 'imagem', 'associado', 'id_estado_civil', 'id_etnia',
@@ -37,7 +39,8 @@ class PacienteModel extends Model {
 
 	}
 
-	public function get($data = null) {
+	public function get($data = null)
+	{
 
 		$get = $this->getColumns();
 
@@ -88,7 +91,8 @@ class PacienteModel extends Model {
 
 	}
 
-	public function getWhere($data = null, $where = null) {
+	public function getWhere($data = null, $where = null)
+	{
 
 		$where = is_array($data) ? $data : [$data => $where];
 
@@ -96,7 +100,8 @@ class PacienteModel extends Model {
 
 	}
 
-	public function search($search, $both = true) {
+	public function search($search, $both = true)
+	{
 
 		return $this->getColumns()
 			->whereAny([
@@ -115,10 +120,11 @@ class PacienteModel extends Model {
 
 	}
 
-	public function cadastra(PacienteRequest $request) {
+	public function cadastra(PacienteRequest $request)
+	{
 
 		$data = $request->all();
-		unset($data['id'], $data['_method'], $data['_token']);
+		unset($data['id'], $data['_method'], $data['_token'], $data['categoria']);
 
 		$data['id_estado_civil'] = $data['estado_civil'] ?? 1;
 		$data['id_etnia']        = $data['etnia'] ?? 1;
@@ -154,7 +160,8 @@ class PacienteModel extends Model {
 
 	}
 
-	public function removePaciente($id) {
+	public function removePaciente($id)
+	{
 
 		$id = [$id];
 
