@@ -102,6 +102,7 @@
 
 					@php
 						$responsaveis = [];
+						$responsavel_tarefa = [];
 						if (request('id')) {
 						    $programaModel = App\Models\Clinica\ProgramaModel::from('tb_programas_responsavel')->where('id_programa', request('id'))->get();
 
@@ -201,10 +202,93 @@
 
 		</div>
 
-		<div id="modal_tarefa" class="modal">
+		<div id="modal_tarefa" class="modal modal-fixed-footer">
+
 			<div class="modal-content">
-				Tarefas
+
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field">
+							<label for="titulo_tarefa">Nome da Tarefa</label>
+							<input type="text" name="titulo_tarefa" id="titulo_tarefa" value="">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field">
+							<label for="descricao_tarefa">Descrição da Tarefa</label>
+							<input type="text" name="descricao_tarefa" id="descricao_tarefa" value="">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field">
+							<label for="prazo_tarefa">Prazo para conclusão</label>
+							<input type="text" name="prazo_tarefa" id="prazo_tarefa" value="">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field">
+							<label for="responsavel_tarefa">Responsáveis por esta tarefa</label>
+
+							<select name="responsavel_tarefa[]" id="responsavel_tarefa" multiple>
+								<option value="" disabled>Profissionais responsáveis</option>
+
+								@if ($profissionais)
+
+									@foreach ($profissionais as $value)
+										@if ($responsavel_tarefa || old('responsavel_tarefa'))
+											@php
+												$selected = old() ? (old('responsavel_tarefa') ? in_array($value['id'], old('responsavel_tarefa')) : old('responsavel_tarefa')) : in_array($value['id'], $responsavel_tarefa);
+											@endphp
+										@endif
+
+										<option value="{{ $value['id'] }}" @selected($selected ?? null)>{{ $value['nome'] }}</option>
+									@endforeach
+
+								@endif
+
+							</select>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field">
+							<label for="tipo_tarefa">Tipo da tarefa</label>
+							<input type="text" name="tipo_tarefa" id="tipo_tarefa" value="">
+						</div>
+					</div>
+				</div>
+
 			</div>
+
+			<div class="modal-footer">
+
+				<div class="row">
+					<div class="col s12 right-align">
+						<button type="button" class="btn white black-text waves-effect left modal-close">
+							<i class="material-symbols-outlined hide-on-small-only left">cancel</i>
+							<span class="">Cancelar</span>
+						</button>
+						<button type="button" class="btn waves-effect">
+							<i class="material-symbols-outlined hide-on-small-only left">save</i>
+							<span class="">Salvar</span>
+						</button>
+					</div>
+				</div>
+
+			</div>
+
 		</div>
 
 	</div>
