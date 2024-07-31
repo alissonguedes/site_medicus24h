@@ -8,7 +8,7 @@ button.addEventListener('click', function() {
 		onCloseStart: (e, f) => {
 
 			e.children[0].querySelectorAll('input,textarea,select').forEach((a, b) => {
-				console.log(a.value = '')
+				a.value = ''
 			});
 
 		}
