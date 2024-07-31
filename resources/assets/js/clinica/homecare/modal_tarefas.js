@@ -5,10 +5,11 @@ button.addEventListener('click', function() {
 
 	var tarefa = M.Modal.init(modal, {
 
-		onCloseStart: () => {
+		onCloseStart: (e, f) => {
 
-			console.log($);
-			alert('teste' + $)
+			e.children[0].querySelectorAll('input,textarea,select').forEach((a, b) => {
+				console.log(a.value = '')
+			});
 
 		}
 
