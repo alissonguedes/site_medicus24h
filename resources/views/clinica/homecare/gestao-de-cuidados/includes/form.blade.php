@@ -68,9 +68,9 @@
 				<div class="input-field @error('sexo') error @enderror">
 					<label for="sexo">Público alvo</label>
 					<select name="sexo" id="sexo">
-						<option value="A" @selected(old() ? old('sexo') == 'A' : $sexo == 'A' ?? null)>Indiferente</option>
-						<option value="M" @selected(old() ? old('sexo') == 'M' : $sexo == 'M' ?? null)>Homens</option>
-						<option value="F" @selected(old() ? old('sexo') == 'F' : $sexo == 'F' ?? null)>Mulheres</option>
+						<option value="A" @selected(old() ? old('sexo') == 'A' : isset($sexo) && $sexo == 'A' ?? null)>Indiferente</option>
+						<option value="M" @selected(old() ? old('sexo') == 'M' : isset($sexo) && $sexo == 'M' ?? null)>Homens</option>
+						<option value="F" @selected(old() ? old('sexo') == 'F' : isset($sexo) && $sexo == 'F' ?? null)>Mulheres</option>
 					</select>
 					@error('sexo')
 						<div class="error">{{ $message }}</div>
@@ -84,7 +84,7 @@
 				<div class="range-field @error('faixa_etaria') error @enderror">
 					<label for="faixa_etaria" class="active">Faixa etária</label>
 					<input type="hidden" name="faixa_etaria" value="{{ $idade_minima ?? null }} - {{ $idade_maxima ?? null }}">
-					<div id="faixa_etaria" class="mt-3 mb-1"></div>
+					<div id="faixa_etaria" class="mt-2 mb-1"></div>
 					@error('faixa_etaria')
 						<div class="error">{{ $message }}</div>
 					@enderror
@@ -177,7 +177,7 @@
 
 			<div class="col s12">
 
-				<table id="table-tarefa" class="bordered">
+				<table id="table_tarefas" class="bordered">
 					<thead>
 						<tr>
 							<th class="center-align">Descrição</th>
@@ -208,34 +208,43 @@
 
 				<div class="row">
 					<div class="col s12">
-						<div class="input-field">
+						<div class="input-field @error('titulo_tarefa') error @enderror">
 							<label for="titulo_tarefa">Nome da Tarefa</label>
 							<input type="text" name="titulo_tarefa" id="titulo_tarefa" value="">
+							@error('titulo_tarefa')
+								<div class="error">{{ $message }}</div>
+							@enderror
 						</div>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col s12">
-						<div class="input-field">
+						<div class="input-field @error('descricao_tarefa') error @enderror">
 							<label for="descricao_tarefa">Descrição da Tarefa</label>
 							<input type="text" name="descricao_tarefa" id="descricao_tarefa" value="">
+							@error('descricao_tarefa')
+								<div class="error">{{ $message }}</div>
+							@enderror
 						</div>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col s12">
-						<div class="input-field">
+						<div class="input-field @error('prazo_tarefa') error @enderror">
 							<label for="prazo_tarefa">Prazo para conclusão</label>
 							<input type="text" name="prazo_tarefa" id="prazo_tarefa" value="">
+							@error('prazo_tarefa')
+								<div class="error">{{ $message }}</div>
+							@enderror
 						</div>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col s12">
-						<div class="input-field">
+						<div class="input-field @error('responsavel_tarefa') error @enderror">
 							<label for="responsavel_tarefa">Responsáveis por esta tarefa</label>
 
 							<select name="responsavel_tarefa[]" id="responsavel_tarefa" multiple>
@@ -257,15 +266,22 @@
 
 							</select>
 
+							@error('responsavel_tarefa')
+								<div class="error">{{ $message }}</div>
+							@enderror
+
 						</div>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col s12">
-						<div class="input-field">
+						<div class="input-field @error('tipo_tarefa') error @enderror">
 							<label for="tipo_tarefa">Tipo da tarefa</label>
 							<input type="text" name="tipo_tarefa" id="tipo_tarefa" value="">
+							@error('tipo_tarefa')
+								<div class="error">{{ $message }}</div>
+							@enderror
 						</div>
 					</div>
 				</div>
@@ -280,7 +296,7 @@
 							<i class="material-symbols-outlined hide-on-small-only left">cancel</i>
 							<span class="">Cancelar</span>
 						</button>
-						<button type="button" class="btn waves-effect">
+						<button type="button" class="btn waves-effect save">
 							<i class="material-symbols-outlined hide-on-small-only left">save</i>
 							<span class="">Salvar</span>
 						</button>
@@ -313,5 +329,93 @@
 	<script src="{{ asset('assets/node_modules/materialize-css/extras/noUiSlider/nouislider.js') }}"></script>
 	<script src="{{ asset('assets/js/clinica/homecare/gestao_cuidados.js') }}"></script>
 	<script src="{{ asset('assets/js/clinica/homecare/modal_tarefas.js') }}"></script>
+
+	<script>
+		$(function() {
+
+			function delete_convidado() {
+				$('#lista_convidados').find('[name="deletar"]').unbind().bind('click', function() {
+					$(this).parents('tr').remove();
+				});
+			}
+
+			delete_convidado();
+
+			var modal_tarefa = $('#modal_tarefa').modal({
+
+				onCloseStart: function() {
+					$('#modal_tarefa').find('.modal-content').find('.input-field input:not([placeholder]),.input-field textarea').parent().find('label').removeClass('active')
+					$('#modal_tarefa').find('.modal-content').find('input:not([type="checkbox"]):not([type="radio"]),select,textarea').val('');
+					$('#modal_tarefa').find('.modal-content').find('select').val('Classe do convidado').formSelect().trigger('change');
+					$('#modal_tarefa').find('.modal-content').find('input:checkbox,input:radio').prop('checked', false).change();
+					$('#modal_tarefa').find('.modal-content').find('.input-field').removeClass('invalid wrong').find('.invalid').remove();
+				}
+
+			});
+
+			$('#modal_tarefa').find('.modal-footer button.save').bind('click', function() {
+
+				var data = {};
+				var values = [];
+				var inputs = $('#modal_tarefa').find('.modal-content').find('input,select,textarea');
+
+				inputs.each(function() {
+
+					if ($(this).is(':valid') || $(this).is(':checked')) {
+
+						var name = $(this).attr('name');
+
+						Object.assign(data, {
+							[name]: $(this).val()
+						});
+
+					}
+
+				});
+
+				$.ajax({
+
+					method: 'post',
+					// datatype: 'html',
+					url: "{{ route('clinica.homecare.gestao-de-cuidados.tarefas') }}",
+					data: inputs.serialize(),
+					headers: {
+						'X-CSRF-Token': '{{ csrf_token() }}',
+					},
+					success: function(response) {
+
+						$('#modal_tarefa').find('.modal-content').find('.input-field').removeClass('error wrong').find('.error').remove();
+
+						var table = $(response).find('tbody').html();
+
+						$('#lista_convidados').find('tbody').append(table);
+
+						modal_tarefa.modal('close')
+
+						delete_convidado();
+
+					},
+
+					error: function(response) {
+
+						var errors = response.responseJSON.errors;
+						$('#modal_tarefa').find('.modal-content').find('.input-field').removeClass('error wrong').find('.error').remove();
+
+						for (var i in errors) {
+
+							var input = $('#modal_tarefa').find('.modal-content').find(`[name="${i}"]`);
+
+							input.parents('.input-field').addClass('error').append(`<div class="error">${errors[i][0]}</div>`);
+
+						}
+
+					}
+
+				})
+
+			});
+
+		});
+	</script>
 
 </x-slot:form>

@@ -74,6 +74,11 @@ Route::middleware([
 			Route::put('/', [Homecare::class, 'update'])->name('clinica.homecare.gestao-de-cuidados.post');
 			Route::delete('/', [Homecare::class, 'destroy'])->name('clinica.homecare.gestao-de-cuidados.delete');
 
+			Route::prefix('/tarefas')->group(function () {
+				Route::get('/', [Homecare::class, 'addTarefa'])->name('clinica.homecare.gestao-de-cuidados.tarefas');
+				Route::post('/', [Homecare::class, 'addTarefa'])->name('clinica.homecare.gestao-de-cuidados.tarefas');
+			});
+
 		});
 
 		// Route::get('/tarefas', [Homecare::class, 'index'])->name('clinica.homecare.tarefas');
