@@ -19,6 +19,7 @@
         "mmenu-js": "^9.3.0",
         "nouislider": "^15.8.1",
         "pace-js": "^1.2.4",
-        "perfect-scrollbar": "^1.5.5"
+        "perfect-scrollbar": "^1.5.5",
+        "select2": "^4.1.0-rc.0"
     }
 }

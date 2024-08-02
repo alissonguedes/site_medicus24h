@@ -120,22 +120,15 @@ class PacientesController extends Controller
 	public function destroy(Request $request, PacienteModel $paciente)
 	{
 
-		// $this->authorize('delete', PacienteModel::class);
+		// // $this->authorize('delete', PacienteModel::class);
 
 		if ($paciente->removePaciente($request->id)) {
-			$status  = 'success';
 			$message = 'Paciente removido com sucesso!';
 		} else {
-			$status  = 'error';
-			$message = $paciente->getErros();
+			$message = 'Não foi possível encontrar o registro';
 		}
 
-		return response()->json([
-			'status'  => $status,
-			'message' => $message,
-			'type'    => 'redirect',
-			'url'     => url()->route('clinica.pacientes.index'),
-		]);
+		return redirect()->route('clinica.pacientes.index')->with(['message' => $message]);
 
 	}
 }

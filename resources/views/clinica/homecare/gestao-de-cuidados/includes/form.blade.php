@@ -100,36 +100,6 @@
 				<div class="input-field mt-3 @error('responsaiveis') error @enderror">
 					<label for="responsaveis" class="active">Profissionais responsáveis</label>
 
-					@php
-						$responsaveis = [];
-						$responsavel_tarefa = [];
-						if (request('id')) {
-						    $programaModel = App\Models\Clinica\ProgramaModel::from('tb_programas_responsavel')->where('id_programa', request('id'))->get();
-
-						    if ($programaModel->count() > 0) {
-						        foreach ($programaModel as $r) {
-						            $responsaveis[] = $r->id_profissional;
-						        }
-						    }
-						}
-
-						$profissionais = [
-						    [
-						        'id' => '1',
-						        'nome' => 'Alisson',
-						    ],
-						    [
-						        'id' => '2',
-						        'nome' => 'Guedes',
-						    ],
-						    [
-						        'id' => '3',
-						        'nome' => 'Pereira',
-						    ],
-						];
-
-					@endphp
-
 					<select name="responsaveis[]" id="responsaveis" multiple>
 						<option value="" disabled>Profissionais responsáveis</option>
 
@@ -177,131 +147,68 @@
 
 			<div class="col s12">
 
-				<table id="table_tarefas" class="bordered">
+				<table id="table_tarefas">
 					<thead>
 						<tr>
+							<th class="center-align">Tarefa</th>
 							<th class="center-align">Descrição</th>
 							<th class="center-align">Prazo de conclusão</th>
-							<th class="center-align">Responsáveis</th>
 							<th class="center-align">Tipo da tarefa</th>
+							<th class="center-align">Responsáveis</th>
 							<th class="center-align"></th>
 						</tr>
 					</thead>
 					<tbody>
-						{{-- <tr>
-							<td class="center-align">Aplicação de insulina</td>
-							<td class="center-align">30 dias</td>
-							<td class="center-align">Selecionar manualmente</td>
-							<td class="center-align">Por Agendamento</td>
-							<td class="center-align">Sim</td>
-						</tr> --}}
+
+						@if (request('id'))
+
+							@php
+								$tarefaModel = new App\Models\Clinica\ProgramaModel();
+								$tarefas = $tarefaModel->from('tb_programas_tarefas')->where('id_programa', request('id'))->get();
+							@endphp
+
+							<tr class="nenhum_registro" style="display: none">
+								<td class="center-align" colspan="6">Nenhuma tarefa cadastrada</td>
+							</tr>
+
+							@if (isset($tarefas))
+								@foreach ($tarefas as $item)
+									<tr>
+										<td class="center-align">{{ $item->titulo }}</td>
+										<td class="center-align">{{ $item->descricao }}</td>
+										<td class="center-align">{{ $item->prazo }}</td>
+										<td class="center-align">{{ $item->tipo }}</td>
+										<td class="center-align">{{ $item->selecionar_responsavel }}</td>
+										<td class="center-align">
+											<button type="button" name="deletar" class="btn btn-flat btn-floating transparent waves-effect">
+												<i class="material-symbols-outlined">delete</i>
+											</button>
+										</td>
+										@php
+											$dados_tarefa = json_encode([
+											    'titulo_tarefa' => $item->titulo,
+											    'descricao_tarefa' => $item->descricao,
+											    'prazo_tarefa' => $item->prazo,
+											    'tipo_tarefa' => $item->tipo,
+											    'responsavel_tarefa' => $item->selecionar_responsavel,
+											]);
+										@endphp
+										<input type="hidden" name="tarefa[]" value="{{ $dados_tarefa }}">
+									</tr>
+								@endforeach
+							@else
+								<tr class="nenhum_registro">
+									<td class="center-align" colspan="6">Nenhuma tarefa cadastrada</td>
+								</tr>
+							@endif
+						@else
+							<tr class="nenhum_registro">
+								<td class="center-align" colspan="6">Nenhuma tarefa cadastrada</td>
+							</tr>
+						@endif
+
 					</tbody>
 				</table>
-
-			</div>
-
-		</div>
-
-		<div id="modal_tarefa" class="modal modal-fixed-footer">
-
-			<div class="modal-content">
-
-				<div class="row">
-					<div class="col s12">
-						<div class="input-field @error('titulo_tarefa') error @enderror">
-							<label for="titulo_tarefa">Nome da Tarefa</label>
-							<input type="text" name="titulo_tarefa" id="titulo_tarefa" value="">
-							@error('titulo_tarefa')
-								<div class="error">{{ $message }}</div>
-							@enderror
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col s12">
-						<div class="input-field @error('descricao_tarefa') error @enderror">
-							<label for="descricao_tarefa">Descrição da Tarefa</label>
-							<input type="text" name="descricao_tarefa" id="descricao_tarefa" value="">
-							@error('descricao_tarefa')
-								<div class="error">{{ $message }}</div>
-							@enderror
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col s12">
-						<div class="input-field @error('prazo_tarefa') error @enderror">
-							<label for="prazo_tarefa">Prazo para conclusão</label>
-							<input type="text" name="prazo_tarefa" id="prazo_tarefa" value="">
-							@error('prazo_tarefa')
-								<div class="error">{{ $message }}</div>
-							@enderror
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col s12">
-						<div class="input-field @error('responsavel_tarefa') error @enderror">
-							<label for="responsavel_tarefa">Responsáveis por esta tarefa</label>
-
-							<select name="responsavel_tarefa[]" id="responsavel_tarefa" multiple>
-								<option value="" disabled>Profissionais responsáveis</option>
-
-								@if ($profissionais)
-
-									@foreach ($profissionais as $value)
-										@if ($responsavel_tarefa || old('responsavel_tarefa'))
-											@php
-												$selected = old() ? (old('responsavel_tarefa') ? in_array($value['id'], old('responsavel_tarefa')) : old('responsavel_tarefa')) : in_array($value['id'], $responsavel_tarefa);
-											@endphp
-										@endif
-
-										<option value="{{ $value['id'] }}" @selected($selected ?? null)>{{ $value['nome'] }}</option>
-									@endforeach
-
-								@endif
-
-							</select>
-
-							@error('responsavel_tarefa')
-								<div class="error">{{ $message }}</div>
-							@enderror
-
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col s12">
-						<div class="input-field @error('tipo_tarefa') error @enderror">
-							<label for="tipo_tarefa">Tipo da tarefa</label>
-							<input type="text" name="tipo_tarefa" id="tipo_tarefa" value="">
-							@error('tipo_tarefa')
-								<div class="error">{{ $message }}</div>
-							@enderror
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-			<div class="modal-footer">
-
-				<div class="row">
-					<div class="col s12 right-align">
-						<button type="button" class="btn white black-text waves-effect left modal-close">
-							<i class="material-symbols-outlined hide-on-small-only left">cancel</i>
-							<span class="">Cancelar</span>
-						</button>
-						<button type="button" class="btn waves-effect save">
-							<i class="material-symbols-outlined hide-on-small-only left">save</i>
-							<span class="">Salvar</span>
-						</button>
-					</div>
-				</div>
 
 			</div>
 
@@ -324,98 +231,98 @@
 		</div>
 	</x-slot:card_footer>
 
-	<link rel="stylesheet" href="{{ asset('assets/node_modules/materialize-css/extras/noUiSlider/nouislider.css') }}">
+	<div id="modal_tarefa" class="modal modal-fixed-footer">
 
-	<script src="{{ asset('assets/node_modules/materialize-css/extras/noUiSlider/nouislider.js') }}"></script>
-	<script src="{{ asset('assets/js/clinica/homecare/gestao_cuidados.js') }}"></script>
-	<script src="{{ asset('assets/js/clinica/homecare/modal_tarefas.js') }}"></script>
+		<div class="modal-content">
 
-	<script>
-		$(function() {
+			<div class="row">
+				<div class="col s12">
+					<div class="input-field @error('titulo_tarefa') error @enderror">
+						<label for="titulo_tarefa">Nome da Tarefa</label>
+						<input type="text" name="titulo_tarefa" id="titulo_tarefa" value="">
+						@error('titulo_tarefa')
+							<div class="error">{{ $message }}</div>
+						@enderror
+					</div>
+				</div>
+			</div>
 
-			function delete_convidado() {
-				$('#lista_convidados').find('[name="deletar"]').unbind().bind('click', function() {
-					$(this).parents('tr').remove();
-				});
-			}
+			<div class="row">
+				<div class="col s12">
+					<div class="input-field @error('descricao_tarefa') error @enderror">
+						<label for="descricao_tarefa">Descrição da Tarefa</label>
+						<input type="text" name="descricao_tarefa" id="descricao_tarefa" value="">
+						@error('descricao_tarefa')
+							<div class="error">{{ $message }}</div>
+						@enderror
+					</div>
+				</div>
+			</div>
 
-			delete_convidado();
+			<div class="row">
+				<div class="col s12">
+					<div class="input-field @error('prazo_tarefa') error @enderror">
+						<label for="prazo_tarefa">Prazo para conclusão</label>
+						<input type="text" name="prazo_tarefa" id="prazo_tarefa" value="">
+						@error('prazo_tarefa')
+							<div class="error">{{ $message }}</div>
+						@enderror
+					</div>
+				</div>
+			</div>
 
-			var modal_tarefa = $('#modal_tarefa').modal({
+			<div class="row">
+				<div class="col s12">
+					<div class="input-field @error('responsavel_tarefa') error @enderror">
+						<label for="responsavel_tarefa">Responsáveis por esta tarefa</label>
 
-				onCloseStart: function() {
-					$('#modal_tarefa').find('.modal-content').find('.input-field input:not([placeholder]),.input-field textarea').parent().find('label').removeClass('active')
-					$('#modal_tarefa').find('.modal-content').find('input:not([type="checkbox"]):not([type="radio"]),select,textarea').val('');
-					$('#modal_tarefa').find('.modal-content').find('select').val('Classe do convidado').formSelect().trigger('change');
-					$('#modal_tarefa').find('.modal-content').find('input:checkbox,input:radio').prop('checked', false).change();
-					$('#modal_tarefa').find('.modal-content').find('.input-field').removeClass('invalid wrong').find('.invalid').remove();
-				}
+						<select name="responsavel_tarefa" id="responsavel_tarefa">
+							<option value="" disabled>Profissionais responsáveis</option>
+							<option value="todos">Todos</option>
+							<option value="manualmente">Selecionar Manualmente</option>
+						</select>
 
-			});
+						@error('responsavel_tarefa')
+							<div class="error">{{ $message }}</div>
+						@enderror
 
-			$('#modal_tarefa').find('.modal-footer button.save').bind('click', function() {
+					</div>
+				</div>
+			</div>
 
-				var data = {};
-				var values = [];
-				var inputs = $('#modal_tarefa').find('.modal-content').find('input,select,textarea');
+			<div class="row">
+				<div class="col s12">
+					<div class="input-field @error('tipo_tarefa') error @enderror">
+						<label for="tipo_tarefa">Tipo da tarefa</label>
+						<input type="text" name="tipo_tarefa" id="tipo_tarefa" value="">
+						@error('tipo_tarefa')
+							<div class="error">{{ $message }}</div>
+						@enderror
+					</div>
+				</div>
+			</div>
 
-				inputs.each(function() {
+		</div>
 
-					if ($(this).is(':valid') || $(this).is(':checked')) {
+		<div class="modal-footer">
 
-						var name = $(this).attr('name');
+			<div class="row">
+				<div class="col s12 right-align">
+					<button type="button" class="btn white black-text waves-effect left modal-close">
+						<i class="material-symbols-outlined hide-on-small-only left">cancel</i>
+						<span class="">Cancelar</span>
+					</button>
+					<button type="button" class="btn waves-effect save" data-url="{{ route('clinica.homecare.gestao-de-cuidados.tarefas') }}" data-token="{{ csrf_token() }}">
+						<i class="material-symbols-outlined hide-on-small-only left">save</i>
+						<span class="">Salvar</span>
+					</button>
+				</div>
+			</div>
 
-						Object.assign(data, {
-							[name]: $(this).val()
-						});
+		</div>
 
-					}
+	</div>
 
-				});
-
-				$.ajax({
-
-					method: 'post',
-					// datatype: 'html',
-					url: "{{ route('clinica.homecare.gestao-de-cuidados.tarefas') }}",
-					data: inputs.serialize(),
-					headers: {
-						'X-CSRF-Token': '{{ csrf_token() }}',
-					},
-					success: function(response) {
-
-						$('#modal_tarefa').find('.modal-content').find('.input-field').removeClass('error wrong').find('.error').remove();
-
-						var table = $(response).find('tbody').html();
-
-						$('#lista_convidados').find('tbody').append(table);
-
-						modal_tarefa.modal('close')
-
-						delete_convidado();
-
-					},
-
-					error: function(response) {
-
-						var errors = response.responseJSON.errors;
-						$('#modal_tarefa').find('.modal-content').find('.input-field').removeClass('error wrong').find('.error').remove();
-
-						for (var i in errors) {
-
-							var input = $('#modal_tarefa').find('.modal-content').find(`[name="${i}"]`);
-
-							input.parents('.input-field').addClass('error').append(`<div class="error">${errors[i][0]}</div>`);
-
-						}
-
-					}
-
-				})
-
-			});
-
-		});
-	</script>
+	@include('clinica.homecare.gestao-de-cuidados.includes.scripts')
 
 </x-slot:form>

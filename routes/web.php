@@ -69,6 +69,7 @@ Route::middleware([
 
 			Route::get('/', [Homecare::class, 'index'])->name('clinica.homecare.gestao-de-cuidados');
 			Route::get('/{search}', [Homecare::class, 'search'])->name('clinica.homecare.gestao-de-cuidados.search');
+			Route::get('/{search?}', [Homecare::class, 'search'])->name('clinica.homecare.programas.search');
 			Route::get('/id/{id}', [Homecare::class, 'index'])->name('clinica.homecare.gestao-de-cuidados.edit');
 			Route::post('/', [Homecare::class, 'store'])->name('clinica.homecare.gestao-de-cuidados.post');
 			Route::put('/', [Homecare::class, 'update'])->name('clinica.homecare.gestao-de-cuidados.post');
@@ -85,6 +86,9 @@ Route::middleware([
 
 		Route::prefix('/pacientes')->group(function () {
 			Route::get('/', [PacientesHomecare::class, 'index'])->name('clinica.homecare.pacientes');
+			Route::get('/{search?}', [PacientesHomecare::class, 'search'])->name('clinica.homecare.pacientes.search');
+			Route::get('/id/{id}', [PacientesHomecare::class, 'index'])->name('clinica.homecare.pacientes.edit');
+			Route::post('/', [PacientesHomecare::class, 'store'])->name('clinica.homecare.pacientes.post');
 		});
 
 	});

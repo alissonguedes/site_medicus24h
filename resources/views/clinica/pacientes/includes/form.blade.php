@@ -70,7 +70,7 @@
 			<li class="tab"><a href="#endereco">Endereço</a></li>
 			<li class="tab"><a href="#convenio">Convênio</a></li>
 			<li class="tab"><a href="#observacoes">Observações</a></li>
-			<li class="tab"><a href="#gestao_de_cuidados">Gestao de Cuidados</a></li>
+			{{-- <li class="tab"><a href="#gestao_de_cuidados">Gestao de Cuidados</a></li> --}}
 			<li class="tab"><a href="#outras_informacoes">Outras informações</a></li>
 		</ul>
 	</x-slot:form_tabs>
@@ -140,7 +140,6 @@
 		</div>
 	</x-slot:card_footer>
 
-	@pushOnce('scripts')
-	@endPushOnce
+	@include('clinica.pacientes.includes.scripts')
 
 </x-slot:form>

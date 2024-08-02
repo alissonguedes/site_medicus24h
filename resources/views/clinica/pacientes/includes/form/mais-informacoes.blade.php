@@ -42,7 +42,7 @@
 @if (request('id'))
 	<hr class="border mt-4 mb-4">
 
-	<form action="{{ route('clinica.pacientes.delete') }}" method="post" id="delete_data" data-target="paciente">
+	{{-- <form action="{{ route('clinica.pacientes.delete') }}" method="post" id="delete_data" data-target="paciente">
 
 		<div class="row">
 			<div class="col s12">
@@ -68,6 +68,39 @@
 		<div class="modal-footer border-top grey-border border-lighten-3">
 			<button type="button" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
 			<button type="button" id="confirm" class="btn red waves-effect">Confirmar</button>
+		</div>
+	</div> --}}
+
+	<div class="row">
+		<div class="col s12">
+			<label for="">Excluir este paciente:</label>
+		</div>
+		<div class="col s12 mt-1">
+			{{-- <input type="hidden" name="id" value="{{ $id ?? null }}"> --}}
+			<button type="button" class="btn delete left waves-effect" data-href="{{ route('clinica.homecare.gestao-de-cuidados.delete') }}" data-target="paciente_{{ $id }}" data-tooltip="Remover" style="align-items: center; display: flex; background-color: var(--red) !important;">
+				<i class="material-symbols-outlined">delete</i>
+				Excluir
+			</button>
+		</div>
+	</div>
+
+	<div id="paciente_{{ $id }}" class="confirm_delete">
+		<div class="card">
+			<form action="{{ route('clinica.pacientes.delete') }}" method="post">
+				@csrf
+				<input type="hidden" name="_method" value="delete">
+				<div class="card-content white-text">
+					<input type="hidden" name="id" value="{{ $id ?? null }}">
+					<p class="bold">Esta ação não poderá ser desfeita.</p>
+					<br>
+					<p>Tem certeza que deseja remover este paciente?</p>
+					{{-- <p>Programa {{ $row->titulo . ' - ' . $row->id }}</p> --}}
+				</div>
+				<div class="card-footer border-top grey-border border-lighten-3 padding-2">
+					<button type="reset" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
+					<button type="submit" id="confirm" class="btn red waves-effect right" style="align-items: center; display: flex; background-color: var(--red) !important;">Confirmar</button>
+				</div>
+			</form>
 		</div>
 	</div>
 @endif

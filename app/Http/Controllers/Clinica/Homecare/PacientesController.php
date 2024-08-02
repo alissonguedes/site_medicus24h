@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Clinica\Homecare;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Clinica\PacienteRequest;
+use App\Http\Requests\Clinica\PacienteHomecareRequest;
 use App\Models\Clinica\EstadocivilModel;
 use App\Models\Clinica\EtniaModel;
+use App\Models\Clinica\HomecareModel;
 use App\Models\Clinica\PacienteModel;
 use App\Models\FileModel;
 use Illuminate\Http\Request;
@@ -16,8 +17,16 @@ class PacientesController extends Controller
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil)
+	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil, $search = null)
 	{
+
+		if (isset($_GET['search'])) {
+			return $this->search($request, $paciente, $_GET['search']);
+		}
+
+		if ($search) {
+			return $this->search($search);
+		}
 
 		$data['estado_civil'] = $estadocivil->get();
 		$data['etnias']       = $etnia->get();
@@ -40,9 +49,22 @@ class PacientesController extends Controller
 	public function search(Request $request, PacienteModel $paciente)
 	{
 
-		$data['pacientes'] = $paciente->search($request->search);
+		$data = [];
 
-		return view('clinica.homecare.pacientes.index', $data);
+		$pacientes = $paciente->whereNotIn('id', function ($query) {
+			$query->select('id_paciente')->from('tb_paciente_homecare');
+		})->where('nome', 'like', '%' . $request->search . '%')->get();
+
+		if (isset($pacientes)) {
+			foreach ($pacientes as $p) {
+				$data[] = [
+					'id'   => $p->id,
+					'text' => $p->nome,
+				];
+			}
+		}
+
+		return response()->json($data);
 
 	}
 
@@ -57,12 +79,27 @@ class PacientesController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(PacienteRequest $request, PacienteModel $paciente)
+	public function store(PacienteHomecareRequest $request, HomecareModel $homecare, PacienteModel $paciente)
 	{
 
 		$data = $request->all();
 
-		$paciente->cadastra($request);
+		unset($data['_token'], $data['sexo']);
+
+		$id_homecare = $homecare->updateOrCreate(['id_paciente' => $data['paciente']]);
+
+		$homecare->from('tb_paciente_programa')->where('id_paciente', $data['paciente'])->delete();
+
+		foreach ($data['programa'] as $programa) {
+
+			$columns = [
+				'id_paciente' => $request->paciente,
+				'id_programa' => $programa,
+			];
+
+			$homecare->from('tb_paciente_programa')->insert($columns, $columns);
+
+		}
 
 		return redirect()->route('clinica.homecare.pacientes')->with(['message' => 'Paciente cadastrado com sucesso!']);
 

@@ -32,13 +32,17 @@
 		<link rel="apple-touch-icon" type="image/png" href="{{ url('/apple-touch-icon.png') }}" sizes="180x180">
 		<link rel="stylesheet" href="{{ asset('assets/node_modules/pace-js/pace-theme-default.min.css') }}">
 
-		@if (isset($styles))
-			{{ $styles }}
-		@endif
+		@stack('styles')
 
 		<title>{{ config('site.title') . (isset($title) ? ' - ' . $title : null) }}</title>
 
 		@vite(['resources/css/app.css', 'resources/js/app.js'])
+
+		<script src="{{ asset('assets/node_modules/jquery/dist/jquery.min.js') }}"></script>
+		<script src="{{ asset('assets/node_modules/materialize-css/dist/js/materialize.min.js') }}"></script>
+		<script src="{{ asset('assets/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>
+		<script src="{{ asset('assets/node_modules/mmenu-js/dist/mmenu.js') }}"></script>
+		<script src="{{ asset('assets/node_modules/pace-js/pace.min.js') }}"></script>
 
 	</head>
 
@@ -53,27 +57,16 @@
 
 			{{ $slot }}
 
-			<script>
-				var BASE_URL = "{{ base_url() }}";
-				var BASE_PATH = "{{ asset('/') }}";
-				var SITE_URL = "{{ site_url() }}";
-				var SITE_KEY = "{{ env('INVISIBLE_RECAPTCHA_SITEKEY') }}";
-			</script>
-
-			@if (isset($scripts))
-				{{ $scripts }}
-			@endif
-
 			@if (isset($sidebar))
 				<aside {{ $sidebar->attributes->merge(['class' => 'sidenav-main nav-expanded nav-lock nav-collapsible']) }}>
 					{{ $sidebar }}
 				</aside>
 			@endif
 
+			@stack('scripts')
+
 		</div>
 		{{-- END #Page --}}
-
-		<script src="{{ asset('assets/node_modules/pace-js/pace.min.js') }}"></script>
 
 	</body>
 
