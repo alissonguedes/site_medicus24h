@@ -4,8 +4,8 @@
 	<x-slot:title> HomeCare </x-slot:title>
 
 	<x-header-page>
-		<x-slot:search href="{{ route('clinica.pacientes.search') }}" placeholder="Pesquisar pacientes..."></x-slot:search>
-		<x-slot:add_button data-href="{{ route('clinica.homecare.pacientes') }}" data-target="main-form">add</x-slot:add_button>
+		<x-slot:search data-url="{{ route('clinica.pacientes.search') }}" placeholder="Pesquisar pacientes..."></x-slot:search>
+		<x-slot:add_button data-href="{{ route('clinica.homecare.pacientes') }}">add</x-slot:add_button>
 	</x-header-page>
 
 	<x-slot:body>

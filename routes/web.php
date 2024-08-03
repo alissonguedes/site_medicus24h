@@ -68,12 +68,17 @@ Route::middleware([
 		Route::prefix('/gestao-de-cuidados')->group(function () {
 
 			Route::get('/', [Homecare::class, 'index'])->name('clinica.homecare.gestao-de-cuidados');
-			Route::get('/q/{search}', [Homecare::class, 'search'])->name('clinica.homecare.gestao-de-cuidados.search');
-			Route::get('/q/{search?}', [Homecare::class, 'search'])->name('clinica.homecare.programas.search');
+			Route::get('/q/{search?}', [Homecare::class, 'search'])->name('clinica.homecare.gestao-de-cuidados.search');
 			Route::get('/id/{id}', [Homecare::class, 'index'])->name('clinica.homecare.gestao-de-cuidados.edit');
 			Route::post('/', [Homecare::class, 'store'])->name('clinica.homecare.gestao-de-cuidados.post');
 			Route::put('/', [Homecare::class, 'update'])->name('clinica.homecare.gestao-de-cuidados.post');
 			Route::delete('/', [Homecare::class, 'destroy'])->name('clinica.homecare.gestao-de-cuidados.delete');
+
+			Route::prefix('/programas')->group(function () {
+
+				Route::get('/q/{search?}', [Homecare::class, 'search'])->name('clinica.homecare.programas.search');
+
+			});
 
 			Route::prefix('/tarefas')->group(function () {
 				Route::get('/', [Homecare::class, 'addTarefa'])->name('clinica.homecare.gestao-de-cuidados.tarefas');

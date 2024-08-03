@@ -3,6 +3,11 @@
 	<x-slot:icon> real_estate_agent </x-slot:icon>
 	<x-slot:title> Programas </x-slot:title>
 
+	<x-header-page>
+		<x-slot:search data-url="{{ route('clinica.homecare.gestao-de-cuidados.search') }}" placeholder="Pesquisar programas..."></x-slot:search>
+		<x-slot:add_button data-href="{{ route('clinica.homecare.gestao-de-cuidados') }}">add</x-slot:add_button>
+	</x-header-page>
+
 	<x-slot:body>
 
 		<div class="row">

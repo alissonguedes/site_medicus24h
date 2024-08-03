@@ -1,9 +1,3 @@
-<x-header-page data-href="{{ route('clinica.pacientes.index') }}" placeholder="Pesquisar pacientes..." title="Adicionar Paciente">
-	<x-slot:add_button>
-		add
-	</x-slot:add_button>
-</x-header-page>
-
 @if (request('id'))
 	@php
 		$id = $paciente->id;
@@ -53,93 +47,97 @@
 	@endphp
 @endif
 
-<x-slot:form id="main-form" action="{{ route('clinica.pacientes.post') }}" method="post" style="{{ $errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);' }}" autocomplete="off">
+<x-slot:forms>
 
-	@csrf
-	<input type="hidden" name="categoria" value="paciente">
+	<x-form action="{{ route('clinica.pacientes.post') }}" method="post" id="main-form" style="{{ $errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);' }}" autocomplete="off">
 
-	@if (request('id'))
-		<input type="hidden" name="_method" value="put">
-		<input type="hidden" name="id" value="{{ $id }}">
-	@endif
+		@csrf
+		<input type="hidden" name="categoria" value="paciente">
 
-	<x-slot:form_tabs>
-		<ul class="tabs tabs-fixed-width">
-			<li class="tab"><a href="#dados-pessoais" class="active">Dados Pessoais</a></li>
-			<li class="tab"><a href="#contato">Contato</a></li>
-			<li class="tab"><a href="#endereco">Endereço</a></li>
-			<li class="tab"><a href="#convenio">Convênio</a></li>
-			<li class="tab"><a href="#observacoes">Observações</a></li>
-			{{-- <li class="tab"><a href="#gestao_de_cuidados">Gestao de Cuidados</a></li> --}}
-			<li class="tab"><a href="#outras_informacoes">Outras informações</a></li>
-		</ul>
-	</x-slot:form_tabs>
+		@if (request('id'))
+			<input type="hidden" name="_method" value="put">
+			<input type="hidden" name="id" value="{{ $id }}">
+		@endif
 
-	<div class="row">
+		<x-slot:tabs>
+			<ul class="tabs tabs-fixed-width">
+				<li class="tab"><a href="#dados-pessoais" class="active">Dados Pessoais</a></li>
+				<li class="tab"><a href="#contato">Contato</a></li>
+				<li class="tab"><a href="#endereco">Endereço</a></li>
+				<li class="tab"><a href="#convenio">Convênio</a></li>
+				<li class="tab"><a href="#observacoes">Observações</a></li>
+				{{-- <li class="tab"><a href="#gestao_de_cuidados">Gestao de Cuidados</a></li> --}}
+				<li class="tab"><a href="#outras_informacoes">Outras informações</a></li>
+			</ul>
+		</x-slot:tabs>
 
-		<div class="col s12 m12 l12">
+		<div class="row">
 
-			<!-- BEGIN #informacoes_pessoais -->
-			<div id="dados-pessoais">
-				@include('clinica.pacientes.includes.form.informacoes-pessoais')
-			</div>
-			<!-- END #informacoes_pessoais -->
+			<div class="col s12 m12 l12">
 
-			<!-- BEGIN #informacoes_contato -->
-			<div id="contato">
-				@include('clinica.pacientes.includes.form.contato')
-			</div>
-			<!-- END #informacoes_contato -->
+				<!-- BEGIN #informacoes_pessoais -->
+				<div id="dados-pessoais">
+					@include('clinica.pacientes.includes.form.informacoes-pessoais')
+				</div>
+				<!-- END #informacoes_pessoais -->
 
-			<!-- BEGIN #informacoes_convenio -->
-			<div id="convenio">
-				@include('clinica.pacientes.includes.form.convenio')
-			</div>
-			<!-- END #informacoes_convenio -->
+				<!-- BEGIN #informacoes_contato -->
+				<div id="contato">
+					@include('clinica.pacientes.includes.form.contato')
+				</div>
+				<!-- END #informacoes_contato -->
 
-			<!-- BEGIN #informacoes_endereco -->
-			<div id="endereco">
-				@include('clinica.pacientes.includes.form.endereco')
-			</div>
-			<!-- END #informacoes_endereco -->
+				<!-- BEGIN #informacoes_convenio -->
+				<div id="convenio">
+					@include('clinica.pacientes.includes.form.convenio')
+				</div>
+				<!-- END #informacoes_convenio -->
 
-			<!-- BEGIN #observacoes -->
-			<div id="observacoes">
-				@include('clinica.pacientes.includes.form.observacoes')
-			</div>
-			<!-- END #observacoes -->
+				<!-- BEGIN #informacoes_endereco -->
+				<div id="endereco">
+					@include('clinica.pacientes.includes.form.endereco')
+				</div>
+				<!-- END #informacoes_endereco -->
 
-			{{-- <!-- BEGIN #homecare -->
+				<!-- BEGIN #observacoes -->
+				<div id="observacoes">
+					@include('clinica.pacientes.includes.form.observacoes')
+				</div>
+				<!-- END #observacoes -->
+
+				{{-- <!-- BEGIN #homecare -->
 			<div id="homecare">
 				@include('clinica.pacientes.includes.form.gestao_de_cuidados')
 			</div>
 			<!-- END #homecare --> --}}
 
-			<!-- BEGIN #outras_informacoes -->
-			<div id="outras_informacoes">
-				@include('clinica.pacientes.includes.form.mais-informacoes')
+				<!-- BEGIN #outras_informacoes -->
+				<div id="outras_informacoes">
+					@include('clinica.pacientes.includes.form.mais-informacoes')
+				</div>
+				<!-- END #outras_informacoes -->
+
 			</div>
-			<!-- END #outras_informacoes -->
 
 		</div>
 
-	</div>
-
-	<x-slot:card_footer>
-		<div class="row">
-			<div class="col s12 right-align">
-				<button type="reset" class="btn btn-large waves-effect">
-					<i class="material-symbols-outlined hide-on-small-only left">cancel</i>
-					<span class="">Cancelar</span>
-				</button>
-				<button type="submit" class="btn btn-large waves-effect">
-					<i class="material-symbols-outlined hide-on-small-only left">save</i>
-					<span class="">Salvar</span>
-				</button>
+		<x-slot:footer>
+			<div class="row">
+				<div class="col s12 right-align">
+					<button type="reset" class="btn btn-large waves-effect">
+						<i class="material-symbols-outlined hide-on-small-only left">cancel</i>
+						<span class="">Cancelar</span>
+					</button>
+					<button type="submit" class="btn btn-large waves-effect">
+						<i class="material-symbols-outlined hide-on-small-only left">save</i>
+						<span class="">Salvar</span>
+					</button>
+				</div>
 			</div>
-		</div>
-	</x-slot:card_footer>
+		</x-slot:footer>
 
-	@include('clinica.pacientes.includes.scripts')
+		@include('clinica.pacientes.includes.scripts')
 
-</x-slot:form>
+	</x-form>
+
+</x-slot:forms>

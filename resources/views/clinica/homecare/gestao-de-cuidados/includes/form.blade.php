@@ -1,9 +1,3 @@
-<x-header-page data-href="{{ route('clinica.homecare.gestao-de-cuidados') }}" data-tooltip="Novo Programa" placeholder="Pesquisar programas...">
-	<x-slot:add_button>
-		add
-	</x-slot:add_button>
-</x-header-page>
-
 @if (request('id'))
 	@php
 		$id = request('id');
