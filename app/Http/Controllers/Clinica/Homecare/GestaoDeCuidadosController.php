@@ -173,9 +173,13 @@ class GestaoDeCuidadosController extends Controller
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(ProgramaModel $programa)
+	public function edit(Request $request, ProgramaModel $programa)
 	{
-		//
+
+		$data['programa'] = $programa->where(['id' => $request->id])->get()->first();
+
+		return response()->json($data);
+
 	}
 
 	/**

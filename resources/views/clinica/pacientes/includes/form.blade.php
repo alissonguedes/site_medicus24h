@@ -53,7 +53,7 @@
 	@endphp
 @endif
 
-<x-slot:form action="{{ route('clinica.pacientes.post') }}" method="post" style="{{ $errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);' }}" autocomplete="off">
+<x-slot:form id="main-form" action="{{ route('clinica.pacientes.post') }}" method="post" style="{{ $errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);' }}" autocomplete="off">
 
 	@csrf
 	<input type="hidden" name="categoria" value="paciente">

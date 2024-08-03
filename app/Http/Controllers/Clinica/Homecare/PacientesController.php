@@ -44,6 +44,27 @@ class PacientesController extends Controller
 	}
 
 	/**
+	 * Display a listing of the resource.
+	 */
+	public function tickets(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil, $search = null)
+	{
+
+		$data['estado_civil'] = $estadocivil->get();
+		$data['etnias']       = $etnia->get();
+		$data['pacientes']    = $paciente->from('tb_paciente_homecare AS H')
+			->join('tb_paciente AS P', 'P.id', 'H.id_paciente')
+			->get();
+		$data['paciente'] = $paciente->getWhere(['id' => $request->id]);
+
+		if ($request->id && empty($data['paciente'])) {
+			return redirect()->route('clinica.homecare.pacientes.index');
+		}
+
+		return view('clinica.homecare.pacientes.index', $data);
+
+	}
+
+	/**
 	 * Search banners
 	 */
 	public function search(Request $request, PacienteModel $paciente)

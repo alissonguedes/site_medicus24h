@@ -46,7 +46,7 @@
 						</h5>
 					</div>
 					<div class="col s4">
-						<h5 class="icon-background gradient-45deg-deep-orange-orange edit pointer circle white-text z-depth-3 mx-auto waves-effect waves-light" data-href="{{ route('clinica.pacientes.edit', $row->id) }}" data-tooltip="Editar">
+						<h5 class="icon-background gradient-45deg-deep-orange-orange edit pointer circle white-text z-depth-3 mx-auto waves-effect waves-light" data-href="{{ route('clinica.pacientes.edit', $row->id) }}" data-tooltip="Editar" data-trigger="form" data-target="main-form">
 							<i class="material-symbols-outlined">edit</i>
 						</h5>
 					</div>

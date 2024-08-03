@@ -155,33 +155,72 @@ $(document).ready(function() {
 
 		var action = $(this).parents('form').attr('action');
 
-		$(this).parents('form.card-reveal').css({
-			'transform': 'translateY(0%)',
+		$(this).parents('.card-reveal').css({
+			transform: 'translateY(0%)',
+			transition: '300ms ease-in-out'
 		});
 
 		Url.update(action);
 
 	});
 
-	$('#card-button,.icon-background,.edit').unbind().bind('click', function() {
-		var url = $(this).data('href');
-		$('form.card-reveal').show();
+	$('[data-trigger="form"]').unbind().bind('click', function(e) {
+
+		e.preventDefault();
+
+		var target = '#' + $(this).data('target');
+		var form = $(target);
+		var url = $(this).data('url') || $(this).data('href');
+		var $cardReveal = form;
+		var anim = {
+			transform: 'translateY(-100%)',
+			transition: '300ms ease-in-out'
+		};
+
+		$cardReveal.css({
+			display: 'block',
+		});
+
 		if (typeof url !== 'undefined') {
+
 			Url.update(url);
+
 			$.ajax({
 				url: url,
 				method: 'get',
 				success: (response) => {
-					var form = $(response).find('form.card-reveal');
-					$('form.card-reveal').html(form.html());
-					$('form.card-reveal').css({
-						'transform': 'translateY(-100%)',
-					});
+					var f = $(response).find(target);
+					form.html(f.html());
+
+					console.log(f.html(), target);
+					$cardReveal.css(anim);
 					$.getScript(BASE_PATH + 'assets/js/app.js');
 				}
 			});
+
 		}
+
 	});
+
+	// $('#card-button,.icon-background,.edit').unbind().bind('click', function() {
+	// var url = $(this).data('href');
+	// $('form.card-reveal').show();
+	// if (typeof url !== 'undefined') {
+	// 	Url.update(url);
+	// 	$.ajax({
+	// 		url: url,
+	// 		method: 'get',
+	// 		success: (response) => {
+	// 			var form = $(response).find('form.card-reveal');
+	// 			$('form.card-reveal').html(form.html());
+	// 			$('form.card-reveal').css({
+	// 				'transform': 'translateY(-100%)',
+	// 			});
+	// 			$.getScript(BASE_PATH + 'assets/js/app.js');
+	// 		}
+	// 	});
+	// }
+	// });
 
 	// activator
 

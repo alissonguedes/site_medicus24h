@@ -93,35 +93,8 @@
 					}
 				</style>
 
-				@if (isset($form))
-
-					<form enctype="multipart/form-data" {{ $form->attributes->merge(['class' => 'card-reveal no-padding']) }}>
-
-						<div class="card card-panel no-border no-margin no-padding">
-
-							@if (isset($form_tabs))
-								<div {{ $form_tabs->attributes->merge(['class' => 'card-tabs']) }}>
-									{{ $form_tabs }}
-								</div>
-							@endif
-
-							<div class="card-content">
-								{{ $form }}
-							</div>
-
-							@if (isset($card_footer))
-								<div {{ $card_footer->attributes->merge(['class' => 'card-action right-align']) }}>
-									{{ $card_footer }}
-								</div>
-							@endif
-
-						</div>
-
-						{{-- Carregar scripts vindo dos formulários, quando necessário --}}
-						{{-- @stack('scripts') --}}
-
-					</form>
-
+				@if (isset($forms))
+					{{ $forms }}
 				@endif
 
 				@if (isset($footer))

@@ -92,6 +92,7 @@ var Url = {
 }
 
 $('#open-search').bind('click', function() {
+
 	$('#input-search-header').show().focus()
 		.bind('blur', function() {
 			if ($(this).val().length === 0) {
@@ -100,7 +101,9 @@ $('#open-search').bind('click', function() {
 				$(this).parents().find('li:not(.search)').removeClass('disabled')
 			}
 		});
+
 	$(this).parents().find('li:not(.search)').addClass('disabled')
+
 });
 
 $('#input-search-header').bind('keyup', function() {
@@ -109,8 +112,10 @@ $('#input-search-header').bind('keyup', function() {
 
 }).bind('keyup', delay(function() {
 
-	var url = window.location.href;
+	var url = $(this).data('href') || $(this).data('url') || window.location.href;
 	var search = $(this).val();
+
+	console.log(url);
 
 	$.ajax({
 		url: url + '/' + search,

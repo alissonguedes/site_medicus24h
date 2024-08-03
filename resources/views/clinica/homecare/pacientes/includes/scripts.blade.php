@@ -12,12 +12,8 @@
 		// 		}
 		// 	})
 		// })
-
 		// $('select[name="nome_paciente"]').on('change', function() {
-
 		// });
-
-
 	})
 </script>
 {{--

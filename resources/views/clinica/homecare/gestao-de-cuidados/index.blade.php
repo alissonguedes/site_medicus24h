@@ -32,7 +32,7 @@
 										@endif
 									</td>
 									<td class="center-align">
-										<button class="btn btn-flat btn-floating edit transparent waves-effect" data-href="{{ route('clinica.homecare.gestao-de-cuidados.edit', $row->id) }}" data-tooltip="Editar">
+										<button class="btn btn-flat btn-floating edit transparent waves-effect" data-href="{{ route('clinica.homecare.gestao-de-cuidados.edit', $row->id) }}" data-tooltip="Editar" data-trigger="form" data-target="main-form">
 											<i class="material-symbols-outlined">edit</i>
 										</button>
 
@@ -41,7 +41,7 @@
 										</button>
 
 										<div id="programa_{{ $row->id }}" class="confirm_delete">
-											<div class="card">
+											<div class="card z-depth-4">
 												<form action="{{ route('clinica.homecare.gestao-de-cuidados.delete') }}" method="post">
 													@csrf
 													<input type="hidden" name="_method" value="delete">

@@ -5,12 +5,14 @@ namespace App\Http\Requests\Clinica;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PacienteRequest extends FormRequest {
+class PacienteRequest extends FormRequest
+{
 
 	/**
 	 * Determine if the user is authorized to make this request.
 	 */
-	public function authorize(): bool {
+	public function authorize(): bool
+	{
 		return true;
 	}
 
@@ -19,7 +21,8 @@ class PacienteRequest extends FormRequest {
 	 *
 	 * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
 	 */
-	public function rules(): array {
+	public function rules(): array
+	{
 
 		$rules = [
 			'nome'       => 'required',

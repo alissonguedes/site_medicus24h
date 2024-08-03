@@ -3,6 +3,11 @@
 	<x-slot:icon> real_estate_agent </x-slot:icon>
 	<x-slot:title> HomeCare </x-slot:title>
 
+	<x-header-page>
+		<x-slot:search href="{{ route('clinica.pacientes.search') }}" placeholder="Pesquisar pacientes..."></x-slot:search>
+		<x-slot:add_button data-href="{{ route('clinica.homecare.pacientes') }}" data-target="main-form">add</x-slot:add_button>
+	</x-header-page>
+
 	<x-slot:body>
 
 		<div class="row">
@@ -31,15 +36,21 @@
 
 							<div class="card-stacked">
 
-								<div class="card-content white-text">
+								<div class="card-content white-text pl-0">
 									<h5 class="white-text" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 50%;">{{ $paciente->nome }}</h5>
 								</div>
 
-								<div class="card-action">
-									<a href="#">This is a link</a>
+								<div class="card-action no-border pl-0">
+									<button type="button" class="btn btn-flat btn-floating amber-text mr-2 waves-effect activator" data-tooltip="Abrir um Ticket" data-trigger="form" data-target="form-ticket" data-href="{{ route('clinica.homecare.pacientes.tickets') }}">
+										<i class="material-symbols-outlined">confirmation_number</i>
+									</button>
+									<button type="button" class="btn btn-flat btn-floating amber-text mr-2 waves-effect" data-tooltip="Abrir um Ticket">
+										<i class="material-symbols-outlined">visibility</i>
+									</button>
 								</div>
 
 							</div>
+
 						</div>
 					</div>
 				@endforeach
