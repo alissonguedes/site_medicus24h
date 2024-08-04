@@ -8,14 +8,12 @@ use App\Models\Clinica\PacienteModel;
 use App\Models\Clinica\ProgramaModel;
 use Illuminate\Http\Request;
 
-class GestaoDeCuidadosController extends Controller
-{
+class GestaoDeCuidadosController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, ProgramaModel $programa)
-	{
+	public function index(Request $request, ProgramaModel $programa) {
 
 		if (isset($_GET['search'])) {
 
@@ -52,25 +50,50 @@ class GestaoDeCuidadosController extends Controller
 	/**
 	 * Search banners
 	 */
-	public function search(Request $request, ProgramaModel $programa)
-	{
+	public function search(Request $request, ProgramaModel $programa) {
 
-		$data['programas'] = $programa->where('titulo', 'like', '%' . $request->search)->get();
+		$data['programas'] = $programa->where('titulo', 'like', $request->search . '%')->get();
 
 		return view('clinica.homecare.gestao-de-cuidados.index', $data);
 
 	}
 
 	/**
+	 * Search banners
+	 */
+	public function search_programas(Request $request, ProgramaModel $programa) {
+
+		$data['programas'] = $programa->where('titulo', 'like', $request->search . '%')->get();
+
+		$data = [];
+
+		// $programas = $programa->whereNotIn('id', function ($query) {
+		// 	$query->select('id_paciente')->from('tb_paciente_homecare');
+		// })->where('nome', 'like', '%' . $request->search . '%')->get();
+
+		$programas = $programa->where('titulo', 'like', $request->search . '%')->get();
+
+		if (isset($programas)) {
+			foreach ($programas as $p) {
+				$data[] = [
+					'id'   => $p->id,
+					'text' => $p->titulo,
+				];
+			}
+		}
+
+		return response()->json($data);
+
+	}
+
+	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create()
-	{
+	public function create() {
 		//
 	}
 
-	public function addTarefa(Request $request)
-	{
+	public function addTarefa(Request $request) {
 
 		$field = [
 			'titulo_tarefa'    => 'required',
@@ -94,8 +117,7 @@ class GestaoDeCuidadosController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(GestaoDeCuidadoRequest $request, ProgramaModel $programa)
-	{
+	public function store(GestaoDeCuidadoRequest $request, ProgramaModel $programa) {
 
 		$data = $request->all();
 
@@ -165,16 +187,14 @@ class GestaoDeCuidadosController extends Controller
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(PacienteModel $pacienteModel)
-	{
+	public function show(PacienteModel $pacienteModel) {
 		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(Request $request, ProgramaModel $programa)
-	{
+	public function edit(Request $request, ProgramaModel $programa) {
 
 		$data['programa'] = $programa->where(['id' => $request->id])->get()->first();
 
@@ -185,8 +205,7 @@ class GestaoDeCuidadosController extends Controller
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(GestaoDeCuidadoRequest $request, ProgramaModel $programa)
-	{
+	public function update(GestaoDeCuidadoRequest $request, ProgramaModel $programa) {
 
 		$data = $request->all();
 
@@ -260,8 +279,7 @@ class GestaoDeCuidadosController extends Controller
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(Request $request, ProgramaModel $programa)
-	{
+	public function destroy(Request $request, ProgramaModel $programa) {
 
 		if ($programa->where('id', $request->id)->delete()) {
 			$message = 'Programa removido com sucesso!';

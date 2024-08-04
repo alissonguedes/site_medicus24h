@@ -1,17 +1,17 @@
 @if (request('id'))
 	@php
 		$id = request('id');
-		$titulo = $programa->titulo;
-		$descricao = $programa->descricao;
-		$sexo = $programa->publico;
-		$idade_minima = $programa->idade_min;
-		$idade_maxima = $programa->idade_max;
+		$titulo = $paciente->titulo;
+		$descricao = $paciente->descricao;
+		$sexo = $paciente->publico;
+		$idade_minima = $paciente->idade_min;
+		$idade_maxima = $paciente->idade_max;
 	@endphp
 @endif
 
 <x-slot:forms>
 
-	@include('clinica.homecare.pacientes.includes.tickets.form')
+	{{-- @include('clinica.homecare.pacientes.includes.tickets.form') --}}
 
 	<x-form action="{{ route('clinica.homecare.pacientes.post') }}">
 
@@ -35,7 +35,10 @@
 					<div class="input-field @error('paciente') error @enderror">
 						<label for="titulo" class="active">Paciente</label>
 
-						<select name="paciente" id="ppaciente" class="autocomplete" data-url="{{ route('clinica.homecare.pacientes.search') }}" placeholder="Pesquise pelo Nome, CPF, Matrícula ou RG"></select>
+						@if (request('id'))
+							<div class="input-label disabled" for="">{{ $paciente->nome }}</div>
+						@endif
+						{{-- <select name="paciente" id="ppaciente" class="autocomplete" data-url="{{ route('clinica.homecare.pacientes.search') }}" placeholder="Pesquise pelo Nome, CPF, Matrícula ou RG"></select> --}}
 
 						@error('paciente')
 							{{ $message }}

@@ -5,7 +5,7 @@
 
 	<x-header-page>
 		<x-slot:search data-url="{{ route('clinica.homecare.gestao-de-cuidados.search') }}" placeholder="Pesquisar programas..."></x-slot:search>
-		<x-slot:add_button data-href="{{ route('clinica.homecare.gestao-de-cuidados') }}">add</x-slot:add_button>
+		<x-slot:add_button data-href="{{ route('clinica.homecare.gestao-de-cuidados') }}" data-tooltip="Adicionar Programa">add</x-slot:add_button>
 	</x-header-page>
 
 	<x-slot:body>

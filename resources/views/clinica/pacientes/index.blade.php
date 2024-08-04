@@ -4,9 +4,8 @@
 	<x-slot:title> Pacientes </x-slot:title>
 
 	<x-header-page>
-		asdf
-		<x-slot:search data-url="{{ route('clinica.pacientes.search') }}" placeholder="Pesquisar pacientes..." title="Adicionar Paciente"></x-slot:search>
-		<x-slot:add_button data-href="{{ route('clinica.pacientes.index') }}">add</x-slot:add_button>
+		<x-slot:search data-url="{{ route('clinica.pacientes.search') }}" placeholder="Pesquisar pacientes..."></x-slot:search>
+		<x-slot:add_button data-href="{{ route('clinica.pacientes.index') }}" data-tooltip="Adicionar Paciente">add</x-slot:add_button>
 	</x-header-page>
 
 	{{-- <x-slot:info>Total: {{ $pacientes->count() }}</x-slot:info> --}}

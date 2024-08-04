@@ -76,7 +76,7 @@ Route::middleware([
 
 			Route::prefix('/programas')->group(function () {
 
-				Route::get('/q/{search?}', [Homecare::class, 'search'])->name('clinica.homecare.programas.search');
+				Route::get('/q/{search?}', [Homecare::class, 'search_programas'])->name('clinica.homecare.programas.search');
 
 			});
 

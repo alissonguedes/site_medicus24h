@@ -13,6 +13,7 @@
 				    'data-target' => $search->attributes['target'] ?? 'main-form',
 				    'placeholder' => $search->attributes['placeholder'] ?? null,
 				    'class' => $search->attributes['class'] ?? null,
+				    'autocomplete' => 'off',
 				]);
 			@endphp
 
