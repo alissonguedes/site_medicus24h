@@ -73,6 +73,24 @@
 				</div> --}}
 
 				<style>
+					.day-range,
+					.time-range,
+					.acao {
+						display: flex;
+						align-items: center;
+						margin-right: 25px;
+					}
+
+					.day-range .dia_semana {
+						width: 250px;
+						display: block;
+						margin-right: 15px;
+					}
+
+					.time-disabled {
+						display: none;
+					}
+
 					/* .day-range,
 					.time-range {
 						display: flex;
@@ -143,7 +161,7 @@
 							</div>
 							<div class="time-range">
 								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
-								<div class="Ozodyc">
+								<div class="time-disabled">
 									Indisponível
 								</div>
 							</div>
@@ -165,13 +183,13 @@
 				<div class="row">
 					<div class="col s12 m5 l5 mt-1 mb-1">
 						<div class="day-range">
-							<div class="">
+							<div class="dia_semana">
 								<label class="strong black-text">Segunda</label>
 							</div>
 							<div class="time-range">
 								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
 							</div>
-							<div class="">
+							<div class="acao">
 								<button type="button" class="btn btn-flat btn-floating transparent">
 									<i class="material-symbols-outlined">content_copy</i>
 								</button>
@@ -181,14 +199,14 @@
 				</div>
 				<div class="row">
 					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="row day-range">
-							<div class="col s4">
+						<div class="day-range">
+							<div class="dia_semana">
 								<label class="strong black-text">Terça</label>
 							</div>
-							<div class="col s4 time-range">
+							<div class="time-range">
 								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
 							</div>
-							<div class="col s4">
+							<div class="acao">
 
 							</div>
 						</div>
@@ -196,14 +214,14 @@
 				</div>
 				<div class="row">
 					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="row day-range">
-							<div class="col s4">
+						<div class="day-range">
+							<div class="dia_semana">
 								<label class="strong black-text">Quarta</label>
 							</div>
-							<div class="col s4 time-range">
+							<div class="time-range">
 								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
 							</div>
-							<div class="col s4">
+							<div class="acao">
 
 							</div>
 						</div>
@@ -211,14 +229,14 @@
 				</div>
 				<div class="row">
 					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="row day-range">
-							<div class="col s4">
+						<div class="day-range">
+							<div class="dia_semana">
 								<label class="strong black-text">Quinta</label>
 							</div>
-							<div class="col s4 time-range">
+							<div class="time-range">
 								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
 							</div>
-							<div class="col s4">
+							<div class="acao">
 
 							</div>
 						</div>
@@ -226,14 +244,14 @@
 				</div>
 				<div class="row">
 					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="row day-range">
-							<div class="col s4">
+						<div class="day-range">
+							<div class="dia_semana">
 								<label class="strong black-text">Sexta</label>
 							</div>
-							<div class="col s4 time-range">
+							<div class="time-range">
 								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
 							</div>
-							<div class="col s4">
+							<div class="acao">
 
 							</div>
 						</div>
@@ -241,14 +259,14 @@
 				</div>
 				<div class="row">
 					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="row day-range">
-							<div class="col s4">
+						<div class="day-range">
+							<div class="dia_semana">
 								<label class="strong black-text">Sábado</label>
 							</div>
-							<div class="col s4 time-range">
+							<div class="time-range">
 								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
 							</div>
-							<div class="col s4">
+							<div class="acao">
 
 							</div>
 						</div>
