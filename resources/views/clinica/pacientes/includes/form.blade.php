@@ -141,7 +141,7 @@
 	</x-form>
 
 	@if (isset($id))
-		<form action="{{ route('clinica.pacientes.delete') }}" method="post">
+		<form action="{{ route('clinica.pacientes.delete') }}" method="post" id="form-delete">
 			<div id="paciente_{{ $id }}" class="confirm_delete">
 				<div class="card z-depth-4 gradient-45deg-teal-teal">
 					@csrf

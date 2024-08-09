@@ -16,9 +16,7 @@
 			</div>
 
 			<div id="formularios" class="card-reveal no-padding" style="{{ ($errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);') . 'overflow:hidden; z-index: 9999999;' }}">
-
 				@include('clinica.recursosmedicos.agenda.includes.main-form')
-
 			</div>
 
 		</div>

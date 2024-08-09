@@ -1437,6 +1437,13 @@ textarea.materialize-textarea:not([readonly]),
 	background-color: var(--teal-lighten-1);
 }
 
+[type="radio"]+span:not(.lever),
+[type="checkbox"]+span:not(.lever) {
+	display: flex;
+	align-items: center;
+	height: 21px;
+}
+
 .input-field>label:not(.label-icon) {
 	color: var(--teal-lighten-1);
 }

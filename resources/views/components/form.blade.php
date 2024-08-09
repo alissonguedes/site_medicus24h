@@ -33,15 +33,17 @@
 
 <style>
 	.card-reveal form {
-		position: absolute;
+		height: 100%;
+		/* position: absolute;
 		left: 0;
 		right: 0;
 		bottom: 0;
 		top: 0;
 		height: inherit;
+		z-index: 1; */
 	}
 
-	.card-reveal form .card-content {
+	.card-reveal form .card-tabs~.card-content {
 		height: calc(100% - 140px);
 		top: 55px;
 	}
