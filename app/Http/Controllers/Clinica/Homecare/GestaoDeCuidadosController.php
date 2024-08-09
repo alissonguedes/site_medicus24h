@@ -63,15 +63,15 @@ class GestaoDeCuidadosController extends Controller {
 	 */
 	public function search_programas(Request $request, ProgramaModel $programa) {
 
-		$data['programas'] = $programa->where('titulo', 'like', $request->search . '%')->get();
-
 		$data = [];
 
-		// $programas = $programa->whereNotIn('id', function ($query) {
-		// 	$query->select('id_paciente')->from('tb_paciente_homecare');
-		// })->where('nome', 'like', '%' . $request->search . '%')->get();
+		if ($request->values) {
+			$programa = $programa->whereNotIn('id', $request->values);
+		}
 
-		$programas = $programa->where('titulo', 'like', $request->search . '%')->get();
+		$programas = $programa
+			->where('titulo', 'like', $request->search . '%')
+			->get();
 
 		if (isset($programas)) {
 			foreach ($programas as $p) {
@@ -130,13 +130,19 @@ class GestaoDeCuidadosController extends Controller {
 
 		// unset($data['sexo'], $data['responsaveis'], $data['faixa_etaria'], $data['_token'], $data['id'], $data['_method']);
 
-		unset($data['sexo'], $data['responsaveis'], $data['faixa_etaria'], $data['tarefa'],
+		unset(
+			$data['sexo'],
+			$data['responsaveis'],
+			$data['faixa_etaria'],
+			$data['tarefa'],
 			$data['titulo_tarefa'],
 			$data['descricao_tarefa'],
 			$data['prazo_tarefa'],
 			$data['responsavel_tarefa'],
 			$data['tipo_tarefa'],
-			$data['_token'], $data['id'], $data['_method']);
+			$data['_token'], $data['id'],
+			$data['_method']
+		);
 
 		$id_programa = $programa->insertGetId($data);
 

@@ -32,6 +32,7 @@ class PacientesController extends Controller {
 		$data['pacientes']    = $paciente->from('tb_paciente_homecare AS H')
 			->join('tb_paciente AS P', 'P.id', 'H.id_paciente')
 			->get();
+
 		$data['paciente'] = $paciente->getWhere(['id' => $request->id]);
 
 		if ($request->id && empty($data['paciente'])) {
@@ -69,9 +70,15 @@ class PacientesController extends Controller {
 
 		$data = [];
 
+		if ($request->values) {
+			$paciente = $paciente->whereNotIn('id', [$request->values]);
+		}
+
 		$pacientes = $paciente->whereNotIn('id', function ($query) {
 			$query->select('id_paciente')->from('tb_paciente_homecare');
-		})->where('nome', 'like', '%' . $request->search . '%')->get();
+		})
+			->where('nome', 'like', '%' . $request->search . '%')
+			->get();
 
 		if (isset($pacientes)) {
 			foreach ($pacientes as $p) {
@@ -117,7 +124,13 @@ class PacientesController extends Controller {
 
 		}
 
-		return redirect()->route('clinica.homecare.pacientes')->with(['message' => 'Paciente cadastrado com sucesso!']);
+		if ($request->_method != 'put') {
+			$message = 'Paciente cadastrado com sucesso!';
+		} else {
+			$message = 'Paciente atualizado com sucesso!';
+		}
+
+		return redirect()->route('clinica.homecare.pacientes')->with(['message' => $message]);
 
 	}
 
@@ -171,22 +184,18 @@ class PacientesController extends Controller {
 	 */
 	public function destroy(Request $request, PacienteModel $paciente) {
 
-		// $this->authorize('delete', PacienteModel::class);
+		$delete = $paciente->from('tb_paciente_homecare')->where('id_paciente', $request->id)->delete();
 
-		if ($paciente->removePaciente($request->id)) {
+		if ($delete) {
 			$status  = 'success';
 			$message = 'Paciente removido com sucesso!';
 		} else {
 			$status  = 'error';
-			$message = $paciente->getErros();
+			$message = 'Paciente não encontrado';
 		}
 
-		return response()->json([
-			'status'  => $status,
-			'message' => $message,
-			'type'    => 'redirect',
-			'url'     => url()->route('clinica.pacientes.index'),
-		]);
+		return redirect()->route('clinica.homecare.pacientes')->with(['message' => $message]);
 
 	}
+
 }

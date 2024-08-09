@@ -99,6 +99,8 @@ Route::middleware([
 			Route::get('/q/{search?}', [PacientesHomecare::class, 'search'])->name('clinica.homecare.pacientes.search');
 			Route::get('/id/{id}', [PacientesHomecare::class, 'index'])->name('clinica.homecare.pacientes.edit');
 			Route::post('/', [PacientesHomecare::class, 'store'])->name('clinica.homecare.pacientes.post');
+			Route::put('/', [PacientesHomecare::class, 'store'])->name('clinica.homecare.pacientes.post');
+			Route::delete('/', [PacientesHomecare::class, 'destroy'])->name('clinica.homecare.pacientes.delete');
 
 		});
 

@@ -5,14 +5,12 @@ namespace App\Http\Requests\Clinica;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PacienteHomecareRequest extends FormRequest
-{
+class PacienteHomecareRequest extends FormRequest {
 
 	/**
 	 * Determine if the user is authorized to make this request.
 	 */
-	public function authorize(): bool
-	{
+	public function authorize(): bool {
 		return true;
 	}
 
@@ -21,8 +19,7 @@ class PacienteHomecareRequest extends FormRequest
 	 *
 	 * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
 	 */
-	public function rules(): array
-	{
+	public function rules(): array {
 
 		$rules = [
 			'paciente' => 'required',
@@ -39,6 +36,10 @@ class PacienteHomecareRequest extends FormRequest
 		// 	$rules['cpf'] = ['required', Rule::unique('medicus.tb_paciente', 'cpf')->ignore($this->id, 'id')];
 
 		// }
+
+		if (!isset($_POST['programa'])) {
+			$rules['programa'] = 'required';
+		}
 
 		return $rules;
 

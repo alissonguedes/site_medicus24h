@@ -171,11 +171,13 @@ $(document).ready(function () {
 		var target = '#' + $(this).data('target');
 		var form = $(target);
 		var url = $(this).data('url') || $(this).data('href');
-		var $cardReveal = form;
+		var $cardReveal = form.parents('#formularios');
 		var anim = {
 			transform: 'translateY(-100%)',
 			transition: '300ms ease-in-out'
 		};
+
+		$('#formularios').find('form').hide();
 
 		$cardReveal.css({
 			display: 'block',
@@ -189,11 +191,8 @@ $(document).ready(function () {
 				url: url,
 				method: 'get',
 				success: (response) => {
-					var f = $(response).find(target);
-					form.html(f.html());
-
-					console.log(f.html(), target);
-					$cardReveal.css(anim);
+					$cardReveal.html($(response).find('#formularios').html());
+					$cardReveal.css(anim).find(target).show();
 					$.getScript(BASE_PATH + 'assets/js/app.js');
 				}
 			});
@@ -435,16 +434,18 @@ $(document).ready(function () {
 
 	select.each(function () {
 
-		$(this).val('').attr('disabled', false).select2({
+		var self = $(this);
+		var a = self.val('').attr('disabled', false).select2({
 			// theme: 'materialize',
-			placeholder: $(this).attr('placeholder') || 'Digite para pesquisar',
+			placeholder: self.attr('placeholder') || 'Digite para pesquisar',
 			allowClear: true,
 			ajax: {
 				delay: 250,
-				url: $(this).data('url'),
+				url: self.data('url'),
 				dataType: 'json',
 				data: (data) => {
 					return {
+						values: self.val(),
 						search: data.term || null,
 					}
 				},
@@ -454,6 +455,17 @@ $(document).ready(function () {
 				},
 			}
 		});
+
+		var selecteds = self.data('selected')
+
+		console.log(selecteds)
+		if (typeof selecteds != 'undefined' && selecteds.length > 0) {
+			for (var i in selecteds) {
+				var s = selecteds[i];
+				var option = new Option(s.text, s.id, true, true);
+				self.append(option).trigger('change');
+			}
+		}
 
 	});
 
