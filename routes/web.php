@@ -12,6 +12,7 @@ use App\Http\Controllers\Clinica\Homecare\GestaoDeCuidadosController as Homecare
 use App\Http\Controllers\Clinica\Homecare\PacientesController as PacientesHomecare;
 use App\Http\Controllers\Clinica\HomeController as ClinicaHome;
 use App\Http\Controllers\Clinica\PacientesController as Pacientes;
+use App\Http\Controllers\Clinica\Recursosmedicos\AgendamedicaController as Agendamedica;
 
 // Main Controllers
 use App\Http\Controllers\ProfileController;
@@ -42,7 +43,7 @@ Route::middleware([
 	})->name('clinica.index');
 
 	Route::get('/dashboard', [ClinicaHome::class, 'index'])->name('clinica.dashboard');
-	Route::get('/agenda', [ClinicaHome::class, 'index'])->name('clinica.recursosmedicos.agenda.index');
+	// Route::get('/agenda', [ClinicaHome::class, 'index'])->name('clinica.recursosmedicos.agenda.index');
 
 	// Pacientes
 	Route::prefix('/pacientes')->group(function () {
@@ -97,6 +98,7 @@ Route::middleware([
 
 			Route::get('/', [PacientesHomecare::class, 'index'])->name('clinica.homecare.pacientes');
 			Route::get('/q/{search?}', [PacientesHomecare::class, 'search'])->name('clinica.homecare.pacientes.search');
+			Route::get('/a/{search?}', [PacientesHomecare::class, 'autocomplete'])->name('clinica.homecare.pacientes.autocomplete');
 			Route::get('/id/{id}', [PacientesHomecare::class, 'index'])->name('clinica.homecare.pacientes.edit');
 			Route::post('/', [PacientesHomecare::class, 'store'])->name('clinica.homecare.pacientes.post');
 			Route::put('/', [PacientesHomecare::class, 'store'])->name('clinica.homecare.pacientes.post');
@@ -107,6 +109,16 @@ Route::middleware([
 	});
 
 	// Recursos Médicos
+	Route::prefix('/recursos-medicos')->group(function () {
+
+		Route::prefix('/agenda')->group(function () {
+
+			Route::get('/', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.index');
+			Route::get('/id/{id}', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.edit');
+
+		});
+
+	});
 
 	// Agendamentos
 

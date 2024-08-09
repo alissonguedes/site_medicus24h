@@ -4,7 +4,7 @@
 	<x-slot:title> HomeCare </x-slot:title>
 
 	<x-header-page>
-		<x-slot:search data-url="{{ route('clinica.pacientes.search') }}" placeholder="Pesquisar pacientes..."></x-slot:search>
+		<x-slot:search data-url="{{ route('clinica.homecare.pacientes.search') }}" placeholder="Pesquisar pacientes..."></x-slot:search>
 		<x-slot:add_button data-href="{{ route('clinica.homecare.pacientes') }}" data-tooltip="Incluir Paciente">add</x-slot:add_button>
 	</x-header-page>
 
@@ -17,7 +17,7 @@
 					$programaModel = new App\Models\Clinica\ProgramaModel();
 				@endphp
 				@foreach ($pacientes as $row)
-					<div class="col s12 m6 l4">
+					<div class="col s12 m3 l2">
 						<div class="card">
 							<div class="card-image">
 
@@ -31,7 +31,7 @@
 
 								<img src="{{ $img }}" class="" alt="">
 
-								<span class="card-title white-text m-0" style="background-color: rgba(0, 0, 0, 0.3); width: 100%;">{{ $row->nome }}</span>
+								{{-- <span class="card-title white-text m-0" style="background-color: rgba(0, 0, 0, 0.3); width: 100%;">{{ $row->nome }}</span> --}}
 								<button class="btn-floating halfway-fab waves-effect waves-light red" data-trigger="form" data-target="main-form" data-href="{{ route('clinica.homecare.pacientes.edit', $row->id) }}" style="z-index: 9999999"><i class="material-icons">edit</i></button>
 							</div>
 
@@ -44,9 +44,10 @@
 									    ->where('id_paciente', $row->id)
 									    ->get();
 								@endphp
-								<button type="button" class="btn btn-flat btn-floating activator amber-text">
+								{{-- <button type="button" class="btn btn-flat btn-floating activator amber-text">
 									<i class="material-symbols-outlined">stars</i>
-								</button>
+								</button> --}}
+								<a href="#" style="text-overflow: ellipsis; white-space: nowrap; display: block; overflow: hidden;">{{ $row->nome }}</a>
 							</div>
 
 							@if (isset($programas) && $programas->count() > 0)

@@ -49,7 +49,7 @@
 
 <x-slot:forms>
 
-	<x-form action="{{ route('clinica.pacientes.post') }}" method="post" id="main-form" style="{{ $errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);' }}" autocomplete="off">
+	<x-form action="{{ route('clinica.pacientes.post') }}" method="post" id="main-form" autocomplete="off">
 
 		@csrf
 		<input type="hidden" name="categoria" value="paciente">
@@ -139,5 +139,27 @@
 		@include('clinica.pacientes.includes.scripts')
 
 	</x-form>
+
+	@if (isset($id))
+		<form action="{{ route('clinica.pacientes.delete') }}" method="post">
+			<div id="paciente_{{ $id }}" class="confirm_delete">
+				<div class="card z-depth-4 gradient-45deg-teal-teal">
+					@csrf
+					<input type="hidden" name="_method" value="delete">
+					<div class="card-content white-text">
+						<input type="hidden" name="id" value="{{ $id ?? null }}">
+						<p class="bold">Remover paciente.</p>
+						<br>
+						<p>Tem certeza que deseja remover este paciente?</p>
+						<p>Paciente {{ $nome . ' - ' . $id }}</p>
+					</div>
+					<div class="card-footer border-top grey-border border-lighten-3 padding-2">
+						<button type="reset" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
+						<button type="submit" id="confirm" class="btn red waves-effect right" style="align-items: center; display: flex; background-color: var(--red) !important;">Confirmar</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	@endif
 
 </x-slot:forms>

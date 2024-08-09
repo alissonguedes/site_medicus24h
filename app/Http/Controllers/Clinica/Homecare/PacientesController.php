@@ -11,12 +11,14 @@ use App\Models\Clinica\PacienteModel;
 use App\Models\FileModel;
 use Illuminate\Http\Request;
 
-class PacientesController extends Controller {
+class PacientesController extends Controller
+{
 
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil) {
+	public function index(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil)
+	{
 
 		if (isset($_GET['search'])) {
 			return $this->search($request, $paciente, $_GET['search']);
@@ -46,7 +48,8 @@ class PacientesController extends Controller {
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function tickets(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil, $search = null) {
+	public function tickets(Request $request, PacienteModel $paciente, EtniaModel $etnia, EstadocivilModel $estadocivil, $search = null)
+	{
 
 		$data['estado_civil'] = $estadocivil->get();
 		$data['etnias']       = $etnia->get();
@@ -66,7 +69,26 @@ class PacientesController extends Controller {
 	/**
 	 * Search banners
 	 */
-	public function search(Request $request, PacienteModel $paciente) {
+	public function search(Request $request, PacienteModel $paciente)
+	{
+
+		$data = [];
+
+		$data['pacientes'] = $paciente->whereIn('id', function ($query) {
+			$query->select('id_paciente')->from('tb_paciente_homecare');
+		})
+			->where('nome', 'like', '%' . $request->search . '%')
+			->get();
+
+		return view('clinica.homecare.pacientes.index', $data);
+
+	}
+
+	/**
+	 * Search banners
+	 */
+	public function autocomplete(Request $request, PacienteModel $paciente)
+	{
 
 		$data = [];
 
@@ -96,14 +118,16 @@ class PacientesController extends Controller {
 	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create() {
+	public function create()
+	{
 		//
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(PacienteHomecareRequest $request, HomecareModel $homecare, PacienteModel $paciente) {
+	public function store(PacienteHomecareRequest $request, HomecareModel $homecare, PacienteModel $paciente)
+	{
 
 		$data = $request->all();
 
@@ -137,21 +161,24 @@ class PacientesController extends Controller {
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(Request $request, FileModel $file, int $file_id) {
+	public function show(Request $request, FileModel $file, int $file_id)
+	{
 		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(PacienteModel $pacienteModel) {
+	public function edit(PacienteModel $pacienteModel)
+	{
 		//
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(PacienteRequest $request, PacienteModel $paciente) {
+	public function update(PacienteRequest $request, PacienteModel $paciente)
+	{
 
 		$data = $request->all();
 
@@ -182,7 +209,8 @@ class PacientesController extends Controller {
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(Request $request, PacienteModel $paciente) {
+	public function destroy(Request $request, PacienteModel $paciente)
+	{
 
 		$delete = $paciente->from('tb_paciente_homecare')->where('id_paciente', $request->id)->delete();
 

@@ -38,7 +38,7 @@
 							<div for="" class="input-label disabled">{{ $paciente->nome }}</div>
 							<input type="hidden" name="paciente" value="{{ $paciente->id }}">
 						@else
-							<select name="paciente" id="ppaciente" class="autocomplete" data-url="{{ route('clinica.homecare.pacientes.search') }}" placeholder="Pesquise pelo Nome, CPF, Matrícula ou RG"></select>
+							<select name="paciente" id="ppaciente" class="autocomplete" data-url="{{ route('clinica.homecare.pacientes.autocomplete') }}" placeholder="Pesquise pelo Nome, CPF, Matrícula ou RG"></select>
 						@endif
 
 						@error('paciente')

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Tickets;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as MainModel;
@@ -12,7 +12,7 @@ class Model extends MainModel
 
 	public function __construct()
 	{
-		$this->connection = env('DB_CLINICA_CONNECTION');
+		$this->connection = env('DB_TICKETS_CONNECTION');
 	}
 
 }
