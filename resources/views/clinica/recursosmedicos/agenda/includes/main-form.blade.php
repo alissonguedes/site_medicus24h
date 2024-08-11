@@ -93,7 +93,7 @@
 						margin-bottom: 15px;
 					}
 
-					.day-range .dia_semana {
+					.day-range .dia-semana {
 						width: 250px;
 						display: block;
 						margin-right: 15px;
@@ -142,7 +142,7 @@
 					<div class="row">
 						<div class="col s12 m5 l5">
 							<div class="day-range">
-								<div class="dia_semana">
+								<div class="dia-semana">
 									<label class="strong black-text">{{ $value }}</label>
 									<input type="text" name="dia" value="{{ $key }}">
 								</div>
@@ -242,30 +242,91 @@
 				minLength: 0,
 				onAutocomplete: (value) => {
 
+					agenda = [];
 					selected_value = value;
 
-					$('.time-range').each(function() {
+					$('.day-range').each(function() {
 
-						$(this).find('.error').remove();
+						var dia = $(this).find('.dia-semana').find('input[name="dia"]').val();
 
-						var dia = $(this).parents('.day-range').find('.dia_semana').find('input[name="dia"]').val();
-						var range = $(this).find('input');
+						var periodo = {};
+						var horarios = [];
 
-						var inicio = $(range[0]).val();
-						var fim = $(range[1]).val();
+						$(this).find('.horario').find('.time-range').each(function(index) {
 
-						console.log(dia, inicio, fim);
+							$(this).find('.error').remove();
 
-						// Validações
-						if (inicio && fim && inicio >= fim) {
-							$(this).append('<div class="error ml-4 mt-0">O horário de início precisa ser anterior ao horário de término</div>');
-						} else {
-							// Os períodos não podem se sobrepor
-						}
+							var range = $(this).find('input');
+							var inicio = $(range[0]).val();
+							var fim = $(range[1]).val();
+
+							if (inicio && fim) {
+
+								if (inicio >= fim) {
+
+									$(this).append('<div class="error ml-4 mt-0">O horário de início precisa ser anterior ao horário de término</div>');
+
+								} else {
+
+									horarios.push({
+										'inicio': inicio,
+										'fim': fim
+									})
+
+									Object.assign(periodo, {
+										[dias_semana[dia]]: horarios
+									});
+
+								}
+
+								agenda.push(periodo);
+
+							}
+
+						});
 
 					});
 
+					if (agenda.length) {
+
+						for (var i in agenda) {
+
+							for (var j in agenda[i]) {
+
+								var horarios = agenda[i][j];
+								var dia = j;
+
+								hora_inicial = null;
+								hora_final = null;
+
+								for (var h in horarios) {
+
+									var inicio = horarios[h]['inicio'];
+									var fim = horarios[h]['fim'];
+
+									if (hora_inicial || hora_final) {
+
+										if (hora_final >= inicio) {
+											console.log(hora_final, inicio, 'Os horário não podem se sobrepor');
+										}
+
+									}
+
+									hora_inicial = inicio;
+									hora_final = fim;
+
+								}
+
+								console.log(hora_inicial, hora_final);
+
+							}
+
+						}
+
+					}
+
 				}
+
 			});
 
 			input_timer.bind('focus', function() {

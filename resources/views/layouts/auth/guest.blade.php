@@ -24,7 +24,7 @@
 		{{-- <!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.bunny.net">
 		<link rel="stylesheet" href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap"> --}}
-		<link rel="stylesheet" href="{{ asset('assets/styles/animate.css') }}">
+		{{-- <link rel="stylesheet" href="{{ asset('assets/styles/animate.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/styles/colors.css') }}">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 		<link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css">
@@ -33,7 +33,8 @@
 
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-		<script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script> --}}
+		<link rel="stylesheet" href="{{ asset('assets/node_modules/materialize-css/dist/css/materialize.min.css') }}">
 
 		<script>
 			$(document).ready(function() {
