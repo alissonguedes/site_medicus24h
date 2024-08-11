@@ -2,7 +2,7 @@ window.onload = () => {
 
 	if (typeof redirect === 'function') {
 
-		window.addEventListener('popstate', function () {
+		window.addEventListener('popstate', function() {
 
 			var href = window.location.href;
 			var javascript = /^[J|j]ava[s|S]cript|^\#/;
@@ -32,13 +32,13 @@ function redirect(url, method = 'get') {
 
 	xhr.open(method, url);
 
-	xhr.onreadystatechange = function () { }
+	xhr.onreadystatechange = function() {}
 
-	xhr.onloadstart = function () { };
+	xhr.onloadstart = function() {};
 
-	xhr.onprogress = function (event) { }
+	xhr.onprogress = function(event) {}
 
-	xhr.onloadend = function (e) {
+	xhr.onloadend = function(e) {
 
 		if (xhr.readyState === 4) {
 
@@ -68,9 +68,9 @@ function delay(func, wait, immediate) {
 
 	var timeout;
 
-	return function (args) {
+	return function(args) {
 		const context = this;
-		const later = function () {
+		const later = function() {
 			timeout = null;
 			if (!immediate) func.apply(context, args);
 		};
@@ -91,10 +91,10 @@ var Url = {
 
 }
 
-$('#open-search').bind('click', function () {
+$('#open-search').bind('click', function() {
 
 	$('#input-search-header').show().focus()
-		.bind('blur', function () {
+		.bind('blur', function() {
 			if ($(this).val().length === 0) {
 				$('#input-search-header').hide();
 				$(this).parents('li.search').find('#open-search').show();
@@ -106,11 +106,11 @@ $('#open-search').bind('click', function () {
 
 });
 
-$('#input-search-header').bind('keyup paste', function () {
+$('#input-search-header').bind('keyup paste', function() {
 
 	$('.progress').show();
 
-}).bind('keyup paste', delay(function () {
+}).bind('keyup paste', delay(function() {
 
 	var url = $(this).data('href') || $(this).data('url') || window.location.href;
 	var search = $(this).val();
@@ -135,7 +135,7 @@ $('#input-search-header').bind('keyup paste', function () {
 
 }, 500));
 
-$(function () {
+$(function() {
 
 
 	new Mmenu("#mmenu", {
@@ -173,6 +173,7 @@ $(function () {
 		// }]
 	});
 
+	// document.body.removeEventListener('keydown', document.body.mmEventKeydownTabguard[0])
 
 	// $('#mm-open-menu').on('click', function() {
 	// 	$('#mmenu').css({

@@ -41,30 +41,9 @@
 											<i class="material-symbols-outlined">edit</i>
 										</button>
 
-										<button type="button" class="btn btn-flat btn-floating delete transparent waves-effect" data-href="{{ route('clinica.homecare.gestao-de-cuidados.delete', $row->id) }}" data-target="programa_{{ $row->id }}" data-tooltip="Remover">
+										<button type="button" class="btn btn-flat btn-floating delete transparent waves-effect" data-trigger="delete" data-id="{{ $row->id }}" data-target="programa_{{ $row->id }}" data-tooltip="Remover">
 											<i class="material-symbols-outlined">delete</i>
 										</button>
-
-										<div id="programa_{{ $row->id }}" class="confirm_delete">
-											<div class="card z-depth-4">
-												<form action="{{ route('clinica.homecare.gestao-de-cuidados.delete') }}" method="post">
-													@csrf
-													<input type="hidden" name="_method" value="delete">
-													<div class="card-content white-text">
-														<input type="hidden" name="id" value="{{ $row->id ?? null }}">
-														<p class="bold">Esta ação não poderá ser desfeita.</p>
-														<br>
-														<p>Tem certeza que deseja remover este programa?</p>
-														{{-- <p>Programa {{ $row->titulo . ' - ' . $row->id }}</p> --}}
-													</div>
-													<div class="card-footer border-top grey-border border-lighten-3 padding-2">
-														<button type="reset" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
-														<button type="submit" id="confirm" class="btn red waves-effect right" style="align-items: center; display: flex; background-color: var(--red) !important;">Confirmar</button>
-													</div>
-												</form>
-											</div>
-										</div>
-
 									</td>
 								</tr>
 							@endforeach
@@ -77,18 +56,6 @@
 				@endif
 			</div>
 		</div>
-		{{--
-		<div id="confirm_delete" class="modal modal-fixed-footer">
-			<div class="modal-content">
-				<h3>ATENÇÃO!!!</h3>
-				<p>Tem certeza que deseja excluir este programa?</p>
-				<p>Esta ação não poderá ser defeita.</p>
-			</div>
-			<div class="modal-footer border-top grey-border border-lighten-3">
-				<button type="button" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
-				<button type="button" id="confirm" class="btn red waves-effect">Confirmar</button>
-			</div>
-		</div> --}}
 
 	</x-slot:body>
 

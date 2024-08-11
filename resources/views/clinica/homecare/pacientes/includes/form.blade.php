@@ -76,7 +76,7 @@
 					<div class="col s12">
 						<div class="input-field">
 							<label for="">Remover paciente do programa:</label>
-							<button type="button" class="btn delete red mt-1 waves-effect" data-href="{{ route('clinica.homecare.gestao-de-cuidados.delete', $paciente->id) }}" data-target="programa_{{ $paciente->id }}" data-tooltip="Remover">
+							<button type="button" class="btn delete red mt-1 waves-effect" data-trigger="delete" data-id="{{ $paciente->id }}" data-target="paciente_{{ $paciente->id }}" data-tooltip="Remover">
 								<i class="material-symbols-outlined">delete</i>
 							</button>
 						</div>
@@ -105,26 +105,11 @@
 
 	</x-form>
 
-	@if (isset($id))
-		<form action="{{ route('clinica.homecare.pacientes.delete') }}" method="post">
-			<div id="programa_{{ $id }}" class="confirm_delete" style="z-index: 9999999999999;">
-				<div class="card z-depth-4 gradient-45deg-green-teal">
-					@csrf
-					<input type="hidden" name="_method" value="delete">
-					<div class="card-content white-text">
-						<input type="hidden" name="id" value="{{ $id ?? null }}">
-						<p class="bold">Remover paciente do programa.</p>
-						<br>
-						<p>Tem certeza que deseja remover este paciente do programa?</p>
-						<p>Programa {{ $nome . ' - ' . $id }}</p>
-					</div>
-					<div class="card-footer border-top grey-border border-lighten-3 padding-2">
-						<button type="reset" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
-						<button type="submit" id="confirm" class="btn red waves-effect right" style="align-items: center; display: flex; background-color: var(--red) !important;">Confirmar</button>
-					</div>
-				</div>
-			</div>
-		</form>
-	@endif
+	<x-slot:form_delete action="{{ route('clinica.homecare.pacientes.delete') }}">
+		<p class="bold">Esta ação não poderá ser desfeita.</p>
+		<br>
+		<p>Tem certeza que deseja remover este paciente do programa?</p>
+		<div id="item"></div>
+	</x-slot:form_delete>
 
 </x-slot:forms>

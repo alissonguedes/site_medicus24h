@@ -323,4 +323,11 @@
 
 	</x-form>
 
+	<x-slot:form_delete action="{{ route('clinica.homecare.gestao-de-cuidados.delete') }}">
+		<p class="bold">Esta ação não poderá ser desfeita.</p>
+		<br>
+		<p>Tem certeza que deseja remover este programa?</p>
+		<div id="item"></div>
+	</x-slot:form_delete>
+
 </x-slot:forms>

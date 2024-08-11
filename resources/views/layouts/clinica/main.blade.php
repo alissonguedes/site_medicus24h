@@ -102,7 +102,50 @@
 				@if (isset($footer))
 					{{ $footer }}
 				@endif
+				@if (isset($form_delete))
+					<div {{ $form_delete->attributes->merge([
+					    'id' => 'modal-delete',
+					    'class' => '',
+					]) }}>
+						<form {{ $form_delete->attributes->merge([
+						    'action' => '#',
+						    'method' => 'post',
+						    'class' => 'card gradient-45deg-teal-teal z-depth-4 confirm_delete',
+						    'style' => 'width: 400px; margin: auto; position: absolute; left: 50%; margin-left: -200px; margin-right: -200px; border-radius: 24px; z-index: 99999999999999999999999;',
+						]) }}>
+							<div class="card-content white-text">
+								{{ $form_delete }}
+							</div>
+							<div class="card-action" style="position: relative;">
+								@csrf
+								<input type="hidden" name="_method" value="delete">
+								<input type="hidden" name="id">
+								<button type="reset" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
+								<button type="submit" id="confirm" class="btn red waves-effect right" style="align-items: center; display: flex; background-color: var(--red) !important;">Confirmar</button>
+							</div>
+						</form>
+					</div>
+					<style>
+						#modal-delete {
+							display: none;
+						}
 
+						#modal-delete.open {
+							display: block;
+						}
+
+						div#modal-delete::after {
+							content: '';
+							position: absolute;
+							top: 0;
+							bottom: 0;
+							background: rgba(0, 0, 0, 0.3);
+							left: 0;
+							right: 0;
+							z-index: 999999999;
+						}
+					</style>
+				@endif
 			</div>
 
 		@endif

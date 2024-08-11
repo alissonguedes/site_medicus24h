@@ -1,10 +1,10 @@
 'use strict';
 
-$(document).ready(function () {
+$(document).ready(function() {
 
 	var scroller = $('.scroller');
 
-	$('[data-href],[href]').unbind().bind('click', function (e) {
+	$('[data-href],[href]').unbind().bind('click', function(e) {
 
 		e.preventDefault();
 
@@ -37,13 +37,13 @@ $(document).ready(function () {
 
 	});
 
-	$(scroller).each(function () {
+	$(scroller).each(function() {
 
 		var scroll = new PerfectScrollbar(this, {
 			theme: "dark",
 		});
 
-		$(window).bind('resize', function () {
+		$(window).bind('resize', function() {
 			scroll.update();
 		});
 
@@ -89,19 +89,19 @@ $(document).ready(function () {
 		});
 	}
 
-	setTimeout(function () {
-		$('.calendar-time').find('select').each(function () {
+	setTimeout(function() {
+		$('.calendar-time').find('select').each(function() {
 			$(this).addClass('browser-default');
 		})
 	}, 1000);
 
-	tabs.find('a').unbind().bind('click', function () {
-		setTimeout(function () {
+	tabs.find('a').unbind().bind('click', function() {
+		setTimeout(function() {
 			t.tabs('updateTabIndicator');
 		}, 100)
 	});
 
-	$('.tabs .tab a').each(function (index, element) {
+	$('.tabs .tab a').each(function(index, element) {
 
 		var id = $(this).attr('href');
 
@@ -120,7 +120,7 @@ $(document).ready(function () {
 	// $('.collapsible').Menu();
 	// $('#main-menu').Menu();
 
-	$('.input-field').each(function () {
+	$('.input-field').each(function() {
 
 		var field = $(this).find('input,textarea,select');
 
@@ -147,11 +147,11 @@ $(document).ready(function () {
 
 	sidenav.sidenav('close');
 
-	$('.btn-menu').unbind().bind('click', function () {
+	$('.btn-menu').unbind().bind('click', function() {
 		$('body').toggleClass('nav-collapsed');
 	});
 
-	$('button[type="reset"]').unbind().bind('click', function () {
+	$('button[type="reset"]').unbind().bind('click', function() {
 
 		var action = $(this).parents('form').attr('action');
 
@@ -164,7 +164,7 @@ $(document).ready(function () {
 
 	});
 
-	$('[data-trigger="form"]').unbind().bind('click', function (e) {
+	$('[data-trigger="form"]').unbind().bind('click', function(e) {
 
 		e.preventDefault();
 
@@ -304,12 +304,12 @@ $(document).ready(function () {
 
 	// });
 
-	$('.card:not(.agenda)>.card-reveal').unbind().bind('mouseleave', function () {
+	$('.card:not(.agenda)>.card-reveal').unbind().bind('mouseleave', function() {
 		$(this).find('.card-title').click();
 	});
 
-	$('.input-field.error').find('input,textarea,select').each(function () {
-		$(this).bind('keyup', function () {
+	$('.input-field.error').find('input,textarea,select').each(function() {
+		$(this).bind('keyup', function() {
 			if ($(this).val().length > 0)
 				$(this).parents('.input-field.error').removeClass('error').find('.error').hide();
 			else
@@ -318,7 +318,7 @@ $(document).ready(function () {
 	});
 
 	if (typeof FroalaEditor !== 'undefined') {
-		$('.editor').each(function () {
+		$('.editor').each(function() {
 			// var height = $(this).attr('rows') || $(this).parent().parent().height();
 			var height = 300;
 			var placeholder = ($(this).attr('placeholder') || 'Escreva aqui') + '...';
@@ -338,93 +338,33 @@ $(document).ready(function () {
 	}
 
 	/** Página de agenda */
-	$('#details .card-title').unbind().bind('click', function () {
+	$('#details .card-title').unbind().bind('click', function() {
 		Url.update(BASE_URL + 'agenda');
 	});
 
-	$('#details .card-title .date').unbind().bind('click', function () {
+	$('#details .card-title .date').unbind().bind('click', function() {
 		$('#details .card-title').click();
 	});
 
 	// Button Delete Actions
 
-	$('.confirm_delete').each(function () {
-
-		$(this).find('[type="reset"]').unbind().bind('click', function (e) {
-			e.preventDefault();
-			$('.confirm_delete').removeClass('open');
-		});
-
+	$('#modal-delete').find('[type="reset"]').unbind().bind('click', function(e) {
+		e.preventDefault();
+		$(this).parents('#modal-delete').removeClass('open');
+		$('#modal-delete').find('input[name="id"]').val('');
 	});
 
-	// $('.confirm_delete:before,.confirm_delete:after').bind('click', function() {
-	// 	console.log($(this).parent());
-	// 	$(this).find('[type="reset"]').click();
-	// });
-
-	$('[type="button"].delete').unbind().bind('click', function (e) {
+	$('[data-trigger="delete"]').unbind().bind('click', function(e) {
 
 		e.preventDefault();
 
-		var form = $(this).parents('form');
-		var action = form.attr('action');
+		var form = $(this);
+		var action = form.data('href');
 		var target = $(this).data('target');
+		var id = $(this).data('id');
 
-		$('.confirm_delete#' + target).toggleClass('open');
-
-		// $('.confirm_delete').toggleClass('open');
-
-		// var modal = $('#confirm_delete').modal({
-
-		// 	onOpenStart: function(m) {
-
-		// 		// $('.card-reveal').show();
-		// 		// $('.card-reveal').css({
-		// 		// 	'display': 'block',
-		// 		// 	'transform': 'translateY(-100%)',
-		// 		// });
-
-		// 		$(m).find('#confirm').unbind().bind('click', function() {
-
-		// 			$.ajax({
-		// 				url: action,
-		// 				method: 'delete',
-		// 				data: form.serialize(),
-		// 				success: (response) => {
-
-		// 					M.toast({
-		// 						html: response.message
-		// 					});
-
-		// 					if (response.status === 'success') {
-
-		// 						if (typeof target !== 'undefined')
-		// 							$('#' + target + '_' + id).remove();
-
-		// 						redirect(action);
-		// 						Url.update(action);
-
-		// 					}
-
-		// 					modal.modal('close');
-
-		// 				}
-		// 			});
-
-		// 		});
-
-		// 	},
-
-		// 	onCloseEnd: () => {
-		// 		// $('.card-reveal').css({
-		// 		// 	'display': 'none',
-		// 		// 	'transform': 'translateY(100%)',
-		// 		// });
-		// 	}
-
-		// });
-
-		// modal.modal('open');
+		$('#modal-delete').toggleClass('open').find('#item').html(target);
+		$('#modal-delete').find('input[name="id"]').val(id);
 
 	});
 
@@ -432,7 +372,7 @@ $(document).ready(function () {
 
 	var select = $('select.autocomplete');
 
-	select.each(function () {
+	select.each(function() {
 
 		var self = $(this);
 		var a = self.val('').attr('disabled', false).select2({
@@ -449,7 +389,7 @@ $(document).ready(function () {
 						search: data.term || null,
 					}
 				},
-				processResults: function (data, params) {
+				processResults: function(data, params) {
 					params.page = params.page || 1;
 					return {
 						results: data

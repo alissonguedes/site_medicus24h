@@ -73,29 +73,54 @@
 				</div> --}}
 
 				<style>
+					.autocomplete-content.dropdown-content {
+						max-height: 220px;
+					}
+
 					.day-range,
-					.time-range,
 					.acao {
 						display: flex;
-						align-items: center;
+						align-items: start;
 						margin-right: 25px;
+					}
+
+					.time-range .input-field {
+						display: flex;
+						align-items: center;
+					}
+
+					.time-range {
+						margin-bottom: 15px;
 					}
 
 					.day-range .dia_semana {
 						width: 250px;
 						display: block;
 						margin-right: 15px;
+						margin-top: 10px;
+						-webkit-box-flex: 0;
+						-webkit-flex: none;
+						flex: none;
+						width: 84px;
 					}
 
 					.time-disabled {
 						display: none;
 					}
 
-					/* .day-range,
-					.time-range {
-						display: flex;
-						align-items: center;
-						place-content: space-between;
+					.day-range .acao {
+						color: rgb(95, 99, 104);
+					}
+
+					.day-range .acao button {
+						margin: 0 5px;
+						color: inherit;
+					}
+
+					.day-range .acao button i {
+						color: inherit;
+						font-size: 24px;
+						font-weight: 300;
 					}
 
 					.time-range input {
@@ -107,171 +132,66 @@
 						text-align: center;
 						margin: 0 15px;
 					}
-
-					.day-range,
-					.time-range {
-						-webkit-box-orient: vertical;
-						-webkit-box-direction: normal;
-						-webkit-flex-direction: column;
-						flex-direction: column;
-						-webkit-transition: height .3s cubic-bezier(.4, 0, .2, 1);
-						transition: height .3s cubic-bezier(.4, 0, .2, 1);
-						padding-bottom: 4px;
-						padding-top: 4px;
-					}
-
-					.V3VAR,
-					.jGuwL {
-						-webkit-box-align: center;
-						-webkit-align-items: center;
-						align-items: center;
-					}
-
-					.x8gipc,
-					.V3VAR,
-					.jGuwL {
-						display: -webkit-box;
-						display: -webkit-flex;
-						display: flex;
-					}
-
-					.MlP2sf {
-						-webkit-box-flex: 0;
-						-webkit-flex: none;
-						flex: none;
-						width: 54px;
-					}
-
-					.Ozodyc {
-						width: 221px;
-						color: rgb(95, 99, 104);
-						padding-left: 8px;
-					}
-
-					.WJCotb {
-						min-width: 32px;
-					} */
 				</style>
 
-				<div class="row">
-					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="day-range">
-							<div class="dia_semana">
-								<label class="strong black-text">Domingo</label>
-							</div>
-							<div class="time-range">
-								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
-								<div class="time-disabled">
-									Indisponível
+				@php
+					$dias_semana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+				@endphp
+
+				@foreach ($dias_semana as $key => $value)
+					<div class="row">
+						<div class="col s12 m5 l5">
+							<div class="day-range">
+								<div class="dia_semana">
+									<label class="strong black-text">{{ $value }}</label>
+									<input type="text" name="dia" value="{{ $key }}">
+								</div>
+								<div class="horario">
+									<div class="time-range">
+										<div class="input-field m-0 mb-1">
+											<input type="text" name="hora_inicio[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" name="hora_fim[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm">
+											<div class="acao">
+												<button type="button" class="btn btn-small btn-flat btn-floating transparent">
+													<i class="material-symbols-outlined">block</i>
+												</button>
+												<button type="button" class="btn btn-small btn-flat btn-floating transparent">
+													<i class="material-symbols-outlined">add</i>
+												</button>
+												<button type="button" class="btn btn-small btn-flat btn-floating transparent">
+													<i class="material-symbols-outlined">content_copy</i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="time-range">
+										<div class="input-field m-0 mb-1">
+											<input type="text" name="hora_inicio[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" name="hora_fim[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm">
+											<div class="acao">
+												<button type="button" class="btn btn-small btn-flat btn-floating transparent">
+													<i class="material-symbols-outlined">block</i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="time-range">
+										<div class="input-field m-0 mb-1">
+											<input type="text" name="hora_inicio[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" name="hora_fim[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm">
+											<div class="acao">
+												<button type="button" class="btn btn-small btn-flat btn-floating transparent">
+													<i class="material-symbols-outlined">block</i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="time-disabled">
+										Indisponível
+									</div>
 								</div>
 							</div>
-							<div class="acao">
-								<button type="button" class="btn btn-small btn-flat btn-floating transparent" style="margin-left: 15px;">
-									<i class="material-symbols-outlined">block</i>
-								</button>
-								<button type="button" class="btn btn-small btn-flat btn-floating transparent" style="margin-left: 15px;">
-									<i class="material-symbols-outlined">add</i>
-								</button>
-								<button type="button" class="btn btn-small btn-flat btn-floating transparent" style="margin-left: 15px;">
-									<i class="material-symbols-outlined">content_copy</i>
-								</button>
-							</div>
 						</div>
 					</div>
-				</div>
+				@endforeach
 
-				<div class="row">
-					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="day-range">
-							<div class="dia_semana">
-								<label class="strong black-text">Segunda</label>
-							</div>
-							<div class="time-range">
-								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
-							</div>
-							<div class="acao">
-								<button type="button" class="btn btn-flat btn-floating transparent">
-									<i class="material-symbols-outlined">content_copy</i>
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="day-range">
-							<div class="dia_semana">
-								<label class="strong black-text">Terça</label>
-							</div>
-							<div class="time-range">
-								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
-							</div>
-							<div class="acao">
-
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="day-range">
-							<div class="dia_semana">
-								<label class="strong black-text">Quarta</label>
-							</div>
-							<div class="time-range">
-								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
-							</div>
-							<div class="acao">
-
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="day-range">
-							<div class="dia_semana">
-								<label class="strong black-text">Quinta</label>
-							</div>
-							<div class="time-range">
-								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
-							</div>
-							<div class="acao">
-
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="day-range">
-							<div class="dia_semana">
-								<label class="strong black-text">Sexta</label>
-							</div>
-							<div class="time-range">
-								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
-							</div>
-							<div class="acao">
-
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col s12 m5 l5 mt-1 mb-1">
-						<div class="day-range">
-							<div class="dia_semana">
-								<label class="strong black-text">Sábado</label>
-							</div>
-							<div class="time-range">
-								<input type="text" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" class="autocomplete timer browser-default" placeholder="hh:mm">
-							</div>
-							<div class="acao">
-
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -296,30 +216,66 @@
 
 			var times = {};
 
-			var razao = 30;
-
-			for (var h = 0; h <= 23; h++) {
-
-				var hora = h < 10 ? '0' + h : h;
-
-				for (var i = 0; i <= 59 / razao; i++) {
-
-					var m = i * razao;
-					var minuto = m < 10 ? '0' + m : m;
-
-					Object.assign(times, {
-						[hora + ':' + minuto]: null
-					});
-
+			function show_times_interval(HORA_INICIAL = 0, MINUTO_INICIAL = 0) {
+				var razao = 30;
+				for (var h = HORA_INICIAL; h <= 23; h++) {
+					var hora = h < 10 ? '0' + h : h;
+					for (var i = MINUTO_INICIAL; i <= 59 / razao; i++) {
+						var m = i * razao;
+						var minuto = m < 10 ? '0' + m : m;
+						Object.assign(times, {
+							[hora + ':' + minuto]: null
+						});
+					}
 				}
-
 			}
+
+			show_times_interval();
+
+			var dias_semana = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
+			var atual_value = null;
+			var selected_value = null;
 
 			var input_timer = $('input.autocomplete.timer');
 			var autocomplete = input_timer.autocomplete({
 				data: times,
-				minLength: 0
-			})
+				minLength: 0,
+				onAutocomplete: (value) => {
+
+					selected_value = value;
+
+					$('.time-range').each(function() {
+
+						$(this).find('.error').remove();
+
+						var dia = $(this).parents('.day-range').find('.dia_semana').find('input[name="dia"]').val();
+						var range = $(this).find('input');
+
+						var inicio = $(range[0]).val();
+						var fim = $(range[1]).val();
+
+						console.log(dia, inicio, fim);
+
+						// Validações
+						if (inicio && fim && inicio >= fim) {
+							$(this).append('<div class="error ml-4 mt-0">O horário de início precisa ser anterior ao horário de término</div>');
+						} else {
+							// Os períodos não podem se sobrepor
+						}
+
+					});
+
+				}
+			});
+
+			input_timer.bind('focus', function() {
+				atual_value = $(this).val();
+				$(this).val('');
+			}).bind('blur', function() {
+				if ($(this).val() == '' || selected_value == atual_value) {
+					$(this).val(atual_value);
+				}
+			});
 
 		});
 	</script>

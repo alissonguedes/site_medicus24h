@@ -140,7 +140,7 @@
 
 	</x-form>
 
-	@if (isset($id))
+	{{-- @if (isset($id))
 		<form action="{{ route('clinica.pacientes.delete') }}" method="post" id="form-delete">
 			<div id="paciente_{{ $id }}" class="confirm_delete">
 				<div class="card z-depth-4 gradient-45deg-teal-teal">
@@ -160,6 +160,13 @@
 				</div>
 			</div>
 		</form>
-	@endif
+	@endif --}}
+
+	<x-slot:form_delete action="{{ route('clinica.pacientes.delete') }}">
+		<p class="bold">Esta ação não poderá ser desfeita.</p>
+		<br>
+		<p>Tem certeza que deseja remover este paciente?</p>
+		<div id="item"></div>
+	</x-slot:form_delete>
 
 </x-slot:forms>

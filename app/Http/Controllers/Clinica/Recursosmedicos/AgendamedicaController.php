@@ -14,9 +14,7 @@ class AgendamedicaController extends Controller
 	 */
 	public function index(Request $request)
 	{
-
 		return view('clinica.recursosmedicos.agenda.index');
-
 	}
 
 	/**

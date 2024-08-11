@@ -40,47 +40,15 @@
 </div>
 
 @if (request('id'))
-	<hr class="border mt-4 mb-4">
-
-	{{-- <form action="{{ route('clinica.pacientes.delete') }}" method="post" id="delete_data" data-target="paciente">
-
-		<div class="row">
-			<div class="col s12">
-				<label for="">Excluir este paciente:</label>
-			</div>
-			<div class="col s12 mt-1">
-				<input type="hidden" name="id" value="{{ $id ?? null }}">
-				<button type="button" class="btn delete left waves-effect" data-target="paciente" style="align-items: center; display: flex; background-color: var(--red) !important;">
-					<i class="material-symbols-outlined">delete</i>
-					Excluir
-				</button>
-			</div>
-		</div>
-
-	</form>
-
-	<div id="confirm_delete" class="modal modal-fixedfooter">
-		<div class="modal-content">
-			<h3>ATENÇÃO!!!</h3>
-			<p>Tem certeza que deseja excluir este paciente?</p>
-			<p>Esta ação não poderá ser defeita.</p>
-		</div>
-		<div class="modal-footer border-top grey-border border-lighten-3">
-			<button type="button" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
-			<button type="button" id="confirm" class="btn red waves-effect">Confirmar</button>
-		</div>
-	</div> --}}
-
+	<hr class="">
 	<div class="row">
 		<div class="col s12">
-			<label for="">Excluir este paciente:</label>
-		</div>
-		<div class="col s12 mt-1">
-			{{-- <input type="hidden" name="id" value="{{ $id ?? null }}"> --}}
-			<button type="button" class="btn delete left waves-effect" data-href="{{ route('clinica.homecare.gestao-de-cuidados.delete') }}" data-target="paciente_{{ $id }}" data-tooltip="Remover" style="align-items: center; display: flex; background-color: var(--red) !important;">
-				<i class="material-symbols-outlined">delete</i>
-				Excluir
-			</button>
+			<div class="input-field">
+				<label for="" class="active">Excluir este paciente:</label>
+				<button type="button" class="btn delete red mt-1 waves-effect" data-trigger="delete" data-id="{{ $paciente->id }}" data-target="paciente_{{ $paciente->id }}" data-tooltip="Remover">
+					<i class="material-symbols-outlined">delete</i>
+				</button>
+			</div>
 		</div>
 	</div>
 @endif
