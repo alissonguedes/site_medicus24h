@@ -30,8 +30,7 @@
 
 									<div class="card-content teal lighten-1 border">
 
-										<img src="{{ asset('assets/img/site/cards/ambulancia.jpg') }}"
-											class="border-radius-8 z-depth-3 image-n-margin" alt="">
+										<img src="{{ asset('assets/img/site/cards/ambulancia.jpg') }}" class="border-radius-8 z-depth-3 image-n-margin" alt="">
 
 										<h6 class="card-title">
 											<a href="#" class="mt-5 letterspacing white-text">UTI Móvel</a>
@@ -81,8 +80,7 @@
 
 								<div class="card-content teal lighten-1 border">
 
-									<img src="{{ asset('assets/img/site/cards/ambulancia.jpg') }}" class="border-radius-8 z-depth-3 image-n-margin"
-										alt="">
+									<img src="{{ asset('assets/img/site/cards/ambulancia.jpg') }}" class="border-radius-8 z-depth-3 image-n-margin" alt="">
 
 									<h6 class="card-title">
 										<a href="#" class="mt-5 letterspacing white-text">UTI Móvel</a>

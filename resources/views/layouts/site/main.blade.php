@@ -5,9 +5,7 @@
 	@endif
 
 	{{-- BEGIN Styles --}}
-	<x-slot:styles>
-		@include('layouts.site.styles')
-	</x-slot:styles>
+	@include('layouts.site.styles')
 	{{-- END Styles --}}
 
 	{{-- BEGIN Body --}}
@@ -29,15 +27,7 @@
 	{{-- END Body --}}
 
 	{{-- BEGIN Scripts  --}}
-	<x-slot:scripts>
-
-		@include('layouts.site.scripts')
-
-		@if (isset($script))
-			{{ $script }}
-		@endif
-
-	</x-slot:scripts>
+	@include('layouts.site.scripts')
 	{{-- END Scripts --}}
 
 </x-app-layout>
