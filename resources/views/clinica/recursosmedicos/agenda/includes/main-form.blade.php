@@ -159,7 +159,7 @@
 							<div class="day-range">
 								<div class="dia-semana">
 									<label class="strong black-text">{{ $value }}</label>
-									<input type="text" name="dia" value="{{ $key }}">
+									<input type="hidden" name="dia" value="{{ $key }}">
 								</div>
 								<div class="horario">
 									<div class="time-range">
@@ -177,6 +177,7 @@
 												</button>
 											</div>
 										</div>
+										<div class="error">Os períodos não podem se  sobrepor</div>
 									</div>
 									<div class="time-range disabled grey-text text-lighten-1 hide">
 										<div class="input-field m-0 mb-1">
