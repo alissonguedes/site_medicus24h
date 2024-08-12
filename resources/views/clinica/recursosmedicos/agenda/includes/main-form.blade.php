@@ -178,38 +178,6 @@
 											</div>
 										</div>
 									</div>
-									<div class="time-range">
-										<div class="input-field m-0 mb-1">
-											<input type="text" name="hora_inicio[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" name="hora_fim[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm">
-											<div class="acao">
-												<button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="delete_time">
-													<i class="material-symbols-outlined">block</i>
-												</button>
-												<button type="button" class="btn btn-small btn-flat btn-floating transparent hide" data-trigger="add_time">
-													<i class="material-symbols-outlined">add</i>
-												</button>
-												<button type="button" class="btn btn-small btn-flat btn-floating transparent hide" data-trigger="copy_time">
-													<i class="material-symbols-outlined">content_copy</i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div class="time-range">
-										<div class="input-field m-0 mb-1">
-											<input type="text" name="hora_inicio[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" name="hora_fim[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm">
-											<div class="acao">
-												<button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="delete_time">
-													<i class="material-symbols-outlined">block</i>
-												</button>
-												<button type="button" class="btn btn-small btn-flat btn-floating transparent hide" data-trigger="add_time">
-													<i class="material-symbols-outlined">add</i>
-												</button>
-												<button type="button" class="btn btn-small btn-flat btn-floating transparent hide" data-trigger="copy_time">
-													<i class="material-symbols-outlined">content_copy</i>
-												</button>
-											</div>
-										</div>
-									</div>
 									<div class="time-range disabled grey-text text-lighten-1 hide">
 										<div class="input-field m-0 mb-1">
 											<div class="label">Indisponível</div>
@@ -251,8 +219,6 @@
 	<script>
 		$(function() {
 
-			var times = {};
-
 			function show_times_interval(HORA_INICIAL = 0, MINUTO_INICIAL = 0) {
 				var razao = 30;
 				for (var h = HORA_INICIAL; h <= 23; h++) {
@@ -267,6 +233,8 @@
 				}
 			}
 
+			var times = {};
+
 			show_times_interval();
 			buttons_time_range_action();
 
@@ -274,31 +242,32 @@
 			var atual_value = null;
 			var selected_value = null;
 
-			var input_timer = $('input.autocomplete.timer');
-			var autocomplete = input_timer.autocomplete({
-				data: times,
-				minLength: 0,
-				onAutocomplete: (value) => {
-
-					agenda = [];
-					selected_value = value;
-
-					buttons_time_range_action();
-
-				}
-
-			});
-
-			input_timer.bind('focus', function() {
-				atual_value = $(this).val();
-				$(this).val('');
-			}).bind('blur', function() {
-				if ($(this).val() == '' || selected_value == atual_value) {
-					$(this).val(atual_value);
-				}
-			});
-
 			function buttons_time_range_action() {
+
+				var input_timer = $('input.autocomplete.timer');
+				var autocomplete = input_timer.autocomplete({
+					data: times,
+					minLength: 0,
+					onAutocomplete: (value) => {
+
+						agenda = [];
+						selected_value = value;
+
+						buttons_time_range_action();
+						show_times_interval();
+
+					}
+
+				});
+
+				input_timer.bind('focus', function() {
+					atual_value = $(this).val();
+					$(this).val('');
+				}).bind('blur', function() {
+					if ($(this).val() == '' || selected_value == atual_value) {
+						$(this).val(atual_value);
+					}
+				});
 
 				var div_time_range = `<div class="time-range">
 					<div class="input-field m-0 mb-1">
@@ -356,19 +325,20 @@
 
 						$(this).find('.acao button').unbind().bind('click', function() {
 
-							var time_index = $(this).parents('.time-range:not(.disabled)').index();
+							var time_index = $(this).parents('.time-range:not(.disabled)');
 							var time_length = $(this).parents('.horario').find('.time-range:not(.disabled)').length;
-
 							var acao = $(this).data('trigger');
+							var new_range = $(this).parents('.horario').find('.time-range:not(.disabled)');
 
 							switch (acao) {
 
 								case 'delete_time':
 
-									if (time_length === 1)
+									if (time_length === 1) {
 										$(this).parents('.horario').find('.time-range.disabled').removeClass('hide');
+									}
 
-									if (time_index === 0) {
+									if (time_index.index() <= 1) {
 										$(this).parents('.time-range').next().find('.acao').find('button').each(function() {
 											if ($(this).hasClass('hide')) {
 												$(this).removeClass('hide');
@@ -377,10 +347,10 @@
 									}
 
 									if (time_length > 0) {
-										$(this).closest('.time-range:not(.disabled)').remove();
-									}
 
-									console.log(time_index, time_length);
+										$(this).closest('.time-range:not(.disabled)').remove();
+
+									}
 
 									break;
 
@@ -388,101 +358,27 @@
 
 									$(this).parents('.horario').append(div_time_range);
 
-									// // if (time_length >= 0) {
-									$(this).parents('.horario').find('.time-range.disabled').addClass('hide');
-									// // }
+									if (time_length > -1) {
 
-									if (time_index === -1) {
-										$(this).parents('.time-range').find('.acao').find('button').each(function() {
-											if (!$(this).removeClass('hide')) {
-												$(this).removeClass('hide');
-											}
-										});
+										$(this).parents('.horario').find('.time-range.disabled').addClass('hide');
+
+										if (time_length === 0) {
+											$(this).parents('.time-range').next().find('.acao').find('button').each(function() {
+												if ($(this).hasClass('hide')) {
+													$(this).removeClass('hide');
+												}
+											});
+										}
+
 									}
-
-									console.log(time_index, time_length);
 
 									buttons_time_range_action();
 
 									break;
+
 							}
 
 						});
-
-						// $(this).find('.acao').find('button').unbind().bind('click', function() {
-
-						// 	var index = $(this).parents('.time-range:not(.disabled)').index();
-						// 	var acao = $(this).data('trigger');
-
-						// 	switch (acao) {
-
-						// 		case 'delete_time':
-
-						// 			if (index === -1) {
-						// 				index = 0;
-						// 			}
-
-						// 			console.log(index);
-
-						// 			if (len == 1) {
-						// 				$(this).parents('.horario').find('.time-range.disabled').removeClass('hide');
-						// 			}
-
-						// 			if (index == 0) {
-
-						// 				$(this).parents('.time-range').next().find('.acao').find('button').each(function() {
-
-						// 					if (index <= 1) {
-						// 						if ($(this).hasClass('hide')) {
-						// 							$(this).removeClass('hide');
-						// 						}
-						// 					}
-
-						// 				});
-
-						// 			}
-
-						// 			if (len > 0) {
-
-						// 				$(this).closest('.time-range:not(.disabled)').remove();
-
-						// 				len--;
-						// 				// index--;
-
-						// 			}
-
-						// 			break;
-
-						// 		case 'add_time':
-
-						// 			len++;
-						// 			// index++;
-
-						// 			$(this).parents('.horario').append(div_time_range);
-						// 			buttons_time_range_action()
-
-						// 			if (len >= 1) {
-						// 				$(this).parents('.horario').find('.time-range.disabled').addClass('hide');
-						// 			}
-
-						// 			// if (index === 1) {
-						// 			$(this).parents('.time-range').next().find('.acao').find('button').each(function() {
-						// 				if ($(this).hasClass('hide')) {
-						// 					$(this).removeClass('hide');
-						// 				}
-						// 			});
-						// 			// }
-
-						// 			console.log(index);
-						// 			break;
-
-						// 		case 'copy_time':
-						// 			break;
-
-						// 	}
-
-						// });
-
 
 					});
 
