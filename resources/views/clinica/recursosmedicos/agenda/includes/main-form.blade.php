@@ -25,14 +25,23 @@
 
 	<div class="row">
 		<div class="col s12">
-			<p>Aqui, você pode informar os dias e horários que está disponível para atendimento na clínica.</p>
+			<p>Aqui, você pode informar os dias e horários que cada médico estará disponível para atendimento na clínica.</p>
 		</div>
 	</div>
 
 	<hr class="">
 
 	<div class="row">
-		{{-- <div class="col s12">
+		<div class="col s12">
+			<div class="input-field">
+				<label for="medico" class="active strong black-text">Médico</label>
+				<select name="medico" id="medico" class="autocomplete" data-url="{{ route('clinica.medicos.autocomplete') }}" placeholder="Pesquise pelo Nome, CPF, Matrícula ou RG"></select>
+			</div>
+		</div>
+	</div>
+
+	{{-- <div class="row">
+		<div class="col s12">
 			<div class="input-field">
 				<div class="row">
 					<div class="col s12">
@@ -49,8 +58,8 @@
 					</div>
 				</div>
 			</div>
-		</div> --}}
-	</div>
+		</div>
+	</div> --}}
 
 	<div class="row">
 		<div class="col s12">
@@ -99,7 +108,7 @@
 						width: 250px;
 						display: block;
 						margin-right: 15px;
-						margin-top: 5px;
+						margin-top: 6px;
 						-webkit-box-flex: 0;
 						-webkit-flex: none;
 						flex: none;
@@ -153,33 +162,34 @@
 					$dias_semana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 				@endphp
 
-				@foreach ($dias_semana as $key => $value)
+				@foreach ($dias_semana as $key => $day)
 					<div class="row">
 						<div class="col s12 m5 l5">
 							<div class="day-range">
 								<div class="dia-semana">
-									<label class="strong black-text">{{ $value }}</label>
-									<input type="hidden" name="dia" value="{{ $key }}">
+									<label class="strong black-text">{{ $day }}</label>
 								</div>
-								<div class="horario">
-									<div class="time-range">
-										<div class="input-field m-0 mb-1">
-											<input type="text" name="hora_inicio[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" name="hora_fim[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm">
-											<div class="acao">
-												<button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="delete_time">
-													<i class="material-symbols-outlined">block</i>
-												</button>
-												<button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="add_time">
-													<i class="material-symbols-outlined">add</i>
-												</button>
-												<button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="copy_time">
+								<div class="horario" data-day="{{ $key }}">
+									@if (replace($day) != 'domingo' && replace($day) != 'sabado')
+										<div class="time-range">
+											<div class="input-field m-0 mb-1">
+												<input type="text" name="horario[{{ replace($day) }}][inicio][]" class="autocomplete timer browser-default" value="08:00" placeholder="hh:mm"> - <input type="text" name="horario[{{ replace($day) }}][fim][]" class="autocomplete timer browser-default" value="17:00" placeholder="hh:mm">
+												<div class="acao">
+													<button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="delete_time">
+														<i class="material-symbols-outlined">block</i>
+													</button>
+													<button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="add_time">
+														<i class="material-symbols-outlined">add</i>
+													</button>
+													{{-- <button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="copy_time">
 													<i class="material-symbols-outlined">content_copy</i>
-												</button>
+												</button> --}}
+												</div>
 											</div>
+											{{-- <div class="error">Os períodos não podem se sobrepor</div> --}}
 										</div>
-										<div class="error">Os períodos não podem se  sobrepor</div>
-									</div>
-									<div class="time-range disabled grey-text text-lighten-1 hide">
+									@endif
+									<div class="time-range disabled grey-text text-lighten-1 {{ replace($day) != 'domingo' && replace($day) != 'sabado' ? 'hide' : null }}">
 										<div class="input-field m-0 mb-1">
 											<div class="label">Indisponível</div>
 										</div>
@@ -217,6 +227,8 @@
 		</div>
 	</x-slot:footer>
 
+	@include('clinica.homecare.pacientes.includes.scripts')
+
 	<script>
 		$(function() {
 
@@ -239,11 +251,12 @@
 			show_times_interval();
 			buttons_time_range_action();
 
-			var dias_semana = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
 			var atual_value = null;
 			var selected_value = null;
 
 			function buttons_time_range_action() {
+
+				var dias_semana = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
 
 				var input_timer = $('input.autocomplete.timer');
 				var autocomplete = input_timer.autocomplete({
@@ -270,26 +283,7 @@
 					}
 				});
 
-				var div_time_range = `<div class="time-range">
-					<div class="input-field m-0 mb-1">
-						<input type="text" name="hora_inicio[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm"> - <input type="text" name="hora_fim[{{ replace($value) }}][]" class="autocomplete timer browser-default" placeholder="hh:mm">
-						<div class="acao">
-							<button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="delete_time">
-								<i class="material-symbols-outlined">block</i>
-							</button>
-							<button type="button" class="btn btn-small btn-flat btn-floating transparent hide" data-trigger="add_time">
-								<i class="material-symbols-outlined">add</i>
-							</button>
-							<button type="button" class="btn btn-small btn-flat btn-floating transparent hide" data-trigger="copy_time">
-								<i class="material-symbols-outlined">content_copy</i>
-							</button>
-						</div>
-					</div>
-				</div>`
-
 				$('.day-range').each(function() {
-
-					var dia = $(this).find('.dia-semana').find('input[name="dia"]').val();
 
 					var periodo = {};
 					var horario = [];
@@ -301,9 +295,31 @@
 
 						$(this).find('.error').remove();
 
+						var dia = $(this).parents('.horario').data('day');
 						var range = $(this).find('input');
 						var inicio = $(range[0]).val();
 						var fim = $(range[1]).val();
+
+						// var dia = $(this).find('.dia-semana').find('input[name="dia"]').val();
+
+						console.log(dias_semana, dia);
+						var div_time_range = `
+							<div class="time-range">
+								<div class="input-field m-0 mb-1">
+									<input type="text" name="horario[${dias_semana[dia]}][inicio][]" class="autocomplete timer browser-default" value="08:00" placeholder="hh:mm"> - <input type="text" name="horario[${dias_semana[dia]}][fim][]" class="autocomplete timer browser-default" value="17:00" placeholder="hh:mm">
+									<div class="acao">
+										<button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="delete_time">
+											<i class="material-symbols-outlined">block</i>
+										</button>
+										<button type="button" class="btn btn-small btn-flat btn-floating transparent hide" data-trigger="add_time">
+											<i class="material-symbols-outlined">add</i>
+										</button>
+										{{-- <button type="button" class="btn btn-small btn-flat btn-floating transparent hide" data-trigger="copy_time">
+											<i class="material-symbols-outlined">content_copy</i>
+										</button> --}}
+									</div>
+								</div>
+							</div>`
 
 						if (inicio && fim) {
 

@@ -11,6 +11,28 @@
 				@include('clinica.recursosmedicos.agenda.includes.card-header')
 			</div>
 
+			@php
+				$agenda_medica = [];
+				if (isset($horarios)) {
+				    foreach ($horarios as $agenda) {
+				        $id = $agenda->id;
+				        $medico = $agenda->id_medico;
+				        $horarios = json_decode($agenda->horarios, true);
+				        if ($horarios) {
+				            foreach ($horarios as $dia => $hora) {
+				                $agenda_medica[] = [
+									'groupId'=> $id,
+				                    'daysOfWeek' => [$dia],
+				                    'title' => $medico,
+				                    // 'startTime'=> $h,
+				                    // 'endTime'=> $h
+				                ];
+				            }
+				        }
+				    }
+				}
+			@endphp
+
 			<div class="card-content animated fadeIn no-padding">
 				<div id="calendar"></div>
 			</div>

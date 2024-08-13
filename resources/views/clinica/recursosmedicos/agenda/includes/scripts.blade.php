@@ -165,18 +165,20 @@
 
 			},
 
-			events: {
-				url: BASE_URL + 'agenda',
-				method: 'get',
-				extraParams: {
-					ajaxCalendar: true
-				},
-				success: (response) => {
+			events: @json($agenda_medica ?? null)
 
-				},
-				color: 'var(--light-green)', // an option!
-				textColor: 'black' // an option!
-			},
+			// events: {
+			// 	url: BASE_URL + 'agenda',
+			// 	method: 'get',
+			// 	extraParams: {
+			// 		ajaxCalendar: true
+			// 	},
+			// 	success: (response) => {
+
+			// 	},
+			// 	color: 'var(--light-green)', // an option!
+			// 	textColor: 'black' // an option!
+			// },
 
 		});
 

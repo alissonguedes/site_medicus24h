@@ -115,8 +115,25 @@ Route::middleware([
 
 			Route::get('/', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.index');
 			Route::get('/id/{id}', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.edit');
+			Route::post('/', [Agendamedica::class, 'store'])->name('clinica.recursosmedicos.agenda.index');
+			Route::put('/', [Agendamedica::class, 'store'])->name('clinica.recursosmedicos.agenda.index');
 
 		});
+
+	});
+
+	// Médicos
+	Route::prefix('/medicos')->group(function () {
+
+		Route::get('/', function () {});
+
+		Route::get('/a/{search?}', function () {
+			return DB::connection('medicus')
+				->table('tb_medico AS M')
+				->select('nome AS text', 'id')
+				->join('tb_funcionario AS F', 'F.id', 'M.id_funcionario')
+				->get();
+		})->name('clinica.medicos.autocomplete');
 
 	});
 
