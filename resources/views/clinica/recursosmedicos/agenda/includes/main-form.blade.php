@@ -33,9 +33,12 @@
 
 	<div class="row">
 		<div class="col s12">
-			<div class="input-field">
+			<div class="input-field @error('medico') error @enderror">
 				<label for="medico" class="active strong black-text">Médico</label>
 				<select name="medico" id="medico" class="autocomplete" data-url="{{ route('clinica.medicos.autocomplete') }}" placeholder="Pesquise pelo Nome, CPF, Matrícula ou RG"></select>
+				@error('medico')
+				<div class="error">{{ $message }}</div>
+				@enderror
 			</div>
 		</div>
 	</div>

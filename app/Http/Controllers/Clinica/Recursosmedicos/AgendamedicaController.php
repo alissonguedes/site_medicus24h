@@ -14,9 +14,10 @@ class AgendamedicaController extends Controller {
 	 */
 	public function index(Request $request, AgendaModel $agenda) {
 
-		$data['horarios'] = $agenda->select('id', 'id_medico_clinica AS id_medico', 'horarios')
+		$data['horarios'] = $agenda->select('A.id', 'C.id_medico', 'horarios')
 			->from('tb_medico_agenda AS A')
 			->join('tb_medico_agenda_horario AS H', 'H.id_agenda', 'A.id')
+			->join('tb_medico_clinica AS C', 'C.id', 'A.id_medico_clinica')
 			->get();
 
 		return view('clinica.recursosmedicos.agenda.index', $data);
@@ -46,8 +47,9 @@ class AgendamedicaController extends Controller {
 	 */
 	public function store(Request $request, AgendaModel $agenda) {
 
-		dump($request->all());
-
+		$request->validate([
+			'medico' => 'required',
+		]);
 		$horarios          = $request->horario;
 		$id_medico_clinica = $agenda->from('tb_medico_clinica')->select('id')->where('id_medico', $request->medico)->get()->first();
 
@@ -60,14 +62,13 @@ class AgendamedicaController extends Controller {
 			'sexta'   => 5,
 			'sabado'  => 6,
 		];
+
 		$horarios_agenda = [];
 
 		foreach ($horarios as $dia => $horario) {
 			$dia                   = $dias_semana[$dia];
 			$horarios_agenda[$dia] = array_combine($horario['inicio'], $horario['fim']);
 		}
-
-		dump($horarios_agenda);
 
 		$agenda_medico = [
 			'id_medico_clinica' => $id_medico_clinica->id,
