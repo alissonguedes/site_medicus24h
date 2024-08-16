@@ -212,6 +212,8 @@ nav .navbar-main::before {
 	background-color: transparent !important;
 	text-transform: uppercase;
 	padding: 0 21px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .navbar-main li a::before {

@@ -122,6 +122,7 @@
 								<input type="hidden" name="id">
 								<button type="reset" id="cancel" class="btn white black-text waves-effect modal-close left">Cancelar</button>
 								<button type="submit" id="confirm" class="btn red waves-effect right" style="align-items: center; display: flex; background-color: var(--red) !important;">Confirmar</button>
+								<div class="clearfix"></div>
 							</div>
 						</form>
 					</div>

@@ -1540,9 +1540,9 @@ select:not(.browser-default),
 	margin: 0;
 }
 
-.select-wrapper {
+/* .select-wrapper {
 	top: 3px;
-}
+} */
 
 input:not([type]):focus:not([readonly]),
 input[type=text]:not(.browser-default):focus:not([readonly]),

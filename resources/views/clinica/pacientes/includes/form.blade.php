@@ -52,6 +52,7 @@
 	<x-form action="{{ route('clinica.pacientes.post') }}" method="post" id="main-form" autocomplete="off">
 
 		@csrf
+
 		<input type="hidden" name="categoria" value="paciente">
 
 		@if (request('id'))
@@ -71,55 +72,59 @@
 			</ul>
 		</x-slot:tabs>
 
-		<div class="row">
+		<x-slot:content>
 
-			<div class="col s12 m12 l12">
+			<div class="row">
 
-				<!-- BEGIN #informacoes_pessoais -->
-				<div id="dados-pessoais">
-					@include('clinica.pacientes.includes.form.informacoes-pessoais')
-				</div>
-				<!-- END #informacoes_pessoais -->
+				<div class="col s12 m12 l12">
 
-				<!-- BEGIN #informacoes_contato -->
-				<div id="contato">
-					@include('clinica.pacientes.includes.form.contato')
-				</div>
-				<!-- END #informacoes_contato -->
+					<!-- BEGIN #informacoes_pessoais -->
+					<div id="dados-pessoais">
+						@include('clinica.pacientes.includes.form.informacoes-pessoais')
+					</div>
+					<!-- END #informacoes_pessoais -->
 
-				<!-- BEGIN #informacoes_convenio -->
-				<div id="convenio">
-					@include('clinica.pacientes.includes.form.convenio')
-				</div>
-				<!-- END #informacoes_convenio -->
+					<!-- BEGIN #informacoes_contato -->
+					<div id="contato">
+						@include('clinica.pacientes.includes.form.contato')
+					</div>
+					<!-- END #informacoes_contato -->
 
-				<!-- BEGIN #informacoes_endereco -->
-				<div id="endereco">
-					@include('clinica.pacientes.includes.form.endereco')
-				</div>
-				<!-- END #informacoes_endereco -->
+					<!-- BEGIN #informacoes_convenio -->
+					<div id="convenio">
+						@include('clinica.pacientes.includes.form.convenio')
+					</div>
+					<!-- END #informacoes_convenio -->
 
-				<!-- BEGIN #observacoes -->
-				<div id="observacoes">
-					@include('clinica.pacientes.includes.form.observacoes')
-				</div>
-				<!-- END #observacoes -->
+					<!-- BEGIN #informacoes_endereco -->
+					<div id="endereco">
+						@include('clinica.pacientes.includes.form.endereco')
+					</div>
+					<!-- END #informacoes_endereco -->
 
-				{{-- <!-- BEGIN #homecare -->
+					<!-- BEGIN #observacoes -->
+					<div id="observacoes">
+						@include('clinica.pacientes.includes.form.observacoes')
+					</div>
+					<!-- END #observacoes -->
+
+					{{-- <!-- BEGIN #homecare -->
 			<div id="homecare">
 				@include('clinica.pacientes.includes.form.gestao_de_cuidados')
 			</div>
 			<!-- END #homecare --> --}}
 
-				<!-- BEGIN #outras_informacoes -->
-				<div id="outras_informacoes">
-					@include('clinica.pacientes.includes.form.mais-informacoes')
+					<!-- BEGIN #outras_informacoes -->
+					<div id="outras_informacoes">
+						@include('clinica.pacientes.includes.form.mais-informacoes')
+					</div>
+					<!-- END #outras_informacoes -->
+
 				</div>
-				<!-- END #outras_informacoes -->
 
 			</div>
 
-		</div>
+		</x-slot:content>
 
 		<x-slot:footer>
 			<div class="row">

@@ -1,6 +1,6 @@
 <x-clinica-layout>
 
-	<x-slot:icon> edit_calendar </x-slot:icon>
+	<x-slot:icon data-href="{{ route('clinica.recursosmedicos.agenda.index') }}"> arrow_back </x-slot:icon>
 	<x-slot:title> Agenda Médica </x-slot:title>
 
 	<x-slot:main>
@@ -25,8 +25,8 @@
 				                    'groupId' => $id_medico,
 				                    'daysOfWeek' => [$dia],
 				                    'title' => $medico->nome,
-				                    // 'startTime'=> $h,
-				                    // 'endTime'=> $h
+				                    'startTime' => array_keys($hora)[0],
+				                    'endTime' => array_values($hora)[0],
 				                ];
 				            }
 				        }

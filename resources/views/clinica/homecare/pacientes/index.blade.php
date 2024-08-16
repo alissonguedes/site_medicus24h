@@ -17,7 +17,7 @@
 					$programaModel = new App\Models\Clinica\ProgramaModel();
 				@endphp
 				@foreach ($pacientes as $row)
-					<div class="col s12 m3 l2">
+					<div class="col s12 m3 l3">
 						<div class="card">
 							<div class="card-image">
 

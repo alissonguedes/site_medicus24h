@@ -13,7 +13,7 @@
 	}
 
 	main .card-panel>.card-header~.card-content {
-		height: calc(100% - 56px);
+		height: calc(100% - 45px);
 		top: auto;
 		bottom: 0px;
 	}
@@ -165,7 +165,34 @@
 
 			},
 
-			events: @json($agenda_medica ?? null)
+			events: @json($agenda_medica ?? null),
+
+			// select: function(start, end, jsEvent, view) {
+			// 	if (start.isBefore(moment())) {
+			// 		$('#calendar').fullCalendar('unselect');
+			// 		return false;
+			// 	} else {
+			// 		var currentDate = moment(start).format('YYYY/MM/DD');
+			// 		alert(currentDate);
+			// 	}
+			// },
+
+			// dayRender: function(date, cell) {
+
+			// 	date.dayEl.style.backgroundColor = 'red';
+			// 	// It's an example, do your own test here
+			// 	if (cell.hasClass("fc-other-month")) {
+			// 		cell.addClass('disabled');
+			// 	}
+
+			// },
+			// dayClick: function(date, jsEvent, view) {
+			// 	if ($(jsEvent.target).hasClass("disabled")) {
+			// 		return false;
+			// 	}
+			// 	// Your code
+			// 	// ....
+			// }
 
 			// events: {
 			// 	url: BASE_URL + 'agenda',

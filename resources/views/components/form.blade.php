@@ -3,7 +3,6 @@
     'method' => 'post',
     'id' => 'main-form',
     'autocomplete' => 'off',
-    // 'class' => '',
 ]) }}>
 
 	<div class="card card-panel no-border no-margin no-padding" style="height: inherit;">
@@ -14,9 +13,13 @@
 			</div>
 		@endif
 
-		<div class="card-content">
-			{{ $slot }}
-		</div>
+		@if (isset($content))
+			<div {{ $content->attributes->merge(['class' => 'card-content']) }}>
+				{{ $content }}
+			</div>
+		@endif
+
+		{{ $slot }}
 
 		@if (isset($footer))
 			<div {{ $footer->attributes->merge(['class' => 'card-action right-align']) }}>
@@ -34,17 +37,10 @@
 <style>
 	.card-reveal form {
 		height: 100%;
-		/* position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		top: 0;
-		height: inherit;
-		z-index: 1; */
 	}
 
 	.card-reveal form .card-tabs~.card-content {
-		height: calc(100% - 140px);
+		height: calc(100% - 117px);
 		top: 55px;
 	}
 </style>

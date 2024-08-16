@@ -11,7 +11,7 @@
 				@include('clinica.recursosmedicos.agenda.includes.card-header')
 			</div>
 
-			@php
+			{{-- @php
 				$agenda_medica = [];
 				if (isset($horarios)) {
 				    foreach ($horarios as $agenda) {
@@ -32,15 +32,66 @@
 				        }
 				    }
 				}
-			@endphp
+			@endphp --}}
 
-			<div class="card-content animated fadeIn no-padding">
+			<div class="card-content animated fadeIn">
 
-				<div id="calendar"></div>
+				@php
+
+					$profissionais = new App\Models\Clinica\AgendaModel();
+
+					$medicos = $profissionais->select('*')->from('tb_medico AS M')->join('tb_funcionario AS F', 'F.id', 'M.id_funcionario')->get();
+
+				@endphp
+
+				@if (isset($medicos) && $medicos->count() > 0)
+					<table class="">
+						<thead>
+							<tr>
+								<th class="center-align">Nome</th>
+								<th class="center-align">Conselho</th>
+								<th class="center-align">Especialidade</th>
+								<th class="center-align"></th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($medicos as $medico)
+								@php
+									$especialidade = $profissionais
+									    ->select('especialidade')
+									    ->from('tb_especialidade')
+									    ->where('id', function ($query) use ($medico) {
+									        $query
+									            ->select('id_especialidade')
+									            ->from('tb_medico_especialidade')
+									            ->where('id_funcionario', $medico->id_funcionario);
+									    })
+									    ->first();
+								@endphp
+								<tr>
+									<td> {{ $medico->nome }} </td>
+									<td> {{ $medico->crm }} </td>
+									<td> {{ $especialidade->especialidade }} </td>
+									<td class="center-align">
+										<button class="btn btn-flat transparent btn-floating black-text ml-3" data-href="{{ route('clinica.recursosmedicos.agenda.medico', $medico->id) }}" data-tooltip="Ver Agenda">
+											<i class="material-symbols-outlined">view_agenda</i>
+										</button>
+										<button class="btn btn-flat transparent btn-floating black-text ml-3" data-href="{{ route('clinica.recursosmedicos.agenda.disponibilidade', $medico->id) }}" data-tooltip="Adicionar Disponibilidade" data-trigger="form" data-target="main-form">
+											<i class="material-symbols-outlined">edit_calendar</i>
+										</button>
+										<button class="btn btn-flat transparent btn-floating black-text ml-3" data-href="{{ route('clinica.recursosmedicos.agenda.medico.agendamento', $medico->id) }}" data-tooltip="Agendamento" data-trigger="form" data-target="form-agendamento">
+											<i class="material-symbols-outlined">calendar_add_on</i>
+										</button>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				@endif
 
 			</div>
 
-			<div id="formularios" class="card-reveal no-padding" style="{{ ($errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);') . 'overflow:hidden; z-index: 9999999;' }}">
+			<div id="formularios" class="card-reveal no-padding" style="{{ ($errors->any() || request()->routeIs('clinica.recursosmedicos.agenda.disponibilidade') || request()->routeIs('clinica.recursosmedicos.agenda.medico.agendamento') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);') . 'overflow:hidden; z-index: 9999999;' }}">
 				@include('clinica.recursosmedicos.agenda.includes.main-form')
 			</div>
 

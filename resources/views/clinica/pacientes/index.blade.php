@@ -20,7 +20,6 @@
 					Nenhum paciente cadastrado.
 				</div>
 			@endif
-
 		</div>
 
 	</x-slot:body>

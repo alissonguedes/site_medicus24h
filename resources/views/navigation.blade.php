@@ -3,8 +3,8 @@
 	<ul>
 		@foreach ($menus as $key => $val)
 			@if ($val['categoria'])
-				<li class="menu-title">
-					{{ $val['titulo'] }}
+				<li class="mm-navbar">
+					<a class="mm-navbar__title">{{ $val['titulo'] }}</a>
 				</li>
 			@else
 				<li>

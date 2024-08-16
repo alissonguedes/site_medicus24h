@@ -157,7 +157,7 @@ nav .brand-logo {
 	display: inherit;
 	align-items: center;
 	place-content: flex-end;
-	padding-left: 126px;
+	padding-left: 35px;
 }
 
 
@@ -173,7 +173,7 @@ nav .navbar-main {
 	width: calc(100% - 270px);
 	display: flex;
 	place-content: flex-end;
-	padding-right: 145px;
+	padding-right: 35px;
 	margin-left: 60px;
 }
 
@@ -212,6 +212,8 @@ nav .navbar-main::before {
 	background-color: transparent !important;
 	text-transform: uppercase;
 	padding: 0 21px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .navbar-main li a::before {

@@ -27,190 +27,194 @@
 			<input type="hidden" name="id" value="{{ $id }}">
 		@endif
 
-		<div id="programa">
+		<x-slot:content>
 
-			<div class="row">
-				<div class="col s12 mb-3">
-					<h6>Programa</h6>
-				</div>
-			</div>
+			<div id="programa">
 
-			<div class="row">
-				<div class="col s12">
-					<div class="input-field @error('titulo') error @enderror">
-						<label for="titulo">Nome do programa</label>
-						<input type="text" name="titulo" id="titulo" value="{{ old('titulo', $titulo ?? null) }}">
-						@error('titulo')
-							<div class="error">{{ $message }}</div>
-						@enderror
+				<div class="row">
+					<div class="col s12 mb-3">
+						<h6>Programa</h6>
 					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col s12">
-					<div class="input-field @error('descricao') error @enderror">
-						<label for="descricao">Descrição do programa</label>
-						<input type="text" name="descricao" id="descricao" value="{{ old('descricao', $descricao ?? null) }}">
-						@error('descricao')
-							<div class="error">{{ $message }}</div>
-						@enderror
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field @error('titulo') error @enderror">
+							<label for="titulo">Nome do programa</label>
+							<input type="text" name="titulo" id="titulo" value="{{ old('titulo', $titulo ?? null) }}">
+							@error('titulo')
+								<div class="error">{{ $message }}</div>
+							@enderror
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col s12">
-					<div class="input-field @error('sexo') error @enderror">
-						<label for="sexo">Público alvo</label>
-						<select name="sexo" id="sexo">
-							<option value="A" @selected(old() ? old('sexo') == 'A' : isset($sexo) && $sexo == 'A' ?? null)>Indiferente</option>
-							<option value="M" @selected(old() ? old('sexo') == 'M' : isset($sexo) && $sexo == 'M' ?? null)>Homens</option>
-							<option value="F" @selected(old() ? old('sexo') == 'F' : isset($sexo) && $sexo == 'F' ?? null)>Mulheres</option>
-						</select>
-						@error('sexo')
-							<div class="error">{{ $message }}</div>
-						@enderror
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field @error('descricao') error @enderror">
+							<label for="descricao">Descrição do programa</label>
+							<input type="text" name="descricao" id="descricao" value="{{ old('descricao', $descricao ?? null) }}">
+							@error('descricao')
+								<div class="error">{{ $message }}</div>
+							@enderror
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col s12">
-					<div class="range-field @error('faixa_etaria') error @enderror">
-						<label for="faixa_etaria" class="active">Faixa etária</label>
-						<input type="hidden" name="faixa_etaria" value="{{ $idade_minima ?? null }} - {{ $idade_maxima ?? null }}">
-						<div id="faixa_etaria" class="mt-2 mb-1"></div>
-						@error('faixa_etaria')
-							<div class="error">{{ $message }}</div>
-						@enderror
-					</div>
-					<div class="label">
-						De <b id="slider-snap-value-lower"></b> a <b id="slider-snap-value-upper"></b> anos.
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col s12">
-					<div class="input-field mt-3 @error('responsaiveis') error @enderror">
-						<label for="responsaveis" class="active">Profissionais responsáveis</label>
-
-						<select name="responsaveis[]" id="responsaveis" multiple>
-							<option value="" disabled>Profissionais responsáveis</option>
-
-							@if ($profissionais)
-
-								@foreach ($profissionais as $value)
-									@if ($responsaveis || old('responsaveis'))
-										@php
-											$selected = old() ? (old('responsaveis') ? in_array($value['id'], old('responsaveis')) : old('responsaveis')) : in_array($value['id'], $responsaveis);
-										@endphp
-									@endif
-
-									<option value="{{ $value['id'] }}" @selected($selected ?? null)>{{ $value['nome'] }}</option>
-								@endforeach
-
-							@endif
-
-						</select>
-						@error('responsaveis')
-							<div class="error">{{ $message }}</div>
-						@enderror
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field @error('sexo') error @enderror">
+							<label for="sexo">Público alvo</label>
+							<select name="sexo" id="sexo">
+								<option value="A" @selected(old() ? old('sexo') == 'A' : isset($sexo) && $sexo == 'A' ?? null)>Indiferente</option>
+								<option value="M" @selected(old() ? old('sexo') == 'M' : isset($sexo) && $sexo == 'M' ?? null)>Homens</option>
+								<option value="F" @selected(old() ? old('sexo') == 'F' : isset($sexo) && $sexo == 'F' ?? null)>Mulheres</option>
+							</select>
+							@error('sexo')
+								<div class="error">{{ $message }}</div>
+							@enderror
+						</div>
 					</div>
 				</div>
-			</div>
 
-		</div>
-
-		<div id="tarefas">
-
-			<div class="row">
-				<div class="col s12 mb-3">
-					<h6>Tarefas</h6>
+				<div class="row">
+					<div class="col s12">
+						<div class="range-field @error('faixa_etaria') error @enderror">
+							<label for="faixa_etaria" class="active">Faixa etária</label>
+							<input type="hidden" name="faixa_etaria" value="{{ $idade_minima ?? null }} - {{ $idade_maxima ?? null }}">
+							<div id="faixa_etaria" class="mt-2 mb-1"></div>
+							@error('faixa_etaria')
+								<div class="error">{{ $message }}</div>
+							@enderror
+						</div>
+						<div class="label">
+							De <b id="slider-snap-value-lower"></b> a <b id="slider-snap-value-upper"></b> anos.
+						</div>
+					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<div class="col s12">
-					<button type="button" id="criar-tarefa" class="btn mb-2">
-						Criar Tarefa
-					</button>
-				</div>
-			</div>
+				<div class="row">
+					<div class="col s12">
+						<div class="input-field mt-3 @error('responsaiveis') error @enderror">
+							<label for="responsaveis" class="active">Profissionais responsáveis</label>
 
-			<div class="row">
+							<select name="responsaveis[]" id="responsaveis" multiple>
+								<option value="" disabled>Profissionais responsáveis</option>
 
-				<div class="col s12">
+								@if ($profissionais)
 
-					<table id="table_tarefas">
-						<thead>
-							<tr>
-								<th class="center-align">Tarefa</th>
-								<th class="center-align">Descrição</th>
-								<th class="center-align">Prazo de conclusão</th>
-								<th class="center-align">Tipo da tarefa</th>
-								<th class="center-align">Responsáveis</th>
-								<th class="center-align"></th>
-							</tr>
-						</thead>
-						<tbody>
-
-							@if (request('id'))
-
-								@php
-									$tarefaModel = new App\Models\Clinica\ProgramaModel();
-									$tarefas = $tarefaModel->from('tb_programas_tarefas')->where('id_programa', request('id'))->get();
-								@endphp
-
-								<tr class="nenhum_registro" style="display: none">
-									<td class="center-align" colspan="6">Nenhuma tarefa cadastrada</td>
-								</tr>
-
-								@if (isset($tarefas))
-									@foreach ($tarefas as $item)
-										<tr>
-											<td class="center-align">{{ $item->titulo }}</td>
-											<td class="center-align">{{ $item->descricao }}</td>
-											<td class="center-align">{{ $item->prazo }}</td>
-											<td class="center-align">{{ $item->tipo }}</td>
-											<td class="center-align">{{ $item->selecionar_responsavel }}</td>
-											<td class="center-align">
-												<button type="button" name="deletar" class="btn btn-flat btn-floating transparent waves-effect">
-													<i class="material-symbols-outlined">delete</i>
-												</button>
-											</td>
+									@foreach ($profissionais as $value)
+										@if ($responsaveis || old('responsaveis'))
 											@php
-												$dados_tarefa = json_encode([
-												    'titulo_tarefa' => $item->titulo,
-												    'descricao_tarefa' => $item->descricao,
-												    'prazo_tarefa' => $item->prazo,
-												    'tipo_tarefa' => $item->tipo,
-												    'responsavel_tarefa' => $item->selecionar_responsavel,
-												]);
+												$selected = old() ? (old('responsaveis') ? in_array($value['id'], old('responsaveis')) : old('responsaveis')) : in_array($value['id'], $responsaveis);
 											@endphp
-											<input type="hidden" name="tarefa[]" value="{{ $dados_tarefa }}">
-										</tr>
+										@endif
+
+										<option value="{{ $value['id'] }}" @selected($selected ?? null)>{{ $value['nome'] }}</option>
 									@endforeach
+
+								@endif
+
+							</select>
+							@error('responsaveis')
+								<div class="error">{{ $message }}</div>
+							@enderror
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div id="tarefas">
+
+				<div class="row">
+					<div class="col s12 mb-3">
+						<h6>Tarefas</h6>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12">
+						<button type="button" id="criar-tarefa" class="btn mb-2">
+							Criar Tarefa
+						</button>
+					</div>
+				</div>
+
+				<div class="row">
+
+					<div class="col s12">
+
+						<table id="table_tarefas">
+							<thead>
+								<tr>
+									<th class="center-align">Tarefa</th>
+									<th class="center-align">Descrição</th>
+									<th class="center-align">Prazo de conclusão</th>
+									<th class="center-align">Tipo da tarefa</th>
+									<th class="center-align">Responsáveis</th>
+									<th class="center-align"></th>
+								</tr>
+							</thead>
+							<tbody>
+
+								@if (request('id'))
+
+									@php
+										$tarefaModel = new App\Models\Clinica\ProgramaModel();
+										$tarefas = $tarefaModel->from('tb_programas_tarefas')->where('id_programa', request('id'))->get();
+									@endphp
+
+									<tr class="nenhum_registro" style="display: none">
+										<td class="center-align" colspan="6">Nenhuma tarefa cadastrada</td>
+									</tr>
+
+									@if (isset($tarefas))
+										@foreach ($tarefas as $item)
+											<tr>
+												<td class="center-align">{{ $item->titulo }}</td>
+												<td class="center-align">{{ $item->descricao }}</td>
+												<td class="center-align">{{ $item->prazo }}</td>
+												<td class="center-align">{{ $item->tipo }}</td>
+												<td class="center-align">{{ $item->selecionar_responsavel }}</td>
+												<td class="center-align">
+													<button type="button" name="deletar" class="btn btn-flat btn-floating transparent waves-effect">
+														<i class="material-symbols-outlined">delete</i>
+													</button>
+												</td>
+												@php
+													$dados_tarefa = json_encode([
+													    'titulo_tarefa' => $item->titulo,
+													    'descricao_tarefa' => $item->descricao,
+													    'prazo_tarefa' => $item->prazo,
+													    'tipo_tarefa' => $item->tipo,
+													    'responsavel_tarefa' => $item->selecionar_responsavel,
+													]);
+												@endphp
+												<input type="hidden" name="tarefa[]" value="{{ $dados_tarefa }}">
+											</tr>
+										@endforeach
+									@else
+										<tr class="nenhum_registro">
+											<td class="center-align" colspan="6">Nenhuma tarefa cadastrada</td>
+										</tr>
+									@endif
 								@else
 									<tr class="nenhum_registro">
 										<td class="center-align" colspan="6">Nenhuma tarefa cadastrada</td>
 									</tr>
 								@endif
-							@else
-								<tr class="nenhum_registro">
-									<td class="center-align" colspan="6">Nenhuma tarefa cadastrada</td>
-								</tr>
-							@endif
 
-						</tbody>
-					</table>
+							</tbody>
+						</table>
+
+					</div>
 
 				</div>
 
 			</div>
 
-		</div>
+		</x-slot:content>
 
 		<x-slot:footer>
 			<div class="row">

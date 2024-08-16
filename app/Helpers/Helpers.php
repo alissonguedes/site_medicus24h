@@ -9,8 +9,7 @@ use App\Models\Model;
  */
 if (!function_exists('replace')) {
 
-	function replace($string, $find = ' ', $replace = '-', $to_lower = true)
-	{
+	function replace($string, $find = ' ', $replace = '-', $to_lower = true) {
 
 		$args = func_get_args();
 
@@ -102,8 +101,7 @@ if (!function_exists('replace')) {
 
 if (!function_exists('lang')) {
 
-	function lang($return_id = false)
-	{
+	function lang($return_id = false) {
 
 		$sigla = isset($_COOKIE['idioma']) ? $_COOKIE['idioma'] : config('site.language');
 
@@ -128,8 +126,7 @@ if (!function_exists('lang')) {
 
 if (!function_exists('getMenu')) {
 
-	function getMenu($local, $id = null, $path = null)
-	{
+	function getMenu($local, $id = null, $path = null) {
 
 		$model = new Model();
 		$model->setConnection(env('DB_SYSTEM_CONNECTION'));
@@ -284,7 +281,7 @@ if (!function_exists('getMenu')) {
 							'id_parent'     => $item->id_parent,
 							'id_controller' => $item->controller,
 							'id_route'      => $item->id_route,
-							'route'         => $route->name,
+							'route'         => $route->name ?? null,
 							'icon'          => $item->icon,
 							'divider'       => $item->divider,
 							'item_type'     => $item->item_type,
@@ -337,8 +334,7 @@ if (!function_exists('getMenu')) {
 
 if (!function_exists('make_menu')) {
 
-	function make_menu($local, $path = null, $id = null, $s = null)
-	{
+	function make_menu($local, $path = null, $id = null, $s = null) {
 
 		if (!empty($attributes)) {
 			foreach ($attributes as $ind => $val) {
@@ -362,8 +358,7 @@ if (!function_exists('make_menu')) {
 
 if (!function_exists('base_url')) {
 
-	function base_url()
-	{
+	function base_url() {
 
 		$path     = '/';
 		$base_url = explode('/', request()->getRequestUri());
@@ -389,8 +384,7 @@ if (!function_exists('base_url')) {
 
 if (!function_exists('site_url')) {
 
-	function site_url()
-	{
+	function site_url() {
 
 		return url('/') . '/';
 
@@ -400,8 +394,7 @@ if (!function_exists('site_url')) {
 
 if (!function_exists('getImg')) {
 
-	function getImg($img)
-	{
+	function getImg($img) {
 
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $img);
@@ -425,8 +418,7 @@ if (!function_exists('getImg')) {
 
 if (!function_exists('gera_cartao')) {
 
-	function gera_cartao($codigo = null, $format = false, $separator = ' ')
-	{
+	function gera_cartao($codigo = null, $format = false, $separator = ' ') {
 
 		$faker = new Faker\Factory();
 
@@ -449,8 +441,7 @@ if (!function_exists('gera_cartao')) {
 		return $number;
 	}
 
-	function sumDig($n)
-	{
+	function sumDig($n) {
 		$a = 0;
 		while ($n > 0) {
 			$a = $a + $n % 10;
@@ -459,8 +450,7 @@ if (!function_exists('gera_cartao')) {
 		return $a;
 	}
 
-	function isValidImei($n)
-	{
+	function isValidImei($n) {
 
 		$s   = (string) ($n);
 		$len = strlen($s);
@@ -480,4 +470,44 @@ if (!function_exists('gera_cartao')) {
 		return ($sum % 10 === 0);
 	}
 
+}
+
+if (!function_exists('format')) {
+	function format($value, $format = 'cpf') {
+
+		// $lenght = 11;
+		$value = preg_replace("/\D/", '', $value);
+		switch ($format) {
+		case 'cpf':
+			return preg_replace("/(\d{3})(\d{3})(\d{3})(\d{2})/", "\$1.\$2.\$3-\$4", $value);
+			break;
+		case 'cnpj':
+			$length = 17;
+			return preg_replace("/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/", "\$1.\$2.\$3/\$4-\$5", $value);
+			break;
+		case 'telefone':
+			return preg_replace("/(\d{2})(\d{4})(\d{4})/", "(\$1) (\$2)\.(\$3/)", $value);
+			break;
+		case 'celular':
+			if (preg_match('/^[55]/', $value)) {
+				return preg_replace("/(\d{2})(\d{2})(\d{1})(\d{4})(\d{4})/", "($2) $3 $4.$5", $value);
+			} else if (preg_match('/^[^55]/', $value)) {
+				if (strlen($value) == 11) {
+					if (preg_match('/^[^83]/', $value)) {
+						return preg_replace("/(\d{2})(\d{1})(\d{4})(\d{4})/", "(\$1) \$2 \$3.$4", $value);
+					}
+					return preg_replace("/(\d{2})(\d{1})(\d{4})(\d{4})/", "($1) $2 $3.$4", $value);
+				} else {
+					if (strlen($value) < 11) {
+						if (preg_match('/^[^83]/', $value)) {
+							return preg_replace("/(\d{1})(\d{4})(\d{4})/", "\$1 \$2.\$3", $value);
+						}
+					}
+					return preg_replace("/(\d{2})(\d{4})(\d{4})/", "($1) $2.$3", $value);
+				}
+			}
+			break;
+		}
+
+	}
 }

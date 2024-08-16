@@ -8,17 +8,25 @@ use App\Http\Controllers\Admin\PastoresController as Pastores;
 use App\Http\Controllers\APIController as API;
 
 // Clinica Controllers
+use App\Http\Controllers\Clinica\DepartamentosController as Departamentos;
+use App\Http\Controllers\Clinica\Funcionarios\FuncionariosController as Funcionarios;
+// use App\Http\Controllers\Clinica\Funcionarios\PerfisController as Perfis;
 use App\Http\Controllers\Clinica\Homecare\GestaoDeCuidadosController as Homecare;
 use App\Http\Controllers\Clinica\Homecare\PacientesController as PacientesHomecare;
 use App\Http\Controllers\Clinica\HomeController as ClinicaHome;
 use App\Http\Controllers\Clinica\PacientesController as Pacientes;
+use App\Http\Controllers\Clinica\ProcedimentosController as Procedimentos;
 use App\Http\Controllers\Clinica\Recursosmedicos\AgendamedicaController as Agendamedica;
+use App\Http\Controllers\Clinica\UnidadesController as Unidades;
 
 // Main Controllers
 use App\Http\Controllers\ProfileController;
 
 // Site Controllers
 use App\Http\Controllers\Site\HomeController;
+
+// Models
+use App\Models\Clinica\AgendaModel;
 
 // Admin Requests
 
@@ -118,9 +126,32 @@ Route::middleware([
 			Route::post('/', [Agendamedica::class, 'store'])->name('clinica.recursosmedicos.agenda.index');
 			Route::put('/', [Agendamedica::class, 'store'])->name('clinica.recursosmedicos.agenda.index');
 
+			Route::prefix('/medico/{id_medico}')->group(function () {
+
+				Route::get('/', function (AgendaModel $agenda) {
+
+					$data['agenda'] = $agenda->select('A.id', 'C.id_medico', 'horarios')
+						->from('tb_medico_agenda AS A')
+						->join('tb_medico_agenda_horario AS H', 'H.id_agenda', 'A.id')
+						->join('tb_medico_clinica AS C', 'C.id', 'A.id_medico_clinica')
+						->where('C.id_medico', request('id_medico'))
+						->get()
+						->first();
+
+					// return view('clinica.recursosmedicos.agenda.index-calendar', $data);
+					return view('clinica.recursosmedicos.agenda.index-agenda', $data);
+
+				})->name('clinica.recursosmedicos.agenda.medico');
+
+				Route::get('/disponibilidade', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.disponibilidade');
+				Route::get('/agendamento', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.medico.agendamento');
+
+			});
 		});
 
 	});
+
+	// Route::get('/agendamento', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agendamento');
 
 	// Médicos
 	Route::prefix('/medicos')->group(function () {
@@ -141,7 +172,76 @@ Route::middleware([
 
 	// Tickets
 
-	// Cadastros
+	/**
+	 * Cadastros
+	 */
+
+	// Cadastro de Unidades
+	Route::prefix('/unidades')->group(function () {
+
+		Route::get('/', [Unidades::class, 'index'])->name('clinica.unidades.index');
+		Route::get('/q/{search?}', [Unidades::class, 'index'])->name('clinica.unidades.search');
+		Route::get('/id/{id}', [Unidades::class, 'index'])->name('clinica.unidades.edit');
+		Route::post('/', [Unidades::class, 'store'])->name('clinica.unidades.post');
+		Route::put('/', [Unidades::class, 'store'])->name('clinica.unidades.post');
+		Route::patch('/id/{id}', [Unidades::class, 'index'])->name('clinica.unidades.patch');
+		Route::delete('/', [Unidades::class, 'destroy'])->name('clinica.unidades.delete');
+
+	});
+
+	// Cadastro de Procedimentos
+	Route::prefix('/procedimentos')->group(function () {
+
+		Route::get('/', [Procedimentos::class, 'index'])->name('clinica.procedimentos.index');
+		Route::get('/q/{search?}', [Procedimentos::class, 'index'])->name('clinica.procedimentos.search');
+		Route::get('/id/{id}', [Procedimentos::class, 'index'])->name('clinica.procedimentos.edit');
+		Route::post('/', [Procedimentos::class, 'store'])->name('clinica.procedimentos.post');
+		Route::put('/', [Procedimentos::class, 'update'])->name('clinica.procedimentos.post');
+		Route::patch('/id/{id}', [Procedimentos::class, 'index'])->name('clinica.procedimentos.patch');
+		Route::delete('/', [Procedimentos::class, 'destroy'])->name('clinica.procedimentos.delete');
+
+	});
+
+	// Cadastro de Funcionários
+	Route::prefix('/funcionarios')->group(function () {
+
+		Route::get('/', [Funcionarios::class, 'index'])->name('clinica.funcionarios.index');
+		Route::get('/q/{search?}', [Funcionarios::class, 'index'])->name('clinica.funcionarios.search');
+		Route::get('/id/{id}', [Funcionarios::class, 'index'])->name('clinica.funcionarios.edit');
+		Route::post('/', [Funcionarios::class, 'store'])->name('clinica.funcionarios.post');
+		Route::put('/', [Funcionarios::class, 'store'])->name('clinica.funcionarios.post');
+		Route::patch('/id/{id}', [Funcionarios::class, 'index'])->name('clinica.funcionarios.patch');
+		Route::delete('/', [Funcionarios::class, 'destroy'])->name('clinica.funcionarios.delete');
+
+	});
+
+	// Cadastro de Perfis de acesso
+	Route::prefix('/perfis')->group(function () {
+
+		Route::get('/', [Funcionarios::class, 'perfis'])->name('clinica.perfis.index');
+
+		Route::get('/a/{search?}', function () {
+			return DB::connection('medicus')
+				->table('tb_medico AS M')
+				->select('nome AS text', 'id')
+				->join('tb_funcionario AS F', 'F.id', 'M.id_funcionario')
+				->get();
+		})->name('clinica.medicos.autocomplete');
+
+	});
+
+	// Cadastro de Procedimentos
+	Route::prefix('/departamentos')->group(function () {
+
+		Route::get('/', [Departamentos::class, 'index'])->name('clinica.departamentos.index');
+		Route::get('/q/{search?}', [Departamentos::class, 'index'])->name('clinica.departamentos.search');
+		Route::get('/id/{id}', [Departamentos::class, 'index'])->name('clinica.departamentos.edit');
+		Route::post('/', [Departamentos::class, 'store'])->name('clinica.departamentos.post');
+		Route::put('/', [Departamentos::class, 'update'])->name('clinica.departamentos.post');
+		Route::patch('/id/{id}', [Departamentos::class, 'index'])->name('clinica.departamentos.patch');
+		Route::delete('/', [Departamentos::class, 'destroy'])->name('clinica.departamentos.delete');
+
+	});
 
 	// Tabelas
 
