@@ -147,6 +147,13 @@
 						}
 					</style>
 				@endif
+
+				@if (isset($action))
+					<div id="info" class="card-action">
+						{{ $action }}
+					</div>
+				@endif
+
 			</div>
 
 		@endif

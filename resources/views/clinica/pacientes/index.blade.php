@@ -8,7 +8,7 @@
 		<x-slot:add_button data-href="{{ route('clinica.pacientes.index') }}" data-tooltip="Adicionar Paciente">add</x-slot:add_button>
 	</x-header-page>
 
-	{{-- <x-slot:info>Total: {{ $pacientes->count() }}</x-slot:info> --}}
+	<x-slot:action>Total: {{ $pacientes->count() }}</x-slot:action>
 
 	<x-slot:body>
 

@@ -1117,6 +1117,11 @@ body:has(footer) main .card-panel {
 	padding: 8px 10px;
 }
 
+.card.card-panel:has(.card-action#info) .card-content {
+	bottom: auto;
+	height: calc(100% - 84px);
+}
+
 .card-header {
 	position: relative;
 	height: 45px;
