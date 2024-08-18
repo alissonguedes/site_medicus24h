@@ -1,7 +1,8 @@
 html,
 body,
-:not(.material-symbols-outlined) {
+:not([class*="material"]) {
 	/* font-family: 'Montserrat', sans-serif; */
+	/* font-family: sans-serif; */
 }
 
 html,
@@ -107,6 +108,10 @@ main,
 .noUi-handle-touch-area,
 .noUi-handle {
 	cursor: pointer !important;
+}
+
+span.badge {
+	font-weight: 500 !important;
 }
 
 /** Main */
@@ -752,6 +757,15 @@ footer .logo-footer {
 .mm-navbar .mm-btn--prev,
 .mm-navbar .mm-btn--prev+.mm-navbar__title {
 	padding: 20px;
+}
+
+.mm-listitem a {
+	transition: 250ms;
+}
+
+.mm-listitem:not(.mm-navbar):not(.mm-listitem--selected):hover a.mm-listitem__text {
+	background-color: var(--grey-lighten-3);
+	color: var(--grey-darken-5);
 }
 
 .mm-listitem:not(.mm-listitem--selected) a:not(.mm-btn--next) {
@@ -1752,49 +1766,45 @@ button[type="submit"] {
 
 /** Tables */
 
-table {
+table:not(.datepicker-table) {
 	border: none;
 }
 
-td,
-th {
-	/* padding: 0px 15px; */
-	display: table-cell;
-	text-align: left;
-	vertical-align: middle;
-	border-radius: 2px;
+table:not(.datepicker-table) td,
+table:not(.datepicker-table) th {
+	border-radius: 0px;
 	border: 1px solid;
 	border-color: var(--grey-lighten-3) !important;
-	/* border: none !important; */
-}
-
-table th,
-table td {
 	padding: 5px 15px;
 }
 
-table button {
+table:not(.datepicker-table) button {
 	width: 25px !important;
 	height: 25px !important;
 	line-height: 25px !important;
 	font-size: 23px !important;
 }
 
-table button i {
+table:not(.datepicker-table) button i {
 	font-size: inherit !important;
 	line-height: inherit !important;
 }
 
-table.bordered {
+table:not(.datepicker-table).bordered {
 	border: 1px solid;
 	border-color: var(--grey-lighten-2);
 }
 
-table.bordered th,
-table.bordered tr,
-table.bordered td {
+table:not(.datepicker-table).bordered th,
+table:not(.datepicker-table).bordered tr,
+table:not(.datepicker-table).bordered td {
 	border: 1px solid;
 	border-color: inherit;
+}
+
+table.datepicker-table th,
+.datepicker-table td {
+	border: none;
 }
 
 /** Responsive layout */
@@ -1929,7 +1939,6 @@ table.bordered td {
 		height: 21px;
 		line-height: 21px;
 	}
-
 
 	.sonar::before,
 	.navbar .notification-badge {

@@ -56,8 +56,8 @@ $(document).ready(function () {
 
 	$('.materialboxed').materialbox();
 
-	if (typeof daterangepicker == 'function' && $('body').find('.datepicker').length > 0) {
-		$('.datepicker').daterangepicker({
+	if (typeof daterangepicker == 'function' && $('body').find('.daterangepicker').length > 0) {
+		$('.daterangepicker').daterangepicker({
 			// singleDatePicker: true,
 			// showDropdowns: true,
 			linkedCalendars: true,
@@ -83,9 +83,65 @@ $(document).ready(function () {
 	}
 
 	if ($('.datepicker').length) {
-		$('.datepicker').datepicker({
-			format: 'dd/mm/yyyy',
-			autoClose: true,
+		$('.datepicker').each(function () {
+
+			// var date = new Date();
+			// var defaultDate = $(this).val() ? $(this).val().split('/').reverse().join('-') : null;
+
+			// var d = new Date(defaultDate);
+			// console.log(d, date, defaultDate);
+			// $(this).datepicker({
+			// 	format: 'dd/mm/yyyy',
+			// 	autoClose: true,
+			// 	yearRange: 50,
+			// 	defaultDate: defaultDate,
+			// 	setDefaultDate: true
+			// });
+
+
+			var date = new Date();
+			// var curDate = date.getDate();
+			// var curMonth = (date.getMonth() < 10 ? '0' : null) + (date.getMonth() + 1);
+			var curYear = date.getFullYear();
+
+			var defaultDate = $(this).val() != '' ? $(this).val().split('/') : null;
+			var minDate = $(this).data('min-date') ? $(this).data('min-date').split('/') : null;
+			var maxDate = $(this).data('max-date') ? $(this).data('max-date').split('/') : null;
+			var yearRange = minDate ? [minDate[2], curYear + 100] : maxDate ? [1900, curYear - 0] : [curYear - 100, curYear + 100];
+
+			minDate = minDate ? new Date(minDate[2], minDate[1] - 1, minDate[0]) : null;
+			maxDate = maxDate ? new Date(maxDate[2], maxDate[1] - 1, maxDate[0]) : null;
+			defaultDate = defaultDate ? new Date(defaultDate[2], defaultDate[1] - 1, defaultDate[0]) : null;
+
+			$(this).datepicker({
+				format: $(this).data('format') || 'dd/mm/yyyy',
+				startView: 1,
+				autoClose: true,
+				setDefaultDate: true,
+				showClearBtn: false,
+				defaultDate: defaultDate,
+				isRTL: false,
+				minDate: minDate,
+				maxDate: maxDate,
+				yearRange: yearRange,
+				// showMonthAfterYear: true,
+				i18n: {
+					months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+					monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+					weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+					weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+					weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+					cancel: 'Cancelar'
+				},
+				onDraw: function () {
+					// var dropdown = $(".datepicker-container").find(".select-dropdown");
+					// dropdown.dropdown('destroy');
+					// dropdown.dropdown({
+					// 	alignment: 'right'
+					// });
+				}
+			});
+
 		});
 	}
 
@@ -374,7 +430,8 @@ $(document).ready(function () {
 	select.each(function () {
 
 		var self = $(this);
-		var a = self.val('').attr('disabled', false).select2({
+		var a = self.val('').attr('disabled', false);
+		self.select2({
 			// theme: 'materialize',
 			placeholder: self.attr('placeholder') || 'Digite para pesquisar',
 			allowClear: true,

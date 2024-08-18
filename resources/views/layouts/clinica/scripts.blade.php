@@ -1,3 +1,4 @@
+<script src="{{ asset('assets/node_modules/moment/moment.js') }}"></script>
 <script>
 	var BASE_URL = "{{ base_url() }}";
 	var BASE_PATH = "{{ asset('/') }}";

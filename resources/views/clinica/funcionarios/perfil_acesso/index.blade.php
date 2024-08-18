@@ -1,27 +1,27 @@
 <x-clinica-layout>
 
 	<x-slot:icon> people </x-slot:icon>
-	<x-slot:title> Funcionários </x-slot:title>
+	<x-slot:title> Perfils </x-slot:title>
 
 	<x-header-page>
-		<x-slot:search data-url="{{ route('clinica.funcionarios.search') }}" placeholder="Pesquisar funcionários..."></x-slot:search>
-		<x-slot:add_button data-href="{{ route('clinica.funcionarios.index') }}" data-tooltip="Adicionar Funcionário">add</x-slot:add_button>
+		<x-slot:search data-url="{{ route('clinica.grupos.usuarios.search') }}" placeholder="Pesquisar perfis..."></x-slot:search>
+		<x-slot:add_button data-href="{{ route('clinica.grupos.usuarios.index') }}" data-tooltip="Adicionar Perfil">add</x-slot:add_button>
 	</x-header-page>
 
 	<x-slot:body>
 
 		<div class="row">
-			@if (isset($funcionarios) && $funcionarios->count() > 0)
-				@include('clinica.funcionarios.includes.results')
+			@if (isset($perfis) && $perfis->count() > 0)
+				@include('clinica.funcionarios.perfil_acesso.includes.results')
 			@else
 				<div class="col s12">
-					Nenhum funcionário cadastrado.
+					Nenhum perfil cadastrado.
 				</div>
 			@endif
 		</div>
 
 	</x-slot:body>
 
-	@include('clinica.funcionarios.includes.form')
+	@include('clinica.funcionarios.perfil_acesso.includes.form')
 
 </x-clinica-layout>

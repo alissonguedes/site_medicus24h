@@ -2,6 +2,7 @@
 	<thead>
 		<tr>
 			<th class="left-align">Departamento</th>
+			<th class="center-align">Status</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -16,6 +17,9 @@
 			@endphp
 			<tr>
 				<td>{{ $row->titulo }}</td>
+				<td class="center-align">
+					<span class="badge new {{ $row->status === '0' ? 'red' : null }}" data-badge-caption="">{{ $row->status === '0' ? 'Inativo' : 'Ativo' }}</span>
+				</td>
 				<td class="center-align">
 					<button class="btn btn-small btn-flat btn-edit btn-floating transparent" data-href="{{ route('clinica.departamentos.edit', $row->id) }}" data-tooltip="Editar" data-trigger="form" data-target="main-form">
 						<i class="material-symbols-outlined grey-text">edit</i>

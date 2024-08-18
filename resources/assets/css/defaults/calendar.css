@@ -503,6 +503,16 @@
 	display: none;
 }
 
+.datepicker-calendar,
+.datepicker-footer {
+	background-color: #fff;
+}
+
+
+.datepicker-calendar {
+	padding: 10px 20px;
+}
+
 @media only screen and (min-width: 601px) {
 
 	.datepicker-day-button {
@@ -513,6 +523,7 @@
 	.datepicker-table,
 	.datepicker-footer {
 		width: 350px;
+		padding: 10px 5px;
 	}
 
 }

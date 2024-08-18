@@ -4,22 +4,26 @@
 			<th class="center-align">Funcionario</th>
 			<th class="center-align">Departamento</th>
 			<th class="center-align">Perfil</th>
-			<th></th>
+			<th class="center-align">Status</th>
+			<th class="center-align"></th>
 		</tr>
 	</thead>
 	<tbody>
 		@foreach ($funcionarios as $row)
 			@php
-				$categoria = DB::connection('medicus')
-				    ->table('tb_categoria_descricao')
-				    ->select('titulo')
-				    ->where('id_categoria', $row->id_categoria)
+				$grupo = DB::connection('system')
+				    ->table('tb_acl_grupo')
+				    ->select('grupo')
+				    ->where('id', $row->perfil)
 				    ->first();
 			@endphp
 			<tr>
 				<td>{{ $row->nome }}</td>
 				<td class="center-align">{{ $row->nome }}</td>
-				<td class="center-align">{{ $row->tempo }} {{ ($row->formato === 'm' ? 'minuto' : ($row->formato === 'h' ? 'hora' : null)) . ($row->tempo > 1 ? 's' : '') }}</td>
+				<td>{{ $grupo->grupo }}</td>
+				<td class="center-align">
+					<span class="badge new {{ $row->status === '0' ? 'red' : null }}" data-badge-caption="">{{ $row->status === '0' ? 'Inativo' : 'Ativo' }}</span>
+				</td>
 				<td class="center-align">
 					<button class="btn btn-small btn-flat btn-edit btn-floating transparent" data-href="{{ route('clinica.funcionarios.edit', $row->id) }}" data-tooltip="Editar" data-trigger="form" data-target="main-form">
 						<i class="material-symbols-outlined grey-text">edit</i>

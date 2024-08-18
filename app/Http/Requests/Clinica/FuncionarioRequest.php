@@ -22,12 +22,13 @@ class FuncionarioRequest extends FormRequest {
 	public function rules(): array {
 
 		$rules = [
-			'nome' => 'required',
-			'cpf'  => [
+			'nome'   => 'required',
+			'cpf'    => [
 				'required',
 				Rule::unique('medicus.tb_funcionario', 'cpf')->ignore($this->id, 'id'),
 				new \App\Rules\CPF(),
 			],
+			'perfil' => 'required',
 			// 'telefone'   => 'required_if:celular,null',
 			// 'celular'    => 'required_if:telefone,null|required_if:receber_sms,on',
 			// 'email'      => 'nullable|email|required_if:receber_notificacoes,on',

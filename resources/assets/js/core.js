@@ -142,11 +142,12 @@ $('#input-search-header').bind('keyup paste', function () {
 
 }, 500));
 
+
 $(function () {
 
-	$(document).keydown(function (e) {
-		if (e.keyCode == 27) return false;
-	});
+	// $(document).keydown(function (e) {
+	// 	if (e.keyCode == 27) return false;
+	// });
 
 	new Mmenu("#mmenu", {
 		"offCanvas": {
@@ -166,23 +167,6 @@ $(function () {
 			}
 		},
 		navbar: { title: 'Menu principal' },
-		// navbars: [{ "position": "top", "content":  '' }]
-		// "navbars": [{
-		// 	"position": "top",
-		// 	"content": [
-		// 		"breadcrumbs",
-		// 		"close"
-		// 	]
-		// }],
-		// "theme": "black",
-		// "navbars": [{
-		// 	"position": "bottom",
-		// 	"content": [
-		// 		"<a class='fa fa-envelope' href='#/'></a>",
-		// 		"<a class='fa fa-twitter' href='#/'></a>",
-		// 		"<a class='fa fa-facebook' href='#/'></a>"
-		// 	]
-		// }]
 	});
 
 	// document.body.removeEventListener('keydown', document.body.mmEventKeydownTabguard[0])
@@ -193,5 +177,16 @@ $(function () {
 	// 		'display': 'block'
 	// 	})
 	// })
+
+});
+
+
+$('body').bind('keydown', function (e) {
+
+	// console.log(e.target.);
+	// if (e.keyCode === 27) {
+	// 	menuInit();
+	// 	return false;
+	// }
 
 })

@@ -39,7 +39,7 @@
 		@vite(['resources/css/app.css', 'resources/js/app.js'])
 
 		<script src="{{ asset('assets/node_modules/jquery/dist/jquery.min.js') }}"></script>
-		<script src="{{ asset('assets/node_modules/materialize-css/dist/js/materialize.min.js') }}"></script>
+		<script src="{{ asset('assets/node_modules/materialize-css/dist/js/materialize.js') }}"></script>
 		<script src="{{ asset('assets/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js') }}"></script>
 		<script src="{{ asset('assets/node_modules/mmenu-js/dist/mmenu.js') }}"></script>
 		<script src="{{ asset('assets/node_modules/pace-js/pace.min.js') }}"></script>
