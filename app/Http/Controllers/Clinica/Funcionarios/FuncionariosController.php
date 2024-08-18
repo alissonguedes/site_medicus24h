@@ -16,6 +16,7 @@ class FuncionariosController extends Controller {
 
 		$dados['funcionarios'] = $funcionario->where('is_deleted', '0')->get();
 		$dados['funcionario']  = $funcionario->where('id', $request->id)->first();
+		$dados['perfis']       = $funcionario->setConnection('system')->select('id', 'grupo', 'status')->from('tb_acl_grupo')->where('id', '<>', 1)->where('is_deleted', '0')->get();
 
 		return view('clinica.funcionarios.index', $dados);
 

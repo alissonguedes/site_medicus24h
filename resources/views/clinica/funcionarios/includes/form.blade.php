@@ -102,8 +102,6 @@
 
 						</div>
 
-						@props(['perfis' => [1 => 'Super Administrador', 2 => 'Admin', 3 => 'Gerente de TI', 4 => 'Gerente Comercial', 5 => 'Vendedor', 6 => 'Recepcionista', 7 => 'Médico', 8 => 'Técnico de Enfermagem']])
-
 						<div class="row">
 							<div class="col s12">
 								<div class="input-field">
@@ -111,8 +109,8 @@
 									<select name="perfil" id="perfil">
 										<option value="" disabled selected>Informe o perfil de acesso</option>
 										@if (isset($perfis))
-											@foreach ($perfis as $id => $perfil)
-												<option value="{{ $id }}" @selected(isset($funcionario) && $id == $funcionario->id_perfil)>{{ $perfil }}</option>
+											@foreach ($perfis as $perfil)
+												<option value="{{ $perfil->id }}" @selected(isset($funcionario) && $perfil->id == $funcionario->perfil)>{{ $perfil->grupo }}</option>
 											@endforeach
 										@endif
 									</select>

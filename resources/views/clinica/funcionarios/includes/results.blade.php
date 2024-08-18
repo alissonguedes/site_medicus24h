@@ -11,16 +11,17 @@
 	<tbody>
 		@foreach ($funcionarios as $row)
 			@php
-				$grupo = DB::connection('system')
+				$gp = DB::connection('system')
 				    ->table('tb_acl_grupo')
 				    ->select('grupo')
 				    ->where('id', $row->perfil)
+				    ->get()
 				    ->first();
 			@endphp
 			<tr>
 				<td>{{ $row->nome }}</td>
 				<td class="center-align">{{ $row->nome }}</td>
-				<td>{{ $grupo->grupo }}</td>
+				<td>{{ $gp->grupo ?? null }}</td>
 				<td class="center-align">
 					<span class="badge new {{ $row->status === '0' ? 'red' : null }}" data-badge-caption="">{{ $row->status === '0' ? 'Inativo' : 'Ativo' }}</span>
 				</td>
