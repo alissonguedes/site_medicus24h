@@ -31,7 +31,7 @@
 				</td>
 
 				<td class="center-align">
-					<button type="button" name="deletar" class="browser-default">
+					<button type="button" name="deletar" class="btn btn-flat btn-floating transparent waves-effect">
 						<i class="material-symbols-outlined">delete</i>
 					</button>
 				</td>

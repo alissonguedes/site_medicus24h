@@ -17,6 +17,7 @@ use App\Http\Controllers\Clinica\Homecare\PacientesController as PacientesHomeca
 use App\Http\Controllers\Clinica\HomeController as ClinicaHome;
 use App\Http\Controllers\Clinica\PacientesController as Pacientes;
 use App\Http\Controllers\Clinica\ProcedimentosController as Procedimentos;
+use App\Http\Controllers\Clinica\ProfissionaisController as Profissionais;
 use App\Http\Controllers\Clinica\Recursosmedicos\AgendamedicaController as Agendamedica;
 use App\Http\Controllers\Clinica\UnidadesController as Unidades;
 
@@ -157,12 +158,13 @@ Route::middleware([
 					->join('tb_especialidade AS E', 'E.id', 'ME.id_especialidade')
 					->where('P.nome', 'like', request('search') . '%')
 					->orWhere('E.especialidade', 'like', request('search') . '%')
+				// ->groupBy('ME.id_profissional')
 					->get();
 
 				$data = [];
 				if ($medicos->count() > 0) {
 					foreach ($medicos as $m) {
-						$data[] = ['id' => $m->id_profissional, 'text' => $m->nome];
+						$data[] = ['id' => $m->id_profissional, 'text' => $m->nome . ' - ' . $m->especialidade];
 					}
 				}
 
@@ -177,9 +179,16 @@ Route::middleware([
 	// Route::get('/agendamento', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agendamento');
 
 	// Médicos
-	Route::prefix('/medicos')->group(function () {
+	Route::prefix('/profissionais')->group(function () {
 
-		Route::get('/', function () {});
+		Route::get('/', [Profissionais::class, 'index'])->name('clinica.profissionais.index');
+
+		Route::get('/q/{search?}', [Profissionais::class, 'search'])->name('clinica.profissionais.search');
+		Route::get('/a/{search?}', [Profissionais::class, 'autocomplete'])->name('clinica.profissionais.autocomplete');
+		Route::get('/id/{id}', [Profissionais::class, 'index'])->name('clinica.profissionais.edit');
+		Route::post('/', [Profissionais::class, 'store'])->name('clinica.profissionais.post');
+		Route::put('/', [Profissionais::class, 'store'])->name('clinica.profissionais.post');
+		Route::delete('/', [Profissionais::class, 'destroy'])->name('clinica.profissionais.delete');
 
 		Route::get('/a/{search?}', function () {
 			return DB::connection('medicus')
@@ -188,6 +197,16 @@ Route::middleware([
 				->join('tb_funcionario AS F', 'F.id', 'M.id_funcionario')
 				->get();
 		})->name('clinica.medicos.autocomplete');
+
+		Route::post('/especialidade', function (Request $request) {
+
+			$data['especialidades'] = request()->all();
+
+			// Validation::make(['especialidade' => 'required']);
+
+			return view('clinica.profissionais.includes.table_especialidade', $data);
+
+		})->name('clinica.profissionais.especialidade.add');
 
 	});
 
@@ -255,6 +274,15 @@ Route::middleware([
 		Route::put('/', [Especialidades::class, 'update'])->name('clinica.especialidades.post');
 		Route::patch('/id/{id}', [Especialidades::class, 'index'])->name('clinica.especialidades.patch');
 		Route::delete('/', [Especialidades::class, 'destroy'])->name('clinica.especialidades.delete');
+
+		// Route::get('/a/{search?}', [Profissionais::class, 'autocomplete'])->name('clinica.profissionais.autocomplete');
+		Route::get('/a/{search?}', function () {
+
+			$especialidades = DB::connection('medicus')->table('tb_especialidade')->select('id', 'especialidade AS text')->where('especialidade', 'like', request('search') . '%')->get();
+
+			return $especialidades;
+
+		})->name('clinica.especialidades.autocomplete');
 
 	});
 
