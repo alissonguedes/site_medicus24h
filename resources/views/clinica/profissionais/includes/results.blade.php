@@ -20,9 +20,8 @@
 
 				if ($especialidades->count() > 0) {
 				    foreach ($especialidades as $e) {
-				        $especs[] = $e->especialidade . ' ';
+				        $especs[] = $e->especialidade;
 				        $especialidade = $e->especialidade;
-				        // break;
 				    }
 				}
 			@endphp
@@ -31,7 +30,7 @@
 				<td>
 					{{ $especialidade ?? 'Não informado' }}
 					@if ($especialidades->count() > 1)
-						<span class="badge blue" data-badge-caption="+{{ $especialidades->count() - 1 }}" data-tooltip="{{ implode(',<br>', $especs) }}" style="border-radius: 24px; color: #fff; width: 15px !important; display: inline-block; margin-left: 5px; cursor: pointer;"></span>
+						<span class="badge blue" data-badge-caption="+{{ $especialidades->count() - 1 }}" data-tooltip="{{ implode(';<br>', $especs) }}." style="border-radius: 24px; color: #fff; width: 15px !important; display: inline-block; margin-left: 5px; cursor: pointer;"></span>
 					@endif
 				</td>
 				<td class="center-align">
