@@ -158,13 +158,13 @@ Route::middleware([
 					->join('tb_especialidade AS E', 'E.id', 'ME.id_especialidade')
 					->where('P.nome', 'like', request('search') . '%')
 					->orWhere('E.especialidade', 'like', request('search') . '%')
-				// ->groupBy('ME.id_profissional')
+					->groupBy('ME.id_profissional')
 					->get();
 
 				$data = [];
 				if ($medicos->count() > 0) {
 					foreach ($medicos as $m) {
-						$data[] = ['id' => $m->id_profissional, 'text' => $m->nome . ' - ' . $m->especialidade];
+						$data[] = ['id' => $m->id_profissional, 'text' => $m->nome];
 					}
 				}
 
