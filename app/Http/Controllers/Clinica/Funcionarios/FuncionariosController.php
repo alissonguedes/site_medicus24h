@@ -7,12 +7,14 @@ use App\Http\Requests\Clinica\FuncionarioRequest;
 use App\Models\Clinica\FuncionarioModel;
 use Illuminate\Http\Request;
 
-class FuncionariosController extends Controller {
+class FuncionariosController extends Controller
+{
 
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, FuncionarioModel $funcionario) {
+	public function index(Request $request, FuncionarioModel $funcionario)
+	{
 
 		$dados['funcionarios'] = $funcionario->where('is_deleted', '0')->get();
 		$dados['funcionario']  = $funcionario->where('id', $request->id)->first();
@@ -25,14 +27,16 @@ class FuncionariosController extends Controller {
 	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create() {
+	public function create()
+	{
 		//
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(FuncionarioRequest $request, FuncionarioModel $funcionario) {
+	public function store(FuncionarioRequest $request, FuncionarioModel $funcionario)
+	{
 
 		$data = $request->all();
 
@@ -64,28 +68,32 @@ class FuncionariosController extends Controller {
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(string $id) {
+	public function show(string $id)
+	{
 		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(string $id) {
+	public function edit(string $id)
+	{
 		//
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(Request $request, FuncionarioModel $funcionario) {
+	public function update(Request $request, FuncionarioModel $funcionario)
+	{
 		//
 	}
 
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(Request $request, FuncionarioModel $funcionario) {
+	public function destroy(Request $request, FuncionarioModel $funcionario)
+	{
 
 		// // $this->authorize('delete', PacienteModel::class);
 

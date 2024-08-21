@@ -86,11 +86,11 @@
 									<label for="" class="active">Sexo</label>
 									<div style="position: relative; top: 10px; margin: 15px 0; display: flex;">
 										<label class="input mr-6">
-											<input type="radio" name="sexo" class="with-gap" value="M" @checked(old('sexo', isset($sexo) && $sexo == 'M'))>
+											<input type="radio" name="sexo" class="with-gap" value="M" @checked(old('sexo', isset($funcionario->sexo) && $funcionario->sexo == 'M'))>
 											<span>Masculino</span>
 										</label>
 										<label class="input">
-											<input type="radio" name="sexo" class="with-gap" value="F" @checked(old('sexo', isset($sexo) && $sexo == 'F'))>
+											<input type="radio" name="sexo" class="with-gap" value="F" @checked(old('sexo', isset($funcionario->sexo) && $funcionario->sexo == 'F'))>
 											<span>Feminino</span>
 										</label>
 									</div>
