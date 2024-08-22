@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 18/08/2024 às 22:27
+-- Tempo de geração: 22/08/2024 às 09:48
 -- Versão do servidor: 10.6.16-MariaDB-0ubuntu0.22.04.1
 -- Versão do PHP: 8.2.18
 
@@ -48,7 +48,7 @@ INSERT INTO `tb_acl_grupo` (`id`, `grupo`, `descricao`, `permissao`, `created_at
 (2, 'Administrador', 'Grupo de usuários com restrição de privilégios.', 0111, '2022-06-24 02:42:45', '2024-08-18 22:03:23', 0, '2024-08-18 22:03:23', '1'),
 (3, 'Médico', 'Grupo de usuários com restrição de privilégios.', 0111, '2022-06-24 02:42:45', '2024-08-18 22:17:21', 0, NULL, '1'),
 (4, 'Recepcionista', 'Grupo de usuários com restrição de privilégios.', 0111, '2022-06-24 02:42:45', NULL, 0, NULL, '1'),
-(5, 'Guest', 'Grupo de usuários para acesso a empresas externas', 0001, '2022-06-24 02:42:45', NULL, 0, NULL, '1');
+(5, 'Paciente', 'Grupo de usuários para acesso a empresas externas', 0001, '2022-06-24 02:42:45', '2024-08-19 02:31:47', 0, NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -187,7 +187,7 @@ INSERT INTO `tb_acl_menu_item` (`id`, `id_controller`, `id_parent`, `id_route`, 
 (16, 12, NULL, 0, 'Recursos Médicos', NULL, NULL, 'medical_services', NULL, 5, 0001, '2022-11-08 23:07:03', NULL, 0, '1', '1'),
 (17, 28, 16, 0, 'Atendimentos', NULL, NULL, 'support_agent', NULL, 0, 0001, '2022-11-08 23:07:03', NULL, 0, '1', '1'),
 (18, 19, NULL, 0, 'Página de pacientes', NULL, NULL, 'group', NULL, 2, 0001, '2022-11-08 23:07:03', NULL, 0, '1', '1'),
-(19, 21, 22, 0, 'Página de médicos', NULL, NULL, 'medical_information', NULL, 5, 0001, '2022-11-08 23:07:03', NULL, 0, '1', '1'),
+(19, 21, 22, 108, 'Página de profissionais', NULL, NULL, 'medical_information', NULL, 5, 0001, '2022-11-08 23:07:03', NULL, 0, '1', '1'),
 (20, 22, 22, 0, 'Página de especialidades', NULL, NULL, 'favorite_border', NULL, 3, 0001, '2022-11-08 23:07:03', NULL, 0, '1', '1'),
 (21, 12, NULL, 0, 'Gerenciamento', 'Sistema', NULL, 'construction', NULL, 20, 0001, '2022-11-08 23:07:03', NULL, 0, '1', '0'),
 (22, 12, NULL, 0, 'Cadastros', 'Gerenciar', NULL, 'construction', NULL, 20, 0001, '2022-11-08 23:07:03', NULL, 0, '1', '1'),
@@ -254,7 +254,7 @@ INSERT INTO `tb_acl_menu_item_descricao` (`id_item`, `id_idioma`, `titulo`, `des
 (16, 1, 'Recursos médicos', 'Recursos médicos', 'Recursos médicos', 'Recursos médicos', 'Recursos médicos', '2023-04-25 18:41:22', NULL),
 (17, 1, 'Atendimentos', 'Atendimentos', 'Atendimentos', 'Atendimentos', 'Atendimentos', '2023-04-25 18:41:22', NULL),
 (18, 1, 'Pacientes', 'Pacientes', 'Pacientes', 'Pacientes', 'Pacientes', '2023-04-25 18:41:22', NULL),
-(19, 1, 'Médicos', 'Médicos', 'Médicos', 'Médicos', 'Médicos', '2023-04-25 18:41:22', NULL),
+(19, 1, 'Profissionais', 'Profissionais', 'MédicosProfissionais', 'Profissionais', 'Profissionais', '2023-04-25 18:41:22', NULL),
 (20, 1, 'Especialidades', 'Especialidades', 'Especialidades', 'Especialidades', 'Especialidades', '2023-04-25 18:41:22', NULL),
 (21, 1, 'Gerenciar', 'Gerenciar', 'Gerenciar', 'Gerenciar', 'Gerenciar', '2023-04-25 18:41:22', NULL),
 (22, 1, 'Cadastros', 'Cadastros', 'Cadastros', 'Cadastros', 'Cadastros', '2023-04-25 18:41:22', NULL),
@@ -710,16 +710,16 @@ INSERT INTO `tb_acl_modulo_routes` (`id`, `name`, `id_controller`, `id_parent`, 
 (105, 'clinica.agendamentos.{agendamento}.paciente.{paciente}', 27, 96, 'get', '{agendamento}/paciente/{paciente}', 'form', NULL, 1111, 'inherit', '1'),
 (106, 'clinica.unidades.autocomplete', 23, 72, 'get', '/json/autocomplete', 'autocomplete', NULL, 1111, 'inherit', '1'),
 (107, 'clinica.pacientes.autocomplete', 19, 40, 'get', '/json/autocomplete', 'autocomplete', NULL, 1111, 'inherit', '1'),
-(108, 'clinica.medicos.index', 21, NULL, 'any', '/medicos', 'index', NULL, 1111, 'inherit', '1'),
-(109, 'clinica.medicos.index', 21, 108, 'any', '/', 'index', NULL, 1111, 'inherit', '1'),
-(110, 'clinica.medicos.add', 21, 108, 'any', '/cadastro', 'form', NULL, 1111, 'inherit', '1'),
-(111, 'clinica.medicos.post', 21, 108, 'post', '/', 'create', NULL, 1111, 'inherit', '1'),
-(112, 'clinica.medicos.edit', 21, 108, 'get', '/{id}', 'form', NULL, 1111, 'inherit', '1'),
-(113, 'clinica.medicos.patch', 21, 108, 'patch', '/{id}', 'patch', NULL, 1111, 'inherit', '1'),
-(114, 'clinica.medicos.delete', 21, 108, 'delete', '/', 'delete', NULL, 1111, 'inherit', '1'),
-(115, 'clinica.medicos.put', 21, 108, 'put', '/', 'edit', NULL, 1111, 'inherit', '1'),
+(108, 'clinica.profissionais.index', 21, NULL, 'any', '/profissionais', 'index', NULL, 1111, 'inherit', '1'),
+(109, 'clinica.profissionais.index', 21, 108, 'any', '/', 'index', NULL, 1111, 'inherit', '1'),
+(110, 'clinica.profissionais.add', 21, 108, 'any', '/cadastro', 'form', NULL, 1111, 'inherit', '1'),
+(111, 'clinica.profissionais.post', 21, 108, 'post', '/', 'create', NULL, 1111, 'inherit', '1'),
+(112, 'clinica.profissionais.edit', 21, 108, 'get', '/{id}', 'form', NULL, 1111, 'inherit', '1'),
+(113, 'clinica.profissionais.patch', 21, 108, 'patch', '/{id}', 'patch', NULL, 1111, 'inherit', '1'),
+(114, 'clinica.profissionais.delete', 21, 108, 'delete', '/', 'delete', NULL, 1111, 'inherit', '1'),
+(115, 'clinica.profissionais.put', 21, 108, 'put', '/', 'edit', NULL, 1111, 'inherit', '1'),
 (116, 'clinica.especialidades.autocomplete', 22, 64, 'get', '/json/autocomplete', 'autocomplete', NULL, 1111, 'inherit', '1'),
-(117, 'clinica.medicos.autocomplete', 21, 108, 'get', '/json/autocomplete', 'autocomplete', NULL, 1111, 'inherit', '1'),
+(117, 'clinica.profissionais.autocomplete', 21, 108, 'get', '/json/autocomplete', 'autocomplete', NULL, 1111, 'inherit', '1'),
 (118, 'main.api.include_js', 7, NULL, 'get', '/api/js', 'include_js_app', NULL, 1111, 'inherit', '1'),
 (120, 'clinica.api.include_js', 16, NULL, 'get', '/api/js', 'include_js_app', NULL, 1111, 'yes', '1'),
 (121, 'clinica.pacientes.{id_paciente}.prontuarios', 20, 48, 'any', '/', 'paciente', NULL, 1111, 'inherit', '0'),

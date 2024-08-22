@@ -38,8 +38,8 @@
 
 				<div class="row">
 					<div class="col s12 m6 l5">
-						<input type="hidden" name="data" data-mask="calendar">
-						<div class="calendar_pk"></div>
+						{{-- <input type="hidden" name="data" data-mask="calendar"> --}}
+						<div class="calendar_pk" data-url="{{ route('clinica.recursosmedicos.agenda.busca.grade') }}" ></div>
 					</div>
 					<div class="col s12 m6 l7">
 						<h5 for="filtro" class="no-margin flex flex-center">
@@ -199,7 +199,7 @@
 					width: 90px;
 				}
 			</style>
-		@include('clinica.homecare.pacientes.includes.scripts')
+			@include('clinica.homecare.pacientes.includes.scripts')
 
 			<script>
 				$(function() {
@@ -246,8 +246,21 @@
 								cancel: 'Cancelar'
 							},
 							onSelect: function(date) {
-								console.log(date);
-								input.val(moment(date).format('YYYY-MM-DD'), date);
+
+								var date = moment(date).format('YYYY-MM-DD');
+								input.val(date);
+
+								$.ajax({
+									url: self.data('url'),
+									data: {
+										'data': date
+									},
+									method: 'get',
+									success: (response) => {
+
+									}
+								})
+
 							},
 						});
 

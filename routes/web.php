@@ -172,6 +172,9 @@ Route::middleware([
 
 			})->name('clinica.recursosmedicos.agenda.busca.medico_especialidade');
 
+			Route::get('/grade', function () {
+				dd(request()->all());
+			})->name('clinica.recursosmedicos.agenda.busca.grade');
 		});
 
 	});
