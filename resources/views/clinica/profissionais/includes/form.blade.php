@@ -70,7 +70,7 @@
 							<div class="col s12 m6 l3">
 								<div class="input-field @error('data_nascimento') error @enderror">
 									<label for="data_nascimento" class="active">Data de nascimento</label>
-									<input type="text" name="data_nascimento" class="datepicker" value="{{ old('data_nascimento', isset($profissional->data_nascimento) ? date('d/m/Y', strtotime( $profissional->data_nascimento)) : null) }}" data-mask="date" data-max-date="{{ date('d/m/Y') }}" placeholder="dd/mm/yyyy" maxlength="10">
+									<input type="text" name="data_nascimento" class="datepicker" value="{{ old('data_nascimento', isset($profissional->data_nascimento) ? date('d/m/Y', strtotime($profissional->data_nascimento)) : null) }}" data-mask="date" data-max-date="{{ date('d/m/Y') }}" placeholder="dd/mm/yyyy" maxlength="10">
 									@error('data_nascimento')
 										<small class="error">{{ $message }}</small>
 									@enderror
@@ -105,6 +105,61 @@
 										<small class="error">{{ $message }}</small>
 									@enderror
 								</div>
+							</div>
+
+						</div>
+
+						<div class="row">
+							<div class="col s12 m6 l6">
+								<div class="inputfield @error('empresas') error @enderror">
+									<label for="empresas">Clincas nas quais o médico atende</label>
+									@php
+										$unidades = DB::connection('medicus')
+										    ->table('tb_empresa')
+										    ->select('id', 'razao_social AS text')
+										    // ->where('razao_social', 'like', request('search') . '%')
+										    ->where('status', '1')
+										    ->where('id', '<>', 20)
+										    ->where('is_deleted', '0')
+										    ->orderBy('razao_social', 'asc')
+										    ->get();
+									@endphp
+								</div>
+
+								<div class="mt-1">
+
+									<label for="unidade_20">
+										<input type="checkbox" id="unidade_20" class="filled-in" checked disabled>
+										<span class="mb-1">Médicus24h (padrão)</span>
+									</label>
+									<input type="hidden" name="empresas[]" id="unidade_20" value="20">
+
+									@php
+										$empresas = [];
+										if (isset($profissional)) {
+										    $medico_clinicas = DB::connection('medicus')
+										        ->table('tb_medico_clinica')
+										        ->select('id_empresa')
+										        ->where('id_medico', $profissional->id)
+										        ->get();
+
+										    if (isset($medico_clinicas) && $medico_clinicas->count() > 0) {
+										        foreach ($medico_clinicas as $c) {
+										            $empresas[] = $c->id_empresa;
+										        }
+										    }
+										}
+									@endphp
+									@if (isset($unidades) && $unidades->count() > 0)
+										@foreach ($unidades as $item)
+											<label for="unidade_{{ $item->id }}">
+												<input type="checkbox" name="empresas[]" id="unidade_{{ $item->id }}" class="filled-in" value="{{ $item->id }}" @checked(in_array($item->id, $empresas))>
+												<span class="mb-1">{{ $item->text }}</span>
+											</label>
+										@endforeach
+									@endif
+								</div>
+
 							</div>
 
 						</div>

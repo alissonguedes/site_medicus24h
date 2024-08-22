@@ -7,11 +7,13 @@ use App\Models\Clinica\ProfissionalModel;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class ProfissionaisController extends Controller {
+class ProfissionaisController extends Controller
+{
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, ProfissionalModel $profissional) {
+	public function index(Request $request, ProfissionalModel $profissional)
+	{
 
 		$data['profissionais'] = $profissional->get();
 		$data['profissional']  = $profissional->where('id', $request->id)->get()->first();
@@ -24,26 +26,30 @@ class ProfissionaisController extends Controller {
 	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create() {
+	public function create()
+	{
 		//
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(Request $request, ProfissionalModel $profissional) {
+	public function store(Request $request, ProfissionalModel $profissional)
+	{
 
-		$data          = $request->all();
+		$data = $request->all();
+
 		$especialidade = isset($data['especialidade']) ? $data['especialidade'] : null;
+		$empresas      = isset($data['empresas']) ? $data['empresas'] : null;
 
-		unset($data['_method'], $data['_token'], $data['id'], $data['categoria'], $data['especialidade']);
+		unset($data['_method'], $data['_token'], $data['id'], $data['categoria'], $data['especialidade'], $data['empresas']);
 
 		$request->validate([
 			'nome' => 'required',
 			'cpf'  => [
 				'required',
 				new \App\Rules\CPF(),
-				Rule::unique('medicus.tb_profissional', 'cpf')->ignore($request->id, 'id'),
+				Rule::unique('medicus.tb_medico', 'cpf')->ignore($request->id, 'id'),
 			],
 		]);
 
@@ -78,6 +84,31 @@ class ProfissionaisController extends Controller {
 
 		}
 
+		if (!empty($empresas)) {
+
+			foreach ($empresas as $e) {
+
+				$atendimento = $profissional->from('tb_atendimento')->where('id_clinica', $e)->where('id_medico', $id_profissional->id)->get()->first();
+
+				if (isset($atendimento)) {
+					$at = ['id_medico' => $atendimento->id_medico, 'id_empresa' => $atendimento->id_clinica];
+					$profissional->from('tb_medico_clinica')->whereNot('id_empresa', $e)->where('id_medico', $id_profissional->id)->delete();
+				}
+
+				$medico_clinica = array('id_empresa' => $e, 'id_medico' => $id_profissional->id);
+
+				$issetEmpresa = $profissional->from('tb_medico_clinica')->where('id_medico', $id_profissional->id)->where('id_empresa', $e)->first();
+
+				if (isset($issetEmpresa)) {
+					$profissional->from('tb_medico_clinica')->where(['id_medico' => $id_profissional->id, 'id_empresa' => $e])->update($medico_clinica);
+				} else {
+					$profissional->from('tb_medico_clinica')->insert($medico_clinica);
+				}
+
+			}
+
+		}
+
 		return redirect()->route('clinica.profissionais.index')->with(['message' => 'Profissional atualizado com sucesso!']);
 
 	}
@@ -85,31 +116,35 @@ class ProfissionaisController extends Controller {
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(string $id) {
+	public function show(string $id)
+	{
 		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(string $id) {
+	public function edit(string $id)
+	{
 		//
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(Request $request, ProfissionalModel $profissional) {
+	public function update(Request $request, ProfissionalModel $profissional)
+	{
 
-		$data = $request->all();
+		$data     = $request->all();
+		$empresas = $data['empresas'];
 
 		dd($data, 'teste');
-		unset($data['_method'], $data['_token'], $data['id'], $data['categoria']);
+		unset($data['_method'], $data['_token'], $data['id'], $data['categoria'], $data['empresas']);
 
 		$request->validate([
 			'profissional' => [
 				'required',
-				Rule::unique('medicus.tb_profissional', 'profissional')->ignore($request->id, 'id'),
+				Rule::unique('medicus.tb_medico', 'profissional')->ignore($request->id, 'id'),
 			],
 		]);
 
@@ -124,7 +159,8 @@ class ProfissionaisController extends Controller {
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(Request $request, ProfissionalModel $profissional) {
+	public function destroy(Request $request, ProfissionalModel $profissional)
+	{
 
 		// // $this->authorize('delete', PacienteModel::class);
 

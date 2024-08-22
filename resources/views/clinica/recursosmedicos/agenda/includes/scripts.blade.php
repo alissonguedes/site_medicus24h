@@ -81,137 +81,137 @@
 <script src="{{ asset('assets/node_modules/fullcalendar/index.global.min.js') }}"></script>
 
 <script>
-	$(function() {
+	// $(function() {
 
-		var calendarEl = document.getElementById('calendar');
-		var calendar = new FullCalendar.Calendar(calendarEl, {
-			initialView: 'dayGridMonth',
-			timeZone: 'America/Sao_Paulo',
-			locale: 'pt-br',
-			headerToolbar: false,
+	// 	var calendarEl = document.getElementById('calendar');
+	// 	var calendar = new FullCalendar.Calendar(calendarEl, {
+	// 		initialView: 'dayGridMonth',
+	// 		timeZone: 'America/Sao_Paulo',
+	// 		locale: 'pt-br',
+	// 		headerToolbar: false,
 
-			dayMaxEvents: true,
-			height: '100%',
-			contentHeight: '100%',
-			fixedWeekCount: false,
-			expandRows: true,
-			lazyFetching: true,
-			nowIndicator: true,
+	// 		dayMaxEvents: true,
+	// 		height: '100%',
+	// 		contentHeight: '100%',
+	// 		fixedWeekCount: false,
+	// 		expandRows: true,
+	// 		lazyFetching: true,
+	// 		nowIndicator: true,
 
-			// eventDisplay: 'inverse-background',
-			// eventDisplay: 'block',
+	// 		// eventDisplay: 'inverse-background',
+	// 		// eventDisplay: 'block',
 
-			moreLinkContent: function(l) {
-				return 'Mais ' + l.num;
-			},
+	// 		moreLinkContent: function(l) {
+	// 			return 'Mais ' + l.num;
+	// 		},
 
-			eventClick: (e) => {
+	// 		eventClick: (e) => {
 
-				e.jsEvent.preventDefault();
+	// 			e.jsEvent.preventDefault();
 
-				var id = e.event.id;
-				var url = e.event.url;
+	// 			var id = e.event.id;
+	// 			var url = e.event.url;
 
-				$('form.card-reveal').show();
-				calendar.refetchEvents();
+	// 			$('form.card-reveal').show();
+	// 			calendar.refetchEvents();
 
-				if (typeof url !== 'undefined') {
+	// 			if (typeof url !== 'undefined') {
 
-					Url.update(url);
+	// 				Url.update(url);
 
-					$.ajax({
-						url: url,
-						method: 'get',
-						success: (response) => {
+	// 				$.ajax({
+	// 					url: url,
+	// 					method: 'get',
+	// 					success: (response) => {
 
-							console.log(response);
-							var form = $(response).find('form.card-reveal');
+	// 						console.log(response);
+	// 						var form = $(response).find('form.card-reveal');
 
-							$('form.card-reveal').html(form.html());
-							$('form.card-reveal').css({
-								'transform': 'translateY(-100%)',
-							});
+	// 						$('form.card-reveal').html(form.html());
+	// 						$('form.card-reveal').css({
+	// 							'transform': 'translateY(-100%)',
+	// 						});
 
-							$.getScript(BASE_PATH + 'assets/js/app.js');
-							calendar.refetchEvents();
-						}
-					});
-				}
+	// 						$.getScript(BASE_PATH + 'assets/js/app.js');
+	// 						calendar.refetchEvents();
+	// 					}
+	// 				});
+	// 			}
 
-			},
+	// 		},
 
-			dateClick: (a) => {
+	// 		dateClick: (a) => {
 
-				var url = BASE_URL + 'agenda/' + a.dateStr.replaceAll('-', '/');
+	// 			var url = BASE_URL + 'agenda/' + a.dateStr.replaceAll('-', '/');
 
-				Url.update(url);
+	// 			Url.update(url);
 
-				$.ajax({
-					url: url,
-					method: 'get',
-					success: (response) => {
-						var form = $(response).find('#details.card-reveal');
-						$('#details.card-reveal').html(form.html());
-						$('#details.card-reveal').css({
-							'display': 'block',
-							'transform': 'translateY(-100%)',
-						});
-						$.getScript(BASE_PATH + 'assets/js/app.js');
-						calendar.refetchEvents();
-					}
-				});
+	// 			$.ajax({
+	// 				url: url,
+	// 				method: 'get',
+	// 				success: (response) => {
+	// 					var form = $(response).find('#details.card-reveal');
+	// 					$('#details.card-reveal').html(form.html());
+	// 					$('#details.card-reveal').css({
+	// 						'display': 'block',
+	// 						'transform': 'translateY(-100%)',
+	// 					});
+	// 					$.getScript(BASE_PATH + 'assets/js/app.js');
+	// 					calendar.refetchEvents();
+	// 				}
+	// 			});
 
-				calendar.refetchEvents();
+	// 			calendar.refetchEvents();
 
-			},
+	// 		},
 
-			events: @json($agenda_medica ?? null),
+	// 		events: @json($agenda_medica ?? null),
 
-			// select: function(start, end, jsEvent, view) {
-			// 	if (start.isBefore(moment())) {
-			// 		$('#calendar').fullCalendar('unselect');
-			// 		return false;
-			// 	} else {
-			// 		var currentDate = moment(start).format('YYYY/MM/DD');
-			// 		alert(currentDate);
-			// 	}
-			// },
+	// 		// select: function(start, end, jsEvent, view) {
+	// 		// 	if (start.isBefore(moment())) {
+	// 		// 		$('#calendar').fullCalendar('unselect');
+	// 		// 		return false;
+	// 		// 	} else {
+	// 		// 		var currentDate = moment(start).format('YYYY/MM/DD');
+	// 		// 		alert(currentDate);
+	// 		// 	}
+	// 		// },
 
-			// dayRender: function(date, cell) {
+	// 		// dayRender: function(date, cell) {
 
-			// 	date.dayEl.style.backgroundColor = 'red';
-			// 	// It's an example, do your own test here
-			// 	if (cell.hasClass("fc-other-month")) {
-			// 		cell.addClass('disabled');
-			// 	}
+	// 		// 	date.dayEl.style.backgroundColor = 'red';
+	// 		// 	// It's an example, do your own test here
+	// 		// 	if (cell.hasClass("fc-other-month")) {
+	// 		// 		cell.addClass('disabled');
+	// 		// 	}
 
-			// },
-			// dayClick: function(date, jsEvent, view) {
-			// 	if ($(jsEvent.target).hasClass("disabled")) {
-			// 		return false;
-			// 	}
-			// 	// Your code
-			// 	// ....
-			// }
+	// 		// },
+	// 		// dayClick: function(date, jsEvent, view) {
+	// 		// 	if ($(jsEvent.target).hasClass("disabled")) {
+	// 		// 		return false;
+	// 		// 	}
+	// 		// 	// Your code
+	// 		// 	// ....
+	// 		// }
 
-			// events: {
-			// 	url: BASE_URL + 'agenda',
-			// 	method: 'get',
-			// 	extraParams: {
-			// 		ajaxCalendar: true
-			// 	},
-			// 	success: (response) => {
+	// 		// events: {
+	// 		// 	url: BASE_URL + 'agenda',
+	// 		// 	method: 'get',
+	// 		// 	extraParams: {
+	// 		// 		ajaxCalendar: true
+	// 		// 	},
+	// 		// 	success: (response) => {
 
-			// 	},
-			// 	color: 'var(--light-green)', // an option!
-			// 	textColor: 'black' // an option!
-			// },
+	// 		// 	},
+	// 		// 	color: 'var(--light-green)', // an option!
+	// 		// 	textColor: 'black' // an option!
+	// 		// },
 
-		});
+	// 	});
 
-		calendar.render();
+	// 	calendar.render();
 
-	});
+	// });
 </script>
 
 <style>

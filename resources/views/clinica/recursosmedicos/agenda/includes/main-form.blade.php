@@ -33,7 +33,8 @@
 						<div class="input-label disabled">{{ $medico->nome }}</div>
 						<input type="hidden" name="medico" value="{{ request('id_medico') }}">
 					@else
-						<select name="medico" id="medico" class="autocomplete" data-url="{{ route('clinica.medicos.autocomplete') }}" placeholder="Pesquise pelo Nome, CPF, Matrícula ou RG"></select>
+						<select name="medico" id="medico" class="autocomplete" data-url="{{ route('clinica.recursosmedicos.agenda.busca.medico_especialidade') }}" placeholder="Buscar por especialidade ou médico"></select>
+						{{-- <select name="medico" id="medico" class="autocomplete" data-url="{{ route('clinica.medicos.autocomplete') }}" placeholder="Pesquise pelo Nome, CPF, Matrícula ou RG"></select> --}}
 					@endif
 					@error('medico')
 						<div class="error">{{ $message }}</div>
@@ -41,6 +42,28 @@
 				</div>
 			</div>
 		</div>
+
+		{{-- <div class="row">
+			<div class="col s12">
+				<div class="input-field @error('clinica') error @enderror">
+					<label for="clinica" class="active strong black-text">Clínica</label>
+					@if (request('id_medico'))
+						@php
+							$medico = DB::connection('medicus')->table('tb_funcionario')->select('nome')->where('id', request('id_medico'))->first();
+						@endphp
+						<div class="input-label disabled">{{ $medico->nome }}</div>
+						<input type="hidden" name="medico" value="{{ request('id_medico') }}">
+					@else
+						<select name="clinica" id="clinica" disabled>
+							<option value="">Informe a clínica</option>
+						</select>
+					@endif
+					@error('medico')
+						<div class="error">{{ $message }}</div>
+					@enderror
+				</div>
+			</div>
+		</div> --}}
 
 		{{-- <div class="row">
 		<div class="col s12">

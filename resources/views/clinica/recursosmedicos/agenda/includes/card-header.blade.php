@@ -5,7 +5,7 @@
 	<x-text-input type="search" id="input-search-header" :data-url="route('clinica.recursosmedicos.agenda.index')" placeholder="Pesquisar eventos" autocomplete="off" />
 </div>
 
-<button type="button" class="btn btn-floating waves-effect gradient-45deg-deep-orange-orange" data-href="{{ route('clinica.recursosmedicos.agenda.index') }}" data-tooltip="Adicionar Evento" data-trigger="form" data-target="main-form">
+<button type="button" class="btn btn-floating waves-effect gradient-45deg-deep-orange-orange" data-href="{{ route('clinica.recursosmedicos.agenda.index') }}" data-tooltip="Criar Agenda" data-trigger="form" data-target="main-form">
 	<i class="material-symbols-outlined">add</i>
 </button>
 

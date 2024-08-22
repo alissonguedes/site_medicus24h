@@ -1,10 +1,10 @@
 'use strict';
 
-$(document).ready(function () {
+$(document).ready(function() {
 
 	var scroller = $('.scroller');
 
-	$('[data-href],[href]').unbind().bind('click', function (e) {
+	$('[data-href],[href]').unbind().bind('click', function(e) {
 
 		e.preventDefault();
 
@@ -37,13 +37,13 @@ $(document).ready(function () {
 
 	});
 
-	$(scroller).each(function () {
+	$(scroller).each(function() {
 
 		var scroll = new PerfectScrollbar(this, {
 			theme: "dark",
 		});
 
-		$(window).bind('resize', function () {
+		$(window).bind('resize', function() {
 			scroll.update();
 		});
 
@@ -83,7 +83,7 @@ $(document).ready(function () {
 	}
 
 	if ($('.datepicker').length) {
-		$('.datepicker').each(function () {
+		$('.datepicker').each(function() {
 
 			// var date = new Date();
 			// var defaultDate = $(this).val() ? $(this).val().split('/').reverse().join('-') : null;
@@ -133,7 +133,7 @@ $(document).ready(function () {
 					weekdaysAbbrev: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
 					cancel: 'Cancelar'
 				},
-				onDraw: function () {
+				onDraw: function() {
 					// var dropdown = $(".datepicker-container").find(".select-dropdown");
 					// dropdown.dropdown('destroy');
 					// dropdown.dropdown({
@@ -145,19 +145,19 @@ $(document).ready(function () {
 		});
 	}
 
-	setTimeout(function () {
-		$('.calendar-time').find('select').each(function () {
+	setTimeout(function() {
+		$('.calendar-time').find('select').each(function() {
 			$(this).addClass('browser-default');
 		})
 	}, 1000);
 
-	tabs.find('a').unbind().bind('click', function () {
-		setTimeout(function () {
+	tabs.find('a').unbind().bind('click', function() {
+		setTimeout(function() {
 			t.tabs('updateTabIndicator');
 		}, 100)
 	});
 
-	$('.tabs .tab a').each(function (index, element) {
+	$('.tabs .tab a').each(function(index, element) {
 
 		var id = $(this).attr('href');
 
@@ -176,7 +176,7 @@ $(document).ready(function () {
 	// $('.collapsible').Menu();
 	// $('#main-menu').Menu();
 
-	$('.input-field').each(function () {
+	$('.input-field').each(function() {
 
 		var field = $(this).find('input,textarea,select');
 
@@ -203,11 +203,11 @@ $(document).ready(function () {
 
 	sidenav.sidenav('close');
 
-	$('.btn-menu').unbind().bind('click', function () {
+	$('.btn-menu').unbind().bind('click', function() {
 		$('body').toggleClass('nav-collapsed');
 	});
 
-	$('button[type="reset"]').unbind().bind('click', function () {
+	$('button[type="reset"]').unbind().bind('click', function() {
 
 		var action = $(this).parents('form').attr('action');
 
@@ -220,7 +220,7 @@ $(document).ready(function () {
 
 	});
 
-	$('[data-trigger="form"]').unbind().bind('click', function (e) {
+	$('[data-trigger="form"]').unbind().bind('click', function(e) {
 
 		e.preventDefault();
 
@@ -359,12 +359,12 @@ $(document).ready(function () {
 
 	// });
 
-	$('.card:not(.agenda)>.card-reveal').unbind().bind('mouseleave', function () {
+	$('.card:not(.agenda)>.card-reveal').unbind().bind('mouseleave', function() {
 		$(this).find('.card-title').click();
 	});
 
-	$('.input-field.error').find('input,textarea,select').each(function () {
-		$(this).bind('keyup', function () {
+	$('.input-field.error').find('input,textarea,select').each(function() {
+		$(this).bind('keyup', function() {
 			if ($(this).val().length > 0)
 				$(this).parents('.input-field.error').removeClass('error').find('.error').hide();
 			else
@@ -373,7 +373,7 @@ $(document).ready(function () {
 	});
 
 	if (typeof FroalaEditor !== 'undefined') {
-		$('.editor').each(function () {
+		$('.editor').each(function() {
 			// var height = $(this).attr('rows') || $(this).parent().parent().height();
 			var height = 300;
 			var placeholder = ($(this).attr('placeholder') || 'Escreva aqui') + '...';
@@ -393,23 +393,23 @@ $(document).ready(function () {
 	}
 
 	/** Página de agenda */
-	$('#details .card-title').unbind().bind('click', function () {
+	$('#details .card-title').unbind().bind('click', function() {
 		Url.update(BASE_URL + 'agenda');
 	});
 
-	$('#details .card-title .date').unbind().bind('click', function () {
+	$('#details .card-title .date').unbind().bind('click', function() {
 		$('#details .card-title').click();
 	});
 
 	// Button Delete Actions
 
-	$('#modal-delete').find('[type="reset"]').unbind().bind('click', function (e) {
+	$('#modal-delete').find('[type="reset"]').unbind().bind('click', function(e) {
 		e.preventDefault();
 		$(this).parents('#modal-delete').removeClass('open');
 		$('#modal-delete').find('input[name="id"]').val('');
 	});
 
-	$('[data-trigger="delete"]').unbind().bind('click', function (e) {
+	$('[data-trigger="delete"]').unbind().bind('click', function(e) {
 
 		e.preventDefault();
 
@@ -427,7 +427,7 @@ $(document).ready(function () {
 
 	var select = $('select.autocomplete');
 
-	select.each(function () {
+	select.each(function() {
 
 		var self = $(this);
 		var a = self.val('').attr('disabled', false);
@@ -445,7 +445,7 @@ $(document).ready(function () {
 						search: data.term || null,
 					}
 				},
-				processResults: function (data, params) {
+				processResults: function(data, params) {
 					params.page = params.page || 1;
 					return {
 						results: data
@@ -465,6 +465,20 @@ $(document).ready(function () {
 			}
 		}
 
+	});
+
+	let forceFocusFn = function() {
+		// Gets the search input of the opened select2
+		var searchInput = document.querySelector('.select2-container--open .select2-search__field');
+		// If exists
+		if (searchInput)
+			searchInput.focus(); // focus
+	};
+
+	// Every time a select2 is opened
+	$(document).on('select2:open', () => {
+		// We use a timeout because when a select2 is already opened and you open a new one, it has to wait to find the appropiate
+		setTimeout(() => forceFocusFn(), 200);
 	});
 
 });

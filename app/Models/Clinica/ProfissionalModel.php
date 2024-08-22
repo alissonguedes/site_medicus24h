@@ -9,7 +9,7 @@ class ProfissionalModel extends Model
 
 	use HasFactory;
 
-	protected $table    = 'tb_profissional';
+	protected $table    = 'tb_medico';
 	protected $fillable = [
 		// Dados do profissional
 		'id_departamento', 'nome', 'cpf', 'rg', 'data_nascimento', 'sexo', 'cns', 'logradouro', 'numero', 'complemento', 'status',

@@ -154,7 +154,7 @@ Route::middleware([
 				$medicos = DB::connection('medicus')
 					->table('tb_medico_especialidade', 'ME')
 					->select('ME.id_profissional', 'ME.id_especialidade', 'P.nome', 'E.especialidade')
-					->join('tb_profissional AS P', 'P.id', 'ME.id_profissional')
+					->join('tb_medico AS P', 'P.id', 'ME.id_profissional')
 					->join('tb_especialidade AS E', 'E.id', 'ME.id_especialidade')
 					->where('P.nome', 'like', request('search') . '%')
 					->orWhere('E.especialidade', 'like', request('search') . '%')
@@ -252,6 +252,15 @@ Route::middleware([
 		Route::patch('/id/{id}', [Unidades::class, 'index'])->name('clinica.unidades.patch');
 		Route::delete('/', [Unidades::class, 'destroy'])->name('clinica.unidades.delete');
 
+		// Route::get('/a/{search?}', [Profissionais::class, 'autocomplete'])->name('clinica.profissionais.autocomplete');
+		Route::get('/a/{search?}', function () {
+
+			$unidades = DB::connection('medicus')->table('tb_empresa')->select('id', 'razao_social AS text')->where('razao_social', 'like', request('search') . '%')
+				->where('status', '1')->orderBy('razao_social', 'asc')->get();
+
+			return $unidades;
+
+		})->name('clinica.unidades.autocomplete');
 	});
 
 	// Cadastro de Procedimentos

@@ -7,12 +7,14 @@ use App\Models\Clinica\AgendaModel;
 use App\Models\FileModel;
 use Illuminate\Http\Request;
 
-class AgendamedicaController extends Controller {
+class AgendamedicaController extends Controller
+{
 
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, AgendaModel $agenda) {
+	public function index(Request $request, AgendaModel $agenda)
+	{
 
 		$data['horarios'] = $agenda->select('A.id', 'C.id_medico', 'horarios')
 			->from('tb_medico_agenda AS A')
@@ -27,7 +29,8 @@ class AgendamedicaController extends Controller {
 	/**
 	 * Search banners
 	 */
-	public function search(Request $request) {
+	public function search(Request $request)
+	{
 
 		// $data['pacientes'] = $paciente->search($request->search);
 
@@ -38,14 +41,16 @@ class AgendamedicaController extends Controller {
 	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create() {
+	public function create()
+	{
 		//
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(Request $request, AgendaModel $agenda) {
+	public function store(Request $request, AgendaModel $agenda)
+	{
 
 		$request->validate([
 			'medico' => 'required',
@@ -53,6 +58,11 @@ class AgendamedicaController extends Controller {
 		$horarios          = $request->horario;
 		$id_medico_clinica = $agenda->from('tb_medico_clinica')->select('id')->where('id_medico', $request->medico)->get()->first();
 
+		if (!isset($id_medico_clinica)) {
+			$request->validate(['id_medico_clinica' => 'required']);
+		}
+
+		// dd($id_medico_clinica, $request->all());
 		$dias_semana = [
 			'domingo' => 0,
 			'segunda' => 1,
@@ -93,21 +103,24 @@ class AgendamedicaController extends Controller {
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(Request $request, FileModel $file, int $file_id) {
+	public function show(Request $request, FileModel $file, int $file_id)
+	{
 		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(Request $request) {
+	public function edit(Request $request)
+	{
 		//
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(Request $request) {
+	public function update(Request $request)
+	{
 
 		return redirect()->route('clinica.pacientes.index')->with(['message' => 'Paciente atualizado com sucesso!']);
 
@@ -116,7 +129,8 @@ class AgendamedicaController extends Controller {
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(Request $request) {
+	public function destroy(Request $request)
+	{
 
 		// return redirect()->route('clinica.pacientes.index')->with(['message' => $message]);
 

@@ -39,14 +39,14 @@
 				<div class="row">
 					<div class="col s12 m6 l5">
 						{{-- <input type="hidden" name="data" data-mask="calendar"> --}}
-						<div class="calendar_pk" data-url="{{ route('clinica.recursosmedicos.agenda.busca.grade') }}" ></div>
+						<div class="calendar_pk" data-url="{{ route('clinica.recursosmedicos.agenda.busca.grade') }}"></div>
 					</div>
 					<div class="col s12 m6 l7">
-						<h5 for="filtro" class="no-margin flex flex-center">
+						<h5 for="f_medico" class="no-margin flex flex-center">
 							<i class="material-symbols-outlined mr-1" style="font-size: 32px; line-height: 32px; ">filter_alt</i> Filtros
 						</h5>
 						<div class="input-field">
-							<select name="medico" id="medico" class="autocomplete" data-url="{{ route('clinica.recursosmedicos.agenda.busca.medico_especialidade') }}" placeholder="Buscar por especialidade ou médico"></select>
+							<select name="medico" id="f_medico" class="autocomplete" data-url="{{ route('clinica.recursosmedicos.agenda.busca.medico_especialidade') }}" placeholder="Buscar por especialidade ou médico"></select>
 							{{-- <select class="autocomplete" id="medico" data-href="{{ route('clinica.recursosmedicos.agenda.busca.medico_especialidade') }}" placeholder=""></select> --}}
 						</div>
 					</div>
@@ -111,6 +111,10 @@
 				@include('clinica.recursosmedicos.agenda.includes.main-form')
 			</div> --}}
 
+			</div>
+
+			<div id="formularios" class="card-reveal no-padding" style="{{ ($errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);') . 'overflow:hidden; z-index: 9999999;' }}">
+				@include('clinica.recursosmedicos.agenda.includes.main-form')
 			</div>
 
 			@include('clinica.recursosmedicos.agenda.includes.scripts')
