@@ -43,27 +43,19 @@
 			</div>
 		</div>
 
-		{{-- <div class="row">
+		<div class="row">
 			<div class="col s12">
 				<div class="input-field @error('clinica') error @enderror">
-					<label for="clinica" class="active strong black-text">Clínica</label>
-					@if (request('id_medico'))
-						@php
-							$medico = DB::connection('medicus')->table('tb_funcionario')->select('nome')->where('id', request('id_medico'))->first();
-						@endphp
-						<div class="input-label disabled">{{ $medico->nome }}</div>
-						<input type="hidden" name="medico" value="{{ request('id_medico') }}">
-					@else
-						<select name="clinica" id="clinica" disabled>
-							<option value="">Informe a clínica</option>
-						</select>
-					@endif
+					<label for="clinica" class="active strong black-text">Clínica <small>(Selecione uma ou mais clínicas)</small></label>
+					<select name="clinica" id="clinica" data-url="{{ route('clinica.recursosmedicos.agenda.medico.get_clinicas', request('id_medico')) }}" disabled>
+						<option value="" selected disabled>Selecione uma ou mais clínicas</option>
+					</select>
 					@error('medico')
 						<div class="error">{{ $message }}</div>
 					@enderror
 				</div>
 			</div>
-		</div> --}}
+		</div>
 
 		{{-- <div class="row">
 		<div class="col s12">
@@ -428,6 +420,50 @@
 				});
 
 			}
+
+			$('select[name="medico"]').bind('change', function() {
+
+				var self = $(this);
+				var value = self.val();
+				var select_clinica = $('select[name="clinica"]');
+
+				$.ajax({
+					url: select_clinica.data('url'),
+					data: {
+						'medico': value,
+					},
+					method: 'get',
+					success: (response) => {
+
+						var options = [];
+
+						select_clinica
+							// .attr('disabled', true)
+							.find('option:not([value=""])').remove();
+
+						select_clinica.trigger('change')
+						// .formSelect();
+
+						if (response) {
+
+							for (var i of response) {
+
+								options.push($('<option/>', {
+									'value': i.id,
+									'text': i.text
+								}));
+
+							}
+
+							select_clinica.append(options);
+							select_clinica.attr('disabled', false).val('Agenda referente à clinica').formSelect();
+
+						}
+
+					}
+				})
+
+			})
 
 		});
 	</script>

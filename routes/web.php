@@ -123,58 +123,106 @@ Route::middleware([
 		Route::prefix('/agenda')->group(function () {
 
 			Route::get('/', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.index');
-			Route::get('/id/{id}', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.edit');
-			Route::post('/', [Agendamedica::class, 'store'])->name('clinica.recursosmedicos.agenda.index');
-			Route::put('/', [Agendamedica::class, 'store'])->name('clinica.recursosmedicos.agenda.index');
+			// 	Route::get('/id/{id}', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.edit');
+			// 	Route::post('/', [Agendamedica::class, 'store'])->name('clinica.recursosmedicos.agenda.index');
+			// 	Route::put('/', [Agendamedica::class, 'store'])->name('clinica.recursosmedicos.agenda.index');
+
+			// 	Route::prefix('/medico')->group(function () {
 
 			Route::prefix('/medico/{id_medico}')->group(function () {
 
 				Route::get('/', function (AgendaModel $agenda) {
 
-					$data['agenda'] = $agenda->select('A.id', 'C.id_medico', 'horarios')
-						->from('tb_medico_agenda AS A')
-						->join('tb_medico_agenda_horario AS H', 'H.id_agenda', 'A.id')
-						->join('tb_medico_clinica AS C', 'C.id', 'A.id_medico_clinica')
-						->where('C.id_medico', request('id_medico'))
-						->get()
+					$data           = [];
+					$data['medico'] = $agenda->select('M.id', 'M.nome')
+						->from('tb_medico AS M')
+						->where('id', request('id_medico'))
 						->first();
 
+					$data['agenda'] = $agenda->select('A.horarios')
+						->from('tb_medico_agenda AS A')
+						->where('id_medico', request('id_medico'))
+						->get();
+
+					// dd($data);
+					// $data['agenda'] = $agenda->select('C.id_medico', 'horarios')
+					// 	->from('tb_medico_agenda AS A')
+					// // ->join('tb_medico_agenda_horario AS H', 'H.id_agenda', 'A.id')
+					// 	->join('tb_medico_clinica AS C', 'C.id', 'A.id_medico')
+					// 	->where('C.id_medico', request('id_medico'))
+					// 	->get()
+					// 	->first();
+
 					// return view('clinica.recursosmedicos.agenda.index-calendar', $data);
-					return view('clinica.recursosmedicos.agenda.index-agenda', $data);
+					// return view('clinica.recursosmedicos.agenda.index-agenda', $data);
+					return view('clinica.recursosmedicos.agenda.medico', $data);
 
 				})->name('clinica.recursosmedicos.agenda.medico');
 
-				Route::get('/disponibilidade', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.disponibilidade');
-				Route::get('/agendamento', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.medico.agendamento');
+				Route::post('/', function () {
+
+					dump(request()->all());
+
+				})->name('clinica.recursosmedicos.agenda.medico');
+
+				// 			Route::get('/disponibilidade', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.disponibilidade');
+				// 			Route::get('/agendamento', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.medico.agendamento');
 
 			});
 
-			Route::get('/filtros', function () {
+			// 		Route::get('/clinicas', function () {
 
-				$medicos = DB::connection('medicus')
-					->table('tb_medico_especialidade', 'ME')
-					->select('ME.id_profissional', 'ME.id_especialidade', 'P.nome', 'E.especialidade')
-					->join('tb_medico AS P', 'P.id', 'ME.id_profissional')
-					->join('tb_especialidade AS E', 'E.id', 'ME.id_especialidade')
-					->where('P.nome', 'like', request('search') . '%')
-					->orWhere('E.especialidade', 'like', request('search') . '%')
-					->groupBy('ME.id_profissional')
-					->get();
+			// 			$id_medico = request('medico');
+			// 			$clinicas  = [];
 
-				$data = [];
-				if ($medicos->count() > 0) {
-					foreach ($medicos as $m) {
-						$data[] = ['id' => $m->id_profissional, 'text' => $m->nome];
-					}
-				}
+			// 			$model = DB::connection('medicus')->table('tb_medico_clinica AS MC')
+			// 				->select('C.id', 'C.razao_social')
+			// 				->join('tb_empresa AS C', 'C.id', 'MC.id_empresa')
+			// 				->where('MC.id_medico', $id_medico)
+			// 				->get();
 
-				return $data;
+			// 			if ($model->count() > 0) {
+			// 				foreach ($model as $c) {
+			// 					$clinicas[] = [
+			// 						'id'   => $c->id,
+			// 						'text' => $c->razao_social,
+			// 					];
+			// 				}
+			// 			}
 
-			})->name('clinica.recursosmedicos.agenda.busca.medico_especialidade');
+			// 			return $clinicas;
 
-			Route::get('/grade', function () {
-				dd(request()->all());
-			})->name('clinica.recursosmedicos.agenda.busca.grade');
+			// 		})->name('clinica.recursosmedicos.agenda.medico.get_clinicas');
+
+			// 	});
+
+			// 	Route::get('/filtros', function () {
+
+			// 		$medicos = DB::connection('medicus')
+			// 			->table('tb_medico_especialidade', 'ME')
+			// 			->select('ME.id_profissional', 'ME.id_especialidade', 'P.nome', 'E.especialidade')
+			// 			->join('tb_medico AS P', 'P.id', 'ME.id_profissional')
+			// 			->join('tb_especialidade AS E', 'E.id', 'ME.id_especialidade')
+			// 			->where('P.nome', 'like', request('search') . '%')
+			// 			->orWhere('E.especialidade', 'like', request('search') . '%')
+			// 			->groupBy('ME.id_profissional')
+			// 			->get();
+
+			// 		$data = [];
+			// 		if ($medicos->count() > 0) {
+			// 			foreach ($medicos as $m) {
+			// 				$data[] = ['id' => $m->id_profissional, 'text' => $m->nome];
+			// 			}
+			// 		}
+
+			// 		return $data;
+
+			// 	})->name('clinica.recursosmedicos.agenda.busca.medico_especialidade');
+
+			// 	Route::get('/grade', function () {
+			// 		dd(request()->all());
+			// 	})->name('clinica.recursosmedicos.agenda.busca.grade');
+			//
 		});
 
 	});

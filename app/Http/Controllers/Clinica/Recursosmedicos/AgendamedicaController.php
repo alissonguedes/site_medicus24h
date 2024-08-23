@@ -16,13 +16,7 @@ class AgendamedicaController extends Controller
 	public function index(Request $request, AgendaModel $agenda)
 	{
 
-		$data['horarios'] = $agenda->select('A.id', 'C.id_medico', 'horarios')
-			->from('tb_medico_agenda AS A')
-			->join('tb_medico_agenda_horario AS H', 'H.id_agenda', 'A.id')
-			->join('tb_medico_clinica AS C', 'C.id', 'A.id_medico_clinica')
-			->get();
-
-		return view('clinica.recursosmedicos.agenda.index', $data);
+		return view('clinica.recursosmedicos.agenda.index');
 
 	}
 
