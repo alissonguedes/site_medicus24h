@@ -2,50 +2,55 @@
 
 	<x-slot:icon data-href="{{ route('clinica.recursosmedicos.agenda.index') }}">arrow_back</x-slot:icon>
 	<x-slot:title>Agenda Médica</x-slot:title>
-	{{--
-	<x-header-page>
-		<x-slot:search data-url="{{ route('clinica.pacientes.search') }}" placeholder="Pesquisar pacientes..."></x-slot:search>
-		<x-slot:add_button data-href="{{ route('clinica.recursosmedicos.agenda.medico', request('id_medico')) }}" data-tooltip="Adicionar Horários" data-trigger="form" data-target="main-form" style="position: absolute; right: 20px;">add</x-slot:add_button>
-	</x-header-page> --}}
 
-	<x-slot:main>
+	<x-slot:body>
 
-		<div class="row">
-			<div class="col s12">
-				<h5>Horários de atendimento: {{ $medico->nome }}</h5>
-			</div>
-		</div>
+		<form action="{{ route('clinica.recursosmedicos.agenda.medico', request('id_medico')) }}" id="main-form">
 
-		<br>
+			@csrf
+			<input type="hidden" name="categoria" value="profissional">
 
-		<div class="row">
-			<div class="col s12 m6 l4">
-				<div class="input-field">
-					<label for="clinica" class="active">Filtrar por clínica:</label>
-					<select name="clinica" id="clinica">
-						<option value="*">Todas as clínicas</option>
-						@php
-							$clinicaModel = new App\Models\Clinica\ClinicaModel();
+			{{-- @if (request('id'))
+			<input type="hidden" name="_method" value="put">
+			<input type="hidden" name="id" value="{{ $profissional->id }}">
+		@endif --}}
 
-							$empresas = $clinicaModel
-							    ->from('tb_medico_clinica AS M')
-							    ->join('tb_empresa AS E', 'E.id', 'M.id_empresa')
-							    ->where('M.id_medico', $medico->id)
-							    ->orderBy('E.razao_social', 'asc')
-							    ->get();
-
-						@endphp
-						@if (isset($empresas) && $empresas->count() > 0)
-							@foreach ($empresas as $e)
-								<option value="{{ $e->id }}">{{ $e->razao_social }}</option>
-							@endforeach
-						@endif
-					</select>
+			<div class="row">
+				<div class="col s12">
+					<h5>Horários de atendimento: {{ $medico->nome }}</h5>
 				</div>
 			</div>
-		</div>
 
-		{{-- @if (isset($agenda) && $agenda->count() > 0)
+			<br>
+
+			<div class="row">
+				<div class="col s12 m6 l4">
+					<div class="input-field">
+						<label for="clinica" class="active">Filtrar por clínica:</label>
+						<select name="clinica" id="clinica">
+							<option value="*">Todas as clínicas</option>
+							@php
+								$clinicaModel = new App\Models\Clinica\ClinicaModel();
+
+								$empresas = $clinicaModel
+								    ->from('tb_medico_clinica AS M')
+								    ->join('tb_empresa AS E', 'E.id', 'M.id_empresa')
+								    ->where('M.id_medico', $medico->id)
+								    ->orderBy('E.razao_social', 'asc')
+								    ->get();
+
+							@endphp
+							@if (isset($empresas) && $empresas->count() > 0)
+								@foreach ($empresas as $e)
+									<option value="{{ $e->id }}">{{ $e->razao_social }}</option>
+								@endforeach
+							@endif
+						</select>
+					</div>
+				</div>
+			</div>
+
+			{{-- @if (isset($agenda) && $agenda->count() > 0)
 					@php
 						// $agenda_medica = [];
 
@@ -72,7 +77,7 @@
 					<p>Ainda não foram informados os horários disponíveis para este médico. <a href="#">Cadastrar Agenda</a></p>
 				@endif --}}
 
-		{{-- @for ($i = 0; $i < 3; $i++)
+			{{-- @for ($i = 0; $i < 3; $i++)
 			<div class="row">
 				<div class="col s12">
 					<h5 class="bold">Nome da empresa</h5>
@@ -88,16 +93,6 @@
 			@endfor
 
 		@endfor --}}
-
-		<form action="{{ route('clinica.recursosmedicos.agenda.medico', request('id_medico')) }}" id="main-form">
-
-			@csrf
-			<input type="hidden" name="categoria" value="profissional">
-
-			{{-- @if (request('id'))
-				<input type="hidden" name="_method" value="put">
-				<input type="hidden" name="id" value="{{ $profissional->id }}">
-			@endif --}}
 
 			<div class="row">
 				<div class="col s12">
@@ -553,7 +548,7 @@
 
 		</form>
 
-	</x-slot:main>
+	</x-slot:body>
 
 	@include('clinica.recursosmedicos.agenda.includes.form')
 
