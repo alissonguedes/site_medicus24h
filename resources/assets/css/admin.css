@@ -1510,6 +1510,10 @@ textarea.materialize-textarea:not([readonly]),
 	color: var(--grey-darken-3);
 }
 
+.select-wrapper .caret {
+	z-index: 999;
+}
+
 .dropdown-content.select-dropdown {
 	max-height: 200px;
 }
