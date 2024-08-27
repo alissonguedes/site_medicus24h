@@ -5,10 +5,15 @@
 	<x-text-input type="search" id="input-search-header" :data-url="route('clinica.recursosmedicos.agenda.index')" placeholder="Pesquisar eventos" autocomplete="off" />
 </div>
 
-<button type="button" class="btn btn-floating waves-effect gradient-45deg-deep-orange-orange" data-href="{{ route('clinica.recursosmedicos.agenda.index') }}" data-tooltip="Criar Agenda" data-trigger="form" data-target="main-form">
+<button type="button" class="btn btn-floating waves-effect" data-href="{{ route('clinica.recursosmedicos.agenda.index') }}" data-tooltip="Criar Agenda" data-trigger="form" data-target="main-form" disabled>
 	<i class="material-symbols-outlined">add</i>
 </button>
 
+<style>
+	button[type="button"]:not(:disabled) {
+		background: var(--gradient-45deg-deep-orange-orange) !important
+	}
+</style>
 {{-- <div class="column-center" style="width: calc(100% - 130px);">
 
 	<div class="">

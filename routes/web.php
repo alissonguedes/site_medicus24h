@@ -26,10 +26,10 @@ use App\Http\Controllers\Clinica\UnidadesController as Unidades;
 // Site Controllers
 use App\Http\Controllers\Site\HomeController;
 
+// Clinica Requests
+
 // Models
 use App\Models\Clinica\AgendaModel;
-
-// Admin Requests
 
 // Illuminate
 use Illuminate\Support\Facades\Route;
@@ -129,7 +129,7 @@ Route::middleware([
 
 			// 	Route::prefix('/medico')->group(function () {
 
-			Route::prefix('/medico/{id_medico}')->group(function () {
+			Route::prefix('/medico/{id_medico}/{id_clinica?}')->group(function () {
 
 				Route::get('/', function (AgendaModel $agenda) {
 
@@ -139,10 +139,10 @@ Route::middleware([
 						->where('id', request('id_medico'))
 						->first();
 
-					$data['agenda'] = $agenda->select('A.horarios')
-						->from('tb_medico_agenda AS A')
-						->where('id_medico', request('id_medico'))
-						->get();
+					// $data['agenda'] = $agenda->select('A.horarios')
+					// 	->from('tb_medico_agenda AS A')
+					// 	->where('id_medico', request('id_medico'))
+					// 	->get();
 
 					// dd($data);
 					// $data['agenda'] = $agenda->select('C.id_medico', 'horarios')
@@ -159,11 +159,8 @@ Route::middleware([
 
 				})->name('clinica.recursosmedicos.agenda.medico');
 
-				Route::post('/', function () {
-
-					dump(request()->all());
-
-				})->name('clinica.recursosmedicos.agenda.medico');
+				Route::post('/', [Agendamedica::class, 'store']);
+				Route::put('/', [Agendamedica::class, 'store']);
 
 				// 			Route::get('/disponibilidade', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.disponibilidade');
 				// 			Route::get('/agendamento', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agenda.medico.agendamento');

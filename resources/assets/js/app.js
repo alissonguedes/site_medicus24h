@@ -483,6 +483,16 @@ $(document).ready(function() {
 
 });
 
+// $(document).keydown(function(e) {
+
+// 	if (e.keyCode == 27) {
+// 		var db = sessionStorage;
+// 		$('a[href="#mmenu"]').click();
+// 		db.setItem('mmenuExpandedState', 'open');
+// 		return false;
+// 	}
+
+// });
 
 // 'use strict';
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clinica\Recursosmedicos;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Clinica\AgendaRequest;
 use App\Models\Clinica\AgendaModel;
 use App\Models\FileModel;
 use Illuminate\Http\Request;
@@ -43,54 +44,56 @@ class AgendamedicaController extends Controller
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(Request $request, AgendaModel $agenda)
+	public function store(AgendaRequest $request, AgendaModel $agenda)
 	{
 
-		$request->validate([
-			'medico' => 'required',
-		]);
-		$horarios          = $request->horario;
-		$id_medico_clinica = $agenda->from('tb_medico_clinica')->select('id')->where('id_medico', $request->medico)->get()->first();
+		$data               = $request->all();
+		$dias_semana        = ['domingo' => 0, 'segunda' => 1, 'terca' => 2, 'quarta' => 3, 'quinta' => 4, 'sexta' => 5, 'sabado' => 6];
+		$categoria          = $data['categoria'];
+		$horarios           = $request['horario'];
+		$data['id_medico']  = $request->medico;
+		$data['id_clinica'] = $request->clinica;
 
-		if (!isset($id_medico_clinica)) {
-			$request->validate(['id_medico_clinica' => 'required']);
-		}
+		unset($data['_token'], $data['_method'], $data['horario'], $data['categoria'], $data['medico'], $data['clinica']);
 
-		// dd($id_medico_clinica, $request->all());
-		$dias_semana = [
-			'domingo' => 0,
-			'segunda' => 1,
-			'terca'   => 2,
-			'quarta'  => 3,
-			'quinta'  => 4,
-			'sexta'   => 5,
-			'sabado'  => 6,
-		];
+		// Cadastrar a agenda do médico na clínica:
+
+		$id_agenda = $agenda->updateOrCreate([
+			'id_medico'  => $data['id_medico'],
+			'id_clinica' => $data['id_clinica'],
+		], $data);
 
 		$horarios_agenda = [];
 
-		foreach ($horarios as $dia => $horario) {
-			$dia                   = $dias_semana[$dia];
-			$horarios_agenda[$dia] = array_combine($horario['inicio'], $horario['fim']);
-		}
-
-		$agenda_medico = [
-			'id_medico_clinica' => $id_medico_clinica->id,
-			// 'dia'               => $dia,
-		];
-
-		$id_agenda = $agenda->updateOrCreate([
-			'id_medico_clinica' => $id_medico_clinica->id,
-		], $agenda_medico);
-
+		// Cadastrar os horários da agenda
 		$agenda->from('tb_medico_agenda_horario')->where('id_agenda', $id_agenda->id)->delete();
 
-		$agenda->from('tb_medico_agenda_horario')->insert([
-			'id_agenda' => $id_agenda->id,
-			'horarios'  => json_encode($horarios_agenda),
-		]);
+		if (isset($horarios)) {
 
-		return redirect()->route('clinica.recursosmedicos.agenda.index')->with(['message' => 'Agenda atualizada com sucesso!']);
+			foreach ($horarios as $dia => $horario) {
+
+				$i              = [];
+				$dia            = $dias_semana[$dia];
+				$i['id_agenda'] = $id_agenda->id;
+				$i['dia']       = $dia;
+				$hora           = array_combine($horario['inicio'], $horario['fim']);
+
+				foreach ($hora as $inicio => $fim) {
+
+					$ini_format  = (preg_match('/^[0-9]{2}\:[0-9]{2}$/', $inicio) ? $inicio : $inicio . ':00') . ':00';
+					$fim_format  = (preg_match('/^[0-9]{2}\:[0-9]{2}$/', $fim) ? $fim : $fim . ':00') . ':00';
+					$i['inicio'] = $ini_format;
+					$i['fim']    = $fim_format;
+
+					$agenda->from('tb_medico_agenda_horario')->insert($i);
+
+				}
+
+			}
+
+		}
+
+		return redirect()->route('clinica.recursosmedicos.agenda.medico', [$request->medico, $request->clinica])->with(['message' => 'Agenda atualizada com sucesso!']);
 
 	}
 
