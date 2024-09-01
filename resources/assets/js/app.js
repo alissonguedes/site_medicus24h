@@ -6,6 +6,8 @@ $(document).ready(function() {
 
 	$('[data-href],[href]').unbind().bind('click', function(e) {
 
+		$('main').addClass('waiting');
+
 		e.preventDefault();
 
 		var href = $(this).data('href') || $(this).attr('href');

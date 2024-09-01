@@ -226,7 +226,179 @@ Route::middleware([
 
 	// Route::get('/agendamento', [Agendamedica::class, 'index'])->name('clinica.recursosmedicos.agendamento');
 
-	// Médicos
+	Route::prefix('/agendamentos')->group(function () {
+
+		Route::get('/', function () {
+
+			return view('clinica.agendamentos.index');
+
+		})->name('clinica.agendamentos.index');
+
+		Route::get('/filtros', function () {
+
+			$medicos = DB::connection('medicus')
+				->table('tb_medico_especialidade', 'ME')
+				->select('ME.id_profissional', 'ME.id_especialidade', 'P.nome', 'E.especialidade')
+				->join('tb_medico AS P', 'P.id', 'ME.id_profissional')
+				->join('tb_especialidade AS E', 'E.id', 'ME.id_especialidade')
+				->where('P.nome', 'like', request('search') . '%')
+				->orWhere('E.especialidade', 'like', request('search') . '%')
+				->groupBy('ME.id_profissional')
+				->get();
+
+			$data = [];
+			if ($medicos->count() > 0) {
+				foreach ($medicos as $m) {
+					$data[] = ['id' => $m->id_profissional, 'text' => $m->nome];
+				}
+			}
+
+			return $data;
+
+		})->name('clinica.recursosmedicos.agenda.busca.medico_especialidade');
+
+		// function getEvents($m = null, $y = null) {
+		// 	$month     = $m ?? date('m');
+		// 	$year      = $y ?? date('Y');
+		// 	$base_date = strtotime($year . '-' . $month . '-01');
+		// 	$day = strtotime('')
+		// 	$days      = [];
+
+		// 	do{
+		// 		$days []=new DateTime(date('r'), $)
+		// 	}
+		// }
+		Route::get('/agenda', function (AgendaModel $agenda_model) {
+
+			$start_date = request('data');
+			$end_date   = date('Y-m-', strtotime($start_date)) . date('t', strtotime($start_date));
+
+			$data_inicio      = 1;
+			$data_fim         = date('t', strtotime($start_date));
+			$repetir          = 7;
+			$dia_semana_ativo = 3; // Diariamente
+
+			$evt_init = strtotime($start_date);
+			$evt_end  = strtotime($end_date);
+
+			$ano = date('Y', $evt_init);
+			$mes = date('m', $evt_end);
+
+			/**
+			 * Repitir um evento de acordo com a primeira até a última data do mês;
+			 * O evento deve obedecer ao número do dia recorrente;
+			 * Os demais que não existirem eventos deverão ser desabilitados;
+			 */
+
+			$dias_ativos   = [];
+			$dias_inativos = [];
+
+			for ($dia = $data_inicio; $dia <= $data_fim; $dia++) {
+
+				$time       = strtotime($ano . '-' . $mes . '-' . $dia); //. '+' . ($repetir * $dia_semana_ativo) . 'day');
+				$dia_semana = date('w', $time);
+				if ($dia_semana == $dia_semana_ativo) {
+					$dias_ativos[] = date('Y-m-d', $time);
+				} else {
+					$dias_inativos[] = date('Y-m-d', $time);
+				}
+
+			}
+
+			return response()->json(['dias_ativos' => $dias_ativos, 'dias_inativos' => $dias_inativos]);
+
+			// dd($dias_ativos, $dias_inativos);
+
+			// $days_of_week = [
+			// 	'Sunday',
+			// 	'Monday',
+			// 	'Tuesday',
+			// 	'Wednesd',
+			// 	'Thursda',
+			// 	'Friday',
+			// 	'Saturday',
+			// ];
+			// $horarios_disponiveis = [];
+
+			// $agenda = $agenda_model->select('id', 'id_medico', 'id_clinica', 'titulo', 'duracao', 'tempo_min_agendamento', 'tempo_max_agendamento', 'intervalo', 'max_agendamento', 'repetir')
+			// 	->from('tb_medico_agenda AS A')
+			// 	->join('tb_medico_agenda_horario AS H', 'H.id_agenda', 'A.id')
+			// 	->where('H.dia', date('w', strtotime($start_date)))
+			// 	->groupBy('id_medico')
+			// 	->get();
+
+			// if ($agenda->count() > 0) {
+
+			// 	$horario = [];
+
+			// 	foreach ($agenda as $a) {
+
+			// 		$horarios = $agenda_model->from('tb_medico_agenda_horario')
+			// 			->where('id_agenda', $a->id)
+			// 			->where('dia', date('w', strtotime($start_date)))
+			// 			->orderBy('dia', 'asc')
+			// 			->orderBy('inicio', 'asc')
+			// 			->orderBy('fim', 'asc')
+			// 			->get();
+
+			// 		//
+
+			// 		// 				// // echo date('d-m-Y', strtotime($days_of_week[$dia])) . '<br>';
+
+			// 		// 				$horarios_disponiveis['datas'][] = [
+			// 		// 					'id_agenda' => $h->id_agenda,
+			// 		// 					'dia'       => date('D M d Y', strtotime($data_calendar)),
+			// 		// 					'inicio'    => $h->inicio,
+			// 		// 					'fim'       => $h->fim,
+			// 		// 				];
+
+			// 		// $medico = $agenda_model->select('nome')->from('tb_medico')->where('id', $a->id_medico)->first();
+
+			// 		// $dispo[$a->id_medico] = [
+			// 		// 	'id_medico'             => $a->id_medico,
+			// 		// 	'medico'                => $medico->nome,
+			// 		// 	'clinica'               => $a->id_clinica,
+			// 		// 	'titulo'                => $a->titulo,
+			// 		// 	'duracao'               => $a->duracao,
+			// 		// 	'tempo_min_agendamento' => $a->tempo_min_agendamento,
+			// 		// 	'tempo_max_agendamento' => $a->tempo_max_agendamento,
+			// 		// 	'intervalo'             => $a->intervalo,
+			// 		// 	'max_agendamento'       => $a->max_agendamento,
+			// 		// 	'repetir'               => $a->repetir,
+			// 		// ];
+
+			// 		// if ($horarios->count() > 0) {
+
+			// 		foreach ($horarios as $i => $v) {
+
+			// 			// $dispo[$a->id_medico]['horarios'][] = [
+			// 			// 	'data'   => date('Y-m-d', strtotime($data_calendar)),
+			// 			// 	'inicio' => $v->inicio,
+			// 			// 	'fim'    => $v->fim,
+			// 			// ];
+
+			// 			$date_init = strtotime('+' . $v->dia . 'day', strtotime($start_date));
+			// 			$date_end  = strtotime('+' . $v->dia . 'day', strtotime($end_date));
+
+			// 			dump($date_init, $date_end);
+
+			// 		}
+
+			// 		// }
+
+			// 		// $horarios_disponiveis[] = $dispo;
+
+			// 	}
+
+			// }
+
+			// return response()->json($horarios_disponiveis);
+
+		})->name('clinica.agendamentos.agenda');
+
+	});
+
+	// Médicossite_medicusite_medicus24h/resources/views/clinica/pacientess24h/resources/views/clinica/pacientes
 	Route::prefix('/profissionais')->group(function () {
 
 		Route::get('/', [Profissionais::class, 'index'])->name('clinica.profissionais.index');

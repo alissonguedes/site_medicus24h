@@ -91,7 +91,7 @@
 					var div_time_range = `
 					<div class="time-range">
 						<div class="input-field m-0 mb-1">
-							<input type="text" name="horario[${dias_semana[dia]}][inicio][]" class="autocomplete timer browser-default" value="08:00" placeholder="hh:mm"> - <input type="text" name="horario[${dias_semana[dia]}][fim][]" class="autocomplete timer browser-default" value="17:00" placeholder="hh:mm">
+							<input type="text" name="horario[${dias_semana[dia]}][inicio][]" class="autocomplete timer browser-default" value="08:00" placeholder="hh:mm" autocomplete="off"> - <input type="text" name="horario[${dias_semana[dia]}][fim][]" class="autocomplete timer browser-default" value="17:00" placeholder="hh:mm" autocomplete="off">
 							<div class="acao">
 								<button type="button" class="btn btn-small btn-flat btn-floating transparent" data-trigger="delete_time">
 									<i class="material-symbols-outlined">block</i>
@@ -256,7 +256,7 @@
 	.time-range {
 		/* margin-bottom: 15px; */
 		display: flex;
-		align-items: center;
+		align-items: start;
 	}
 
 	.day-range .dia-semana {
@@ -268,6 +268,11 @@
 		-webkit-flex: none;
 		flex: none;
 		width: 84px;
+	}
+
+	.day-range .horario {
+		width: 100%;
+		flex: 1 100%;
 	}
 
 	.day-range .acao {
@@ -295,10 +300,14 @@
 		margin: 0 15px;
 	}
 
+	.time-range .error {
+		top: 10px;
+	}
+
 	.time-range.disabled {
 		color: var(--grey);
-		align-items: center;
-		display: flex;
+		/* align-items: center; */
+		/* display: flex; */
 		margin-top: 2px;
 	}
 

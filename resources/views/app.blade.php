@@ -65,6 +65,41 @@
 
 			@stack('scripts')
 
+			{{-- <style>
+				.waiting .card.card-panel {
+					transition: 3s;
+				}
+
+				/* .animateFadeOut {
+					-webkit-animation: fadeinout 4s linear forwards;
+					animation: fadeinout 4s linear forwards;
+					opacity: 0;
+				} */
+				.waiting .card.card-panel:before {
+					content: '';
+					position: absolute;
+					left: 0;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					background: #fff;
+					z-index: 1004;
+					transition: 3s;
+					opacity: 1;
+				}
+
+				.card.card-panel:after {
+					content: '';
+					position: absolute;
+				}
+			</style>
+
+			<script>
+				setTimeout(() => {
+					// $('main').removeClass('waiting');
+				}, 200);
+			</script> --}}
+
 		</div>
 		{{-- END #Page --}}
 

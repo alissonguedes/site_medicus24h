@@ -19,12 +19,12 @@
 	{{-- END Sidebar --}}
 
 	{{-- BEGIN Body --}}
-	<main id="body" class="">
+	<main id="body" class="waiting">
 
 		@if (isset($main))
 			{{ $main }}
 		@else
-			<div class="card card-panel no-padding no-margin">
+			<div class="card card-panel waiting no-padding no-margin">
 
 				@if (isset($header))
 					<section class="card-header">
