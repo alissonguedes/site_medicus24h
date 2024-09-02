@@ -257,32 +257,65 @@ Route::middleware([
 
 		})->name('clinica.recursosmedicos.agenda.busca.medico_especialidade');
 
-		// function getEvents($m = null, $y = null) {
-		// 	$month     = $m ?? date('m');
-		// 	$year      = $y ?? date('Y');
-		// 	$base_date = strtotime($year . '-' . $month . '-01');
-		// 	$day = strtotime('')
-		// 	$days      = [];
-
-		// 	do{
-		// 		$days []=new DateTime(date('r'), $)
-		// 	}
-		// }
 		Route::get('/agenda', function (AgendaModel $agenda_model) {
 
-			$start_date = request('data');
-			$end_date   = date('Y-m-', strtotime($start_date)) . date('t', strtotime($start_date));
+			$data             = request('data'); // data que vem do calendario na requisição
+			$data_time        = strtotime($data); // transforma a data da requisição em inteiro
+			$ultima_data_mes  = date('Y-m-', strtotime($data)) . date('t', strtotime($data)); // A última data do mês (28|29; 30|31)
+			$data_fim_time    = strtotime($ultima_data_mes); // transforma a última data do mês em inteiro
+			$ano              = date('Y', $data_time); // ano da data
+			$mes              = date('m', $data_fim_time); // mês da data
+			$data_inicio      = 1; // primeira data do mês
+			$data_fim         = date('t', strtotime($data)); // última data do mês
+			$dia_semana_ativo = date('w', $data_time); // o dia da semana que está disponível para atendimento (vem do Banco de dados)
+			$repetir          = null; // o dia da semana que deve se repetir o evento (vem do Banco de dados)
 
-			$data_inicio      = 1;
-			$data_fim         = date('t', strtotime($start_date));
-			$repetir          = 7;
-			$dia_semana_ativo = 3; // Diariamente
+			$agenda = $agenda_model->select('id', 'id_medico', 'id_clinica', 'titulo', 'duracao', 'tempo_min_agendamento', 'tempo_max_agendamento', 'intervalo', 'max_agendamento', 'repetir')
+				->from('tb_medico_agenda AS A')
+				->join('tb_medico_agenda_horario AS H', 'H.id_agenda', 'A.id')
+				->where('H.dia', $dia_semana_ativo)
+				->get();
 
-			$evt_init = strtotime($start_date);
-			$evt_end  = strtotime($end_date);
+			if ($agenda->count() > 0) {
 
-			$ano = date('Y', $evt_init);
-			$mes = date('m', $evt_end);
+				foreach ($agenda as $a) {
+
+					$id                    = $a->id;
+					$id_medico             = $a->id_medico;
+					$medico                = $agenda_model->select('nome')->from('tb_medico')->where('id', $a->id_medico)->first();
+					$medico                = $medico->nome;
+					$id_clinica            = $a->id_clinica;
+					$clinica               = $agenda_model->select('razao_social')->from('tb_empresa')->where('id', $a->id_clinica)->first();
+					$clinica               = $clinica->razao_social;
+					$titulo                = $a->titulo;
+					$duracao               = $a->duracao;
+					$tempo_min_agendamento = $a->tempo_min_agendamento;
+					$tempo_max_agendamento = $a->tempo_max_agendamento;
+					$intervalo             = $a->intervalo;
+					$max_agendamento       = $a->max_agendamento;
+					$repetir               = $a->repetir;
+
+					$horarios = $agenda_model->from('tb_medico_agenda_horario')
+						->where('id_agenda', $a->id)
+						->where('dia', date('w', strtotime($data)))
+						->orderBy('dia', 'asc')
+						->orderBy('inicio', 'asc')
+						->orderBy('fim', 'asc')
+						->get();
+
+					if ($horarios->count() > 0) {
+
+						foreach ($horarios as $h) {
+							dump($h);
+						}
+
+					}
+
+				}
+
+			}
+
+			return;
 
 			/**
 			 * Repitir um evento de acordo com a primeira até a última data do mês;
