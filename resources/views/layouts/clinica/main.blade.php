@@ -94,7 +94,11 @@
 				</style>
 
 				@if (isset($forms))
-					<div id="formularios" class="card-reveal no-padding" style="{{ ($errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);') . 'overflow:hidden; z-index: 9999999;' }}">
+					<div {{ $forms->attributes->merge([
+					    'id' => 'formularios',
+					    'class' => 'card-reveal no-padding',
+					    'style' => ($errors->any() || request('id') ? 'display: block; transform: translateY(-100%);' : 'display: none; transform: translateY(0%);') . 'overflow:hidden; z-index: 9999999;',
+					]) }}>
 						{{ $forms }}
 					</div>
 				@endif
@@ -149,7 +153,11 @@
 				@endif
 
 				@if (isset($action))
-					<div id="info" class="card-action">
+					<div {{ $form_delete->attributes->merge([
+					    'id' => 'info',
+					    'class' => 'card-action',
+					    'style' => 'font-size: 13px;',
+					]) }}>
 						{{ $action }}
 					</div>
 				@endif

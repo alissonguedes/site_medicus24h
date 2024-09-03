@@ -8,7 +8,22 @@
 		<x-slot:add_button data-href="{{ route('clinica.pacientes.index') }}" data-tooltip="Adicionar Paciente">add</x-slot:add_button>
 	</x-header-page>
 
-	<x-slot:action>Total: {{ $pacientes->total() }}</x-slot:action>
+	<x-slot:action>
+		@php
+			$dados = new App\Models\Clinica\PacienteModel();
+		@endphp
+
+		<div class="row">
+			<div class="col s6"></div>
+			<div class="col s6 right-align">
+				{{ $dados->get()->total() }} Pacientes cadastrados
+				·
+				{{ $dados->where('status', '1')->count() }} ativos
+				·
+				{{ $dados->where('status', '0')->count() }} inativos
+			</div>
+		</div>
+	</x-slot:action>
 
 	<x-slot:body>
 

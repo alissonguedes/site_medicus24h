@@ -458,14 +458,21 @@ $(document).ready(function() {
 
 		var selecteds = self.data('selected')
 
-		console.log(selecteds)
-		if (typeof selecteds != 'undefined' && selecteds.length > 0) {
-			for (var i in selecteds) {
-				var s = selecteds[i];
+		if (typeof selecteds != 'undefined') {
+			if ($(self).attr('multiple')) {
+				for (var i in selecteds) {
+					var s = selecteds[i];
+					console.log(s);
+					var option = new Option(s.text, s.id, true, true);
+					self.append(option).trigger('change');
+				}
+			} else {
+				var s = selecteds;
 				var option = new Option(s.text, s.id, true, true);
 				self.append(option).trigger('change');
 			}
 		}
+
 
 	});
 

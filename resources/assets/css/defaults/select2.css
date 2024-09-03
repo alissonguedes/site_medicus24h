@@ -784,9 +784,16 @@
 	padding-right: 0px;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
+/* .select2-container--default .select2-selection--single .select2-selection__rendered {
 	line-height: 45px;
 	padding-left: 0
+} */
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+	line-height: 3rem;
+	padding-left: 0;
+	font-size: 16px;
+	color: #333;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {

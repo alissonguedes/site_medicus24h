@@ -74,12 +74,12 @@
 		color: #fff;
 	}
 
-	.datepicker-table td.is-selectable:not(.is-outside-current-month) .datepicker-day-button {
+	.datepicker-table td.is-selectable:not(.is-outside-current-month):not(.is-disabled) .datepicker-day-button {
 		color: #fff;
 		background-color: var(--teal-lighten-2);
 	}
 
-	.datepicker-table td.is-selected.is-selectable:not(.is-outside-current-month) .datepicker-day-button {
+	.datepicker-table td.is-selected.is-selectable:not(.is-outside-current-month):not(.is-disabled) .datepicker-day-button {
 		color: #fff;
 		background-color: var(--teal-darken-4);
 	}
@@ -122,8 +122,8 @@
 
 			var self = $(this);
 
-			var defaultDate = "{{ date('d/m/Y') }}".split('/');
-			var minDate = defaultDate; // $(this).data('min-date') ? $(this).data('min-date').split('/') : null;
+			var defaultDate = "{{ request('year') && request('month') && request('day') ? date('d/m/Y', strtotime(request('year') . '-' . request('month') . '-' . request('day'))) : date('d/m/Y') }}".split('/');
+			var minDate = "{{ date('d/m/Y') }}".split('/'); // $(this).data('min-date') ? $(this).data('min-date').split('/') : null;
 			var maxDate = null; // $(this).data('max-date') ? $(this).data('max-date').split('/') : null;
 			var yearRange = minDate ? [minDate[2], curYear + 50] : maxDate ? [1900, curYear - 0] : [curYear - 50, curYear + 50];
 
@@ -147,24 +147,30 @@
 						for (var i in inativo) {
 							var d = inativo[i];
 							var data = moment(d).format('D');
+							var cur_date = new Date();
+							// if (moment(cur_date).format('YYYY-MM-DD') > d)
 							$('.datepicker-table').find('td[data-day="' + data + '"]').addClass('is-disabled');
 						}
 
 						for (var i in ativo) {
 							var d = ativo[i];
 							var data = moment(d).format('D');
-							$('.datepicker-table').find('td[data-day="' + data + '"]').addClass('is-selectable');
+							var cur_date = new Date();
+							if (moment(cur_date).format('YYYY-MM-DD') < d)
+								$('.datepicker-table').find('td[data-day="' + data + '"]').removeClass('is-disabled').addClass('is-selectable');
+
 						}
+
 
 					}
 
 				});
+
 			}
 
 			var pick = $(this).datepicker({
-				showDaysInNextAndPreviousMonths: true,
+				showDaysInNextAndPreviousMonths: false,
 				container: self,
-				startView: 1,
 				setDefaultDate: true,
 				defaultDate: defaultDate,
 				minDate: minDate,
@@ -182,7 +188,7 @@
 
 				onOpen(date) {
 
-					var data = moment(date).format('YYYY-MM-DD');
+					var data = moment(defaultDate).format('YYYY-MM-DD');
 					goToDate(data)
 
 				},
@@ -213,6 +219,11 @@
 					var data = moment(date).format('YYYY-MM-DD');
 
 					goToDate(data);
+
+					var url = self.data('url') + '/' + moment(date).format('YYYY') + '/' + moment(date).format('MM') + '/' + moment(date).format('DD');
+
+					redirect(url);
+					Url.update(url)
 
 				},
 

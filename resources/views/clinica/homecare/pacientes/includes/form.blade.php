@@ -58,12 +58,18 @@
 
 							@if (request('id'))
 								@php
+									$programas = [];
 									$paciente_programas = new App\Models\Clinica\ProgramaModel();
 									$programas_paciente = $paciente_programas->select('id', 'titulo AS text')->from('tb_paciente_programa AS PP')->join('tb_programas AS P', 'P.id', 'PP.id_programa')->where('PP.id_paciente', request('id'))->get();
+									if ($programas_paciente->count() > 0) {
+									    foreach ($programas_paciente as $p) {
+									        $programas[] = ['id' => $p->id, 'text' => $p->text];
+									    }
+									}
 								@endphp
 							@endif
 
-							<select name="programa[]" id="pprograma" class="autocomplete" data-url="{{ route('clinica.homecare.programas.search') }}" data-selected="{{ $programas_paciente ?? null }}" placeholder="" multiple></select>
+							<select name="programa[]" id="pprograma" class="autocomplete" data-url="{{ route('clinica.homecare.programas.search') }}" @if (isset($programas) && !empty($programas)) data-selected="{{ json_encode($programas) }}" @endif placeholder="" multiple></select>
 
 							@error('programa')
 								{{ $message }}
@@ -85,7 +91,6 @@
 						</div>
 					</div>
 				@endif
-
 			</div>
 
 		</x-slot:content>
