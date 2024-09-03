@@ -5,15 +5,14 @@
 
 	<x-slot:main>
 
-		<div class="card card-panel no-padding">
+		<div class="card agenda card-panel no-padding">
 
 			<div class="card-content animated fadeIn">
 
 				@if (!request('id_medico') || !request('id_clinica') || !request('id_especialidade') || !request('horario'))
-
 					<div class="row">
 
-						<div class="col s12 m6 l5">
+						<div class="col s12 m6 l6">
 							<div class="row">
 								<div class="col s12">
 									<p class="mb-3">
@@ -28,7 +27,7 @@
 							</div>
 						</div>
 
-						<div class="col s12 m6 l7">
+						<div class="col s12 m6 l6" style="position: relative; overflow: hidden;">
 
 							{{-- <h5 for="f_medico" class="no-margin flex flex-center">
 							<i class="material-symbols-outlined mr-1" style="font-size: 32px; line-height: 32px; ">filter_alt</i> Filtros
@@ -49,99 +48,12 @@
 														{{ $especialidade }}
 														<ol>
 															@foreach ($dados as $v)
-																<li>
+																<li class="flex flex-center">
+																	{{ $v['medico'] }} -
 																	{{-- {{ $v['medico'] }} - <x-nav-link href="{{ route('clinica.agendamento.marcar_consulta', [request('year'), request('month'), request('day'), $v['id_especialidade'], $v['id_medico']]) }}">Ver horários disponíveis</x-nav-link> --}}
-																	{{ $v['medico'] }} - <a href="#modal-horarios-{{ $v['id_especialidade'] }}-{{ $v['id_medico'] }}" class="modal-trigger" data-trigger="modal-horarios">Ver horários disponíveis</a>
+																	{{--  <a href="#modal-horarios-{{ $v['id_especialidade'] }}-{{ $v['id_medico'] }}" class="modal-trigger" data-trigger="modal-horarios">Ver horários disponíveis</a> --}}
+																	<a class="card-title activator blue-text no-padding no-margin" data-url="{{ route('clinica.agendamentos.horarios', [request('year'), request('month'), request('day'), $v['id_medico'], $v['id_clinica'], $v['id_especialidade']]) }}" style="font-size: inherit; font-color: inherit; text-transform: inherit; font-family: inherit; font-weight: inherit; margin-left: 5px !important;">Ver horários disponíveis</a>
 																</li>
-																<div id="modal-horarios-{{ $v['id_especialidade'] }}-{{ $v['id_medico'] }}" class="modal modal-fixed-footer">
-																	<div class="modal-content">
-																		<h4>Agenda</h4>
-																		<h5 class="mt-0">{{ $v['medico'] }} - {{ $v['especialidade'] }}</h5>
-																		@php
-																			$data = request('day') . '/' . request('month') . '/' . request('year');
-																		@endphp
-																		<p class="mt-3 mb-3">Horarios disponíveis para o dia {{ $data }}</p>
-																		<p>
-																			@foreach ($v['horarios'] as $h)
-																				@php
-																					$duracao = $v['duracao'];
-																					$inicio = strtotime($h['inicio']);
-																					$fim = strtotime($h['fim']);
-																					$i = 0;
-																					$turno = date('H', $inicio) < 12 ? 'Manhã' : 'Tarde';
-
-																				@endphp
-
-																				<table>
-																					{{-- <caption>{{ $turno }}</caption> --}}
-																					<thead>
-																						<tr>
-																							<th>Hora</th>
-																							<th>Reserva</th>
-																						</tr>
-																					</thead>
-																					<tbody>
-																						@for ($hora = date('H', $inicio); $hora < date('H', $fim); $hora++)
-																							@php
-																								$turno = $hora < 12 ? 'Manhã' : 'Tarde';
-																							@endphp
-																							@php
-																								$i = 0;
-																							@endphp
-																							@for ($minuto = 0; $minuto < 59 / $duracao; $minuto++)
-																								@php
-																									$h = $hora < 10 ? '0' . (int) $hora : $hora;
-																									$m = $minuto * $duracao < 10 ? '0' . $minuto * $duracao : $minuto * $duracao;
-																									$i++;
-																								@endphp
-																								<tr>
-																									<td style="vertical-align: top;" width="10px">
-																										{{ $h . ':' . $m }}
-																									</td>
-																									<td>
-																										@php
-																											$atendimento = DB::connection('medicus')
-																											    ->table('tb_atendimento AS A')
-																											    ->select(
-																													'data',
-																													'hora_agendada',
-																													DB::raw('(SELECT nome FROM tb_paciente WHERE id = A.id_paciente) as paciente'),
-																													DB::raw('(SELECT titulo FROM tb_empresa WHERE id = A.id_clinica) as clinica')
-																												)
-																											    ->where([
-																											        'id_medico' => $v['id_medico'],
-																											        'data' => date('Y-m-d', strtotime(str_replace('/', '-', $data))),
-																											        'hora_agendada' => date('H:i:s', strtotime($h . ':' . $m)),
-																											    ])
-																											    ->get()
-																											    ->first();
-																										@endphp
-																										@if (!isset($atendimento))
-																											@php
-																												$year = request('year');
-																												$month = request('month');
-																												$day = request('day');
-																												$horario = strtotime(date('Y-m-d H:i:s', strtotime(request('year') . '-' . request('month') . '-' . request('day') . ' ' . $h . ':' . $m)));
-																												$link = route('clinica.agendamentos.form', [$year, $month, $day, $horario, $v['id_medico'], $v['id_clinica'], $v['id_especialidade']]);
-																											@endphp
-																											<x-nav-link :href="$link">Reservar Horário</x-nav-link>
-																										@else
-																											{{ $atendimento->paciente }} <br> {{ $atendimento->clinica }} <br> {{ date('d/m/Y', strtotime($atendimento->data)) }} - {{ date('H:i', strtotime($atendimento->hora_agendada)) }}
-																										@endif
-																									</td>
-																								</tr>
-																							@endfor
-																						@endfor
-																					</tbody>
-																				</table>
-																				<br>
-																			@endforeach
-																		</p>
-																	</div>
-																	<div class="modal-footer">
-																		<a href="#" class="modal-close waves-effect waves-green btn-flat">Fechar</a>
-																	</div>
-																</div>
 															@endforeach
 														</ol>
 													</li>
@@ -160,10 +72,29 @@
 						</div>
 
 					</div>
-				@else
+
+					<script>
+						$(function() {
+							$('.card-title.activator').bind('click', function() {
+
+								var url = $(this).data('url');
+
+								$.ajax({
+									url: url,
+									method: 'get',
+									success: (response) => {
+										$('#horarios.card-reveal').html(response);
+									}
+								});
+
+							});
+						})
+					</script>
 				@endif
 
 			</div>
+
+			<div id="horarios" class="card-reveal" style="z-index: 9999999999999999999999999;"></div>
 
 			@if (request('id_medico') && request('id_clinica') && request('id_especialidade') && request('horario'))
 				<div class="card-reveal no-padding" style="display: block; transform: translateY(-100%)">

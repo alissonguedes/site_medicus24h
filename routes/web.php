@@ -426,6 +426,39 @@ Route::middleware([
 
 			Route::prefix('/{year}/{month}/{day}')->group(function () {
 
+				Route::get('/{id_medico}/{id_clinica}/{id_especialidade}', function (AgendaModel $agenda_model) {
+
+					/**
+					 * Listar todas as especialidades / médicos que atendem no dia (w) referente à data selecionada
+					 */
+					$data     = strtotime(request('year') . '-' . request('month') . '-' . request('day'));
+					$ano      = date('Y', $data);
+					$mes      = date('m', $data);
+					$dia      = date('d', $data);
+					$dia_num  = date('w', $data);
+					$clinicas = [];
+
+					if (request('id_medico') && request('id_clinica') && request('id_especialidade')) {
+
+						$agenda = $agenda_model->select('*')
+							->from('tb_medico_agenda AS A')
+							->join('tb_medico_agenda_horario AS H', 'H.id_agenda', 'A.id')
+							->join('tb_medico_agenda_especialidade AS E', 'E.id_agenda', 'H.id_agenda')
+							->where('E.id_especialidade', request('id_especialidade'))
+							->where('A.id_clinica', request('id_clinica'))
+							->where('A.id_medico', request('id_medico'))
+							->where('dia', $dia_num)
+							->groupBy('H.id_agenda')
+							->get()
+							->first();
+
+						$dados['agenda'] = $agenda;
+						return view('clinica.agendamentos.horarios', $dados);
+
+					}
+
+				})->name('clinica.agendamentos.horarios');
+
 				Route::get('/', function (AgendaModel $agenda_model) {
 
 					/**
@@ -442,7 +475,7 @@ Route::middleware([
 						->from('tb_medico_agenda AS A')
 						->join('tb_medico_agenda_horario AS H', 'H.id_agenda', 'A.id')
 						->where('dia', $dia_num)
-						->groupBy('id_agenda')
+						->groupBy('H.id_agenda')
 						->get();
 
 					if ($agendas->count() > 0) {
@@ -457,7 +490,11 @@ Route::middleware([
 
 								foreach ($especialidades as $e) {
 
-									$horarios = $agenda_model->select('inicio', 'fim')->from('tb_medico_agenda_horario')->where('id_agenda', $a->id)->where('dia', $dia_num)->get();
+									$horarios = $agenda_model->select('inicio', 'fim')
+										->from('tb_medico_agenda_horario')
+										->where('id_agenda', $a->id)
+										->where('dia', $dia_num)
+										->get();
 
 									$horario = [];
 									foreach ($horarios as $h) {
@@ -549,8 +586,9 @@ Route::middleware([
 						'titulo'              => $request['titulo'] ?? null,
 						'descricao'           => $request['descricao'] ?? null,
 						'id_parent'           => $request['id_parent'] ?? null,
-						'id_tipo'             => $request['tipo'] ?? null,
+						'id_tipo'             => $request['tipo'],
 						'id_medico'           => $request['medico'],
+						'id_especialidade'    => $request['especialidade'],
 						'id_clinica'          => $request['clinica'],
 						'id_paciente'         => $request['paciente'],
 						'id_convenio'         => $request['convenio'],
