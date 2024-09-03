@@ -7,7 +7,7 @@
 
 		<div class="card agenda card-panel no-padding">
 
-			<div class="card-content animated fadeIn">
+			<div class="card-content animated fadeIn" style="height: calc(100% - 0px);">
 
 				@if (!request('id_medico') || !request('id_clinica') || !request('id_especialidade') || !request('horario'))
 					<div class="row">
