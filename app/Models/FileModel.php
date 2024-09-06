@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 define('CHUNK_SIZE', 128 * 500);
 
-class FileModel extends Model {
+class FileModel extends Model
+{
 
 	use HasFactory;
 
@@ -36,7 +37,8 @@ class FileModel extends Model {
 		'status',
 	];
 
-	public function showFile(int $file_id, string $categoria) {
+	public function showFile(int $file_id, string $categoria)
+	{
 
 		$filedata = false;
 
@@ -97,7 +99,8 @@ class FileModel extends Model {
 
 	}
 
-	public function fileExists(int $id_file, string $categoria) {
+	public function fileExists(int $id_file, string $categoria)
+	{
 
 		$issetFile = $this->getInfoFromFile($id_file, $categoria);
 
@@ -105,7 +108,8 @@ class FileModel extends Model {
 
 	}
 
-	public function getInfoFromFile(int $id_file, string $categoria) {
+	public function getInfoFromFile(int $id_file, string $categoria)
+	{
 
 		return $this->select(
 			'id',
@@ -120,7 +124,8 @@ class FileModel extends Model {
 			->first();
 	}
 
-	public function getFile($id_file) {
+	public function getFile($id_file)
+	{
 
 		return $this->select('filedata')
 			->from('tb_file_chunk')
@@ -130,7 +135,8 @@ class FileModel extends Model {
 
 	}
 
-	public function getWhere($data = null, $where = null) {
+	public function getWhere($data = null, $where = null)
+	{
 
 		$where = is_array($data) ? $data : [$data => $where];
 
@@ -138,7 +144,8 @@ class FileModel extends Model {
 
 	}
 
-	private static function _getKeyAndHash($data = false, $file = false) {
+	private static function _getKeyAndHash($data = false, $file = false)
+	{
 
 		if ($file) {
 			$sha1 = base64_encode(sha1_file($data, true));
@@ -165,7 +172,8 @@ class FileModel extends Model {
 
 	}
 
-	public static function addAttachments($files, $object_id, $inline = false, $lang = false) {
+	public static function addAttachments($files, $object_id, $inline = false, $lang = false)
+	{
 
 		if (empty($files)) {
 			return false;
@@ -187,7 +195,8 @@ class FileModel extends Model {
 
 	}
 
-	private static function insert_or_update($object_id, $file) {
+	private static function insert_or_update($object_id, $file)
+	{
 
 		// self::where('id_object', $object_id)->delete();
 
@@ -212,7 +221,8 @@ class FileModel extends Model {
 
 	}
 
-	private static function write_file_chunk($file_id, $file, $chunk = CHUNK_SIZE) {
+	private static function write_file_chunk($file_id, $file, $chunk = CHUNK_SIZE)
+	{
 
 		self::from('tb_file_chunk')->where('id_file', $file_id)->delete();
 
@@ -241,7 +251,8 @@ class FileModel extends Model {
 
 	}
 
-	public static function remove($id_object, $categoria) {
+	public static function remove($id_object, $categoria)
+	{
 
 		$where   = ['id_object' => $id_object, 'categoria' => $categoria];
 		$id_file = self::select('id')->where($where)->first();

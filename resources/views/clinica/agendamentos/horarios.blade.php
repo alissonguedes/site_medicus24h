@@ -26,8 +26,9 @@
 			    ->get();
 		@endphp
 
-		<h4>Agenda <i class="material-symbols-outlined right card-title">close</i></h4>
+		<h4 class="mt-0">Agenda</h4>
 		<h5 class="no-margin">{{ $medico->nome }} - {{ $especialidade->especialidade }}</h5>
+		{{-- <i class="material-symbols-outlined right card-title">close</i> --}}
 
 		<p class="mt-3 mb-3">Horarios disponíveis para o dia {{ $data }}</p>
 
@@ -70,7 +71,7 @@
 										@php
 											$atendimento = DB::connection('medicus')
 											    ->table('tb_atendimento AS A')
-											    ->select('data', 'hora_agendada', DB::raw('(SELECT nome FROM tb_paciente WHERE id = A.id_paciente) as paciente'), DB::raw('(SELECT titulo FROM tb_empresa WHERE id = A.id_clinica) as clinica'))
+											    ->select('id', 'data', 'hora_agendada', DB::raw('(SELECT nome FROM tb_paciente WHERE id = A.id_paciente) as paciente'), DB::raw('(SELECT titulo FROM tb_empresa WHERE id = A.id_clinica) as clinica'))
 											    ->where([
 											        'id_medico' => $agenda->id_medico,
 											        'id_especialidade' => $agenda->id_especialidade,
