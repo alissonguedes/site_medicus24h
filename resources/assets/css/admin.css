@@ -1117,8 +1117,7 @@ body:has(footer) main .card-panel {
 
 .card-panel .card-reveal {
 	transition: 250ms;
-	overflow: hidden;
-	z-index: 9999999;
+	/* overflow: hidden; */
 	background-color: #ffffff;
 	z-index: 9999;
 }
