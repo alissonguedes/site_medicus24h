@@ -1115,11 +1115,12 @@ body:has(footer) main .card-panel {
 	padding: 24px 15px;
 }
 
-.card-panel form.card-reveal {
+.card-panel .card-reveal {
 	transition: 250ms;
 	overflow: hidden;
 	z-index: 9999999;
 	background-color: #ffffff;
+	z-index: 9999;
 }
 
 .card-panel .card-action {
