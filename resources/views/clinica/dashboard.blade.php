@@ -8,7 +8,7 @@
 		<div class="row">
 
 			<div class="col s12 m6 l6 xl3">
-				<div class="card gradient-45deg-teal-teal gradient-shadow min-height-100 white-text animate fadeLeft">
+				<div class="card gradient-45deg-purple-deep-purple gradient-shadow min-height-100 white-text animate fadeLeft">
 					<div class="padding-4">
 						<div class="row">
 							<div class="col s4 m4 center-align">
@@ -25,7 +25,7 @@
 			</div>
 
 			<div class="col s12 m6 l6 xl3">
-				<div class="card gradient-45deg-teal-teal gradient-shadow min-height-100 white-text animate fadeLeft">
+				<div class="card gradient-45deg-purple-deep-purple gradient-shadow min-height-100 white-text animate fadeLeft">
 					<div class="padding-4">
 						<div class="row">
 							<div class="col s4 m4 center-align">
@@ -42,7 +42,7 @@
 			</div>
 
 			<div class="col s12 m6 l6 xl3">
-				<div class="card gradient-45deg-teal-teal gradient-shadow min-height-100 white-text animate fadeLeft">
+				<div class="card gradient-45deg-purple-deep-purple gradient-shadow min-height-100 white-text animate fadeLeft">
 					<div class="padding-4">
 						<div class="row">
 							<div class="col s4 m4 center-align">
@@ -59,7 +59,7 @@
 			</div>
 
 			<div class="col s12 m6 l6 xl3">
-				<div class="card gradient-45deg-teal-teal gradient-shadow min-height-100 white-text animate fadeLeft">
+				<div class="card gradient-45deg-purple-deep-purple gradient-shadow min-height-100 white-text animate fadeLeft">
 					<div class="padding-4">
 						<div class="row">
 							<div class="col s4 m4 center-align">

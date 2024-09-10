@@ -66,15 +66,6 @@
 						<a href="#mmenu" class="waves-effect waves-blue">
 							<i class="material-symbols-outlined">menu</i>
 						</a>
-						{{-- <a href="#mmenu" id="mm-open-menu">
-							<i class="material-symbols-outlined">menu</i>
-						</a> --}}
-						{{-- <button type="button" class="btn-floating waves-effect z-depth-0 sidenav-trigger" data-target="sidebar-menu">
-							<i class="material-symbols-outlined">menu</i>
-						</button> --}}
-						{{-- <a class="waves-effect waves-green sidenav-trigger" data-target="slide-out">
-							<i class="material-symbols-outlined">menu</i>
-						</a> --}}
 					</li>
 				</ul>
 

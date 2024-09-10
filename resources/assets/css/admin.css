@@ -36,7 +36,7 @@ body::before {
 
 body::after {
 	opacity: 0.7;
-	background-color: var(--teal-lighten-1);
+	background-color: var(--purple-darken-1);
 }
 
 .btn i,
@@ -71,12 +71,12 @@ hr {
 
 nav ul a,
 a {
-	color: var(--teal-lighten-1);
+	color: var(--purple-darken-1);
 }
 
 .dark-theme nav ul a,
 .dark-theme a {
-	color: var(--teal-lighten-3);
+	color: var(--purple-lighten-3);
 }
 
 main,
@@ -224,7 +224,7 @@ nav ul a,
 	border-radius: 50%;
 	color: #ffffff;
 	background: var(--gradient-45deg-deep-orange-orange);
-	box-shadow: 0 0 10px 0 var(--teal-lighten-4);
+	box-shadow: 0 0 10px 0 var(--purple-lighten-4);
 	width: 24px;
 	height: 24px;
 	line-height: 24px;
@@ -310,11 +310,11 @@ nav ul a,
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	color: var(--teal-lighten-1);
+	color: var(--purple-darken-1);
 }
 
 .dark-theme .navbar h1 {
-	color: var(--teal-lighten-3);
+	color: var(--purple-lighten-3);
 }
 
 .navbar h1 .icon,
@@ -401,8 +401,8 @@ footer .logo-footer {
 .progress .indeterminate::before,
 .progress .indeterminate-center::before,
 .pace .pace-progress {
-	background: -webkit-linear-gradient(45deg, var(--teal), var(--teal));
-	background: linear-gradient(45deg, var(--teal), var(--teal));
+	background: -webkit-linear-gradient(45deg, var(--purple), var(--purple));
+	background: linear-gradient(45deg, var(--purple), var(--purple));
 }
 
 /** SideNav */
@@ -565,7 +565,7 @@ footer .logo-footer {
 
 .sidenav li a.active {
 	color: #fff;
-	background: var(--gradient-45deg-teal-teal);
+	background: var(--gradient-45deg-purple-deep-purple);
 }
 
 .sidenav .navigation-header {
@@ -773,9 +773,9 @@ footer .logo-footer {
 }
 
 .mm-listitem.mm-listitem--selected a {
-	background-image: var(--gradient-45deg-teal-teal);
+	background-image: var(--gradient-45deg-purple-deep-purple);
 	color: #ffffff;
-	/* box-shadow: 0 0 10px 0px var(--teal); */
+	/* box-shadow: 0 0 10px 0px var(--purple); */
 }
 
 .nav-collapsed li.mm-navbar {
@@ -938,7 +938,7 @@ footer .logo-footer {
 }
 
 .application-logo:before {
-	border-bottom: 5px solid var(--teal-lighten-1);
+	border-bottom: 5px solid var(--purple-darken-1);
 }
 
 .navbar-main:after {
@@ -1094,7 +1094,7 @@ main {
 	padding: 0;
 	border-bottom-width: 10px;
 	border-top-width: 10px;
-	border-color: var(--teal-darken-3);
+	border-color: var(--purple-darken-3);
 	border-style: solid none solid;
 }
 
@@ -1222,8 +1222,8 @@ main .card-panel>.card-header~.card-content {
 
 .card-content .card.profile-card {
 	overflow: hidden;
-	background: -webkit-linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-1));
-	background: linear-gradient(45deg, var(--teal-darken-4), var(--teal-lighten-1));
+	background: -webkit-linear-gradient(45deg, var(--purple-darken-4), var(--purple-darken-1));
+	background: linear-gradient(45deg, var(--purple-darken-4), var(--purple-darken-1));
 }
 
 .dark-theme .card-content .card {
@@ -1376,7 +1376,7 @@ main .card-panel>.card-header~.card-content {
 .tabs .tab a {
 	font-size: 13px;
 	font-weight: 500;
-	color: var(--teal-lighten-1);
+	color: var(--purple-darken-1);
 }
 
 .tabs .tab a:focus,
@@ -1388,11 +1388,11 @@ main .card-panel>.card-header~.card-content {
 .tabs .tab a:hover,
 .tabs .tab a.active {
 	background-color: rgba(30, 161, 173, 0.1);
-	color: var(--teal-lighten-1);
+	color: var(--purple-darken-1);
 }
 
 .tabs .indicator {
-	background-color: var(--teal-lighten-1);
+	background-color: var(--purple-darken-1);
 }
 
 .card-panel form.card-reveal>.card {
@@ -1506,7 +1506,7 @@ textarea.materialize-textarea:not([readonly]),
 .select-wrapper:not(.browser-default) input.select-dropdown.ql-container:not([readonly]),
 .chips.focus:not([readonly]),
 .input-field:not(.browser-default) .ql-container:not([readonly]) {
-	background-image: linear-gradient(var(--teal), var(--teal)), linear-gradient(var(--grey-lighten-2), var(--grey-lighten-2));
+	background-image: linear-gradient(var(--purple), var(--purple)), linear-gradient(var(--grey-lighten-2), var(--grey-lighten-2));
 	color: var(--grey-darken-3);
 }
 
@@ -1527,7 +1527,7 @@ textarea.materialize-textarea:not([readonly]),
 }
 
 .switch label input[type=checkbox]:checked+.lever {
-	background-color: var(--teal-lighten-1);
+	background-color: var(--purple-darken-1);
 }
 
 [type="radio"]+span:not(.lever),
@@ -1538,7 +1538,7 @@ textarea.materialize-textarea:not([readonly]),
 }
 
 .input-field>label:not(.label-icon) {
-	color: var(--teal-lighten-1);
+	color: var(--purple-darken-1);
 	z-index: 2;
 }
 
@@ -1550,13 +1550,13 @@ button[type="submit"] {
 }
 
 [type="reset"] {
-	border: 1px solid var(--teal);
-	color: var(--teal);
+	border: 1px solid var(--purple);
+	color: var(--purple);
 	border-radius: 30px;
 }
 
 [type="submit"] {
-	background-color: var(--teal) !important;
+	background-color: var(--purple) !important;
 	border-radius: 30px;
 }
 
@@ -1953,7 +1953,7 @@ table.datepicker-table th,
 		border-radius: 50%;
 		color: #ffffff;
 		background: var(--gradient-45deg-deep-orange-orange);
-		/* box-shadow: 0 0 10px 0 var(--teal-lighten-4); */
+		/* box-shadow: 0 0 10px 0 var(--purple-lighten-4); */
 		width: 24px;
 		height: 24px;
 		line-height: 24px;

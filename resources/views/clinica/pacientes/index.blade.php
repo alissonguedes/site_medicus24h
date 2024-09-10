@@ -14,8 +14,8 @@
 		@endphp
 
 		<div class="row">
-			<div class="col s6"></div>
-			<div class="col s6 right-align">
+			<div class="col s12 m6 l6 hide-on-small-only"></div>
+			<div class="col s12 m6 l6 right-align">
 				{{ $dados->get()->total() }} Pacientes cadastrados
 				·
 				{{ $dados->where('status', '1')->count() }} ativos

@@ -270,6 +270,18 @@
 	--purple-accent-3: #d500f9 !important;
 	--purple-accent-4: #a0f !important;
 
+	/*
+	--gradient-45deg-darken-purple-purple: -webkit-gradient(radial, 165 0, 0, 220 -257, 465, from(var(--purple-darken-4)), to(var(--purple-lighten-1))) !important;*/
+	--gradient-45deg-purple-deep-purple: -webkit-linear-gradient(45deg, var(--purple-darken-4), var(--purple-lighten-1)) !important;
+	--gradient-45deg-purple-deep-purple: -webkit-linear-gradient(45deg, #7b1fa2, #7c4dff) !important;
+	--gradient-45deg-purple-deep-purple: linear-gradient(45deg, #7b1fa2, #7c4dff) !important;
+
+	--gradient-45deg-purple-deep-purple: -webkit-linear-gradient(45deg, var(--purple-darken-4), var(--purple-lighten-1)) !important;
+	--gradient-45deg-purple-deep-purple: linear-gradient(45deg, var(--purple-darken-4), var(--purple-lighten-1)) !important;
+	/*
+	--gradient-45deg-purple-deep-purple: -webkit-linear-gradient(45deg, var(--light-green), var(--green-darken-4)) !important;
+	--gradient-45deg-purple-deep-purple: linear-gradient(45deg, var(--light-green), var(--green-darken-4)) !important; */
+
 	/** Indigo */
 	--indigo: #3f51b5 !important;
 
@@ -289,7 +301,6 @@
 	--indigo-accent-3: #3d5afe !important;
 	--indigo-accent-4: #304ffe !important;
 
-	--gradient-45deg-darken-purple-purple: -webkit-gradient(radial, 165 0, 0, 220 -257, 465, from(var(--purple-darken-4)), to(var(--purple-lighten-1))) !important;
 
 }
 
