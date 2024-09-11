@@ -1,6 +1,6 @@
 <x-clinica-layout>
 
-	<x-slot:icon> people </x-slot:icon>
+	<x-slot:icon> favorite_border </x-slot:icon>
 	<x-slot:title> Especialidades </x-slot:title>
 
 	<x-header-page>

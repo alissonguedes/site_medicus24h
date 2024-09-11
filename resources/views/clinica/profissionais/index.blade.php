@@ -1,6 +1,6 @@
 <x-clinica-layout>
 
-	<x-slot:icon> people </x-slot:icon>
+	<x-slot:icon> medical_information </x-slot:icon>
 	<x-slot:title> Profissionais </x-slot:title>
 
 	<x-header-page>

@@ -1,7 +1,7 @@
 <x-clinica-layout>
 
-	<x-slot:icon> people </x-slot:icon>
-	<x-slot:title> Perfils </x-slot:title>
+	<x-slot:icon> user_attributes </x-slot:icon>
+	<x-slot:title> Perfis de acesso </x-slot:title>
 
 	<x-header-page>
 		<x-slot:search data-url="{{ route('clinica.grupos.usuarios.search') }}" placeholder="Pesquisar perfis..."></x-slot:search>

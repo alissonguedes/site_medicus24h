@@ -1,6 +1,6 @@
 <x-clinica-layout>
 
-	<x-slot:icon> people </x-slot:icon>
+	<x-slot:icon> stethoscope_check </x-slot:icon>
 	<x-slot:title> Procedimentos </x-slot:title>
 
 	<x-header-page>
