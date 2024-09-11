@@ -1543,6 +1543,10 @@ select:not(.browser-default),
 /* .select-wrapper {
 	top: 3px;
 } */
+.noUi-target.noUi-horizontal .noUi-tooltip,
+.noUi-connect {
+	background-color: var(--purple-darken-1) !important;
+}
 
 input:not([type]):focus:not([readonly]),
 input[type=text]:not(.browser-default):focus:not([readonly]),

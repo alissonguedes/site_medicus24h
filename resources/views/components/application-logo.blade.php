@@ -3,8 +3,8 @@
 <div class="logo">
 	<div class="icon"></div>
 	<div class="text">
-		<small>Clinic</small>
-		<span>Cloud</span>
+		<span>Clinic</span>
+		<small>Cloud</small>
 	</div>
 </div>
 
@@ -45,10 +45,15 @@
 		margin-left: 5px;
 	}
 
+	.logo .text span {
+		top: -3px;
+		position: relative;
+	}
+
 	.logo .text small {
 		position: absolute;
-		left: 23px;
-		top: -10px;
+		left: 18px;
+		bottom: -10px;
 		font-size: 8px;
 		letter-spacing: 1px;
 	}

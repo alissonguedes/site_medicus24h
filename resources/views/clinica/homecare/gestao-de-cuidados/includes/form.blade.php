@@ -135,7 +135,7 @@
 
 				<div class="row">
 					<div class="col s12">
-						<button type="button" id="criar-tarefa" class="btn mb-2">
+						<button type="button" id="criar-tarefa" class="btn green mb-2">
 							Criar Tarefa
 						</button>
 					</div>

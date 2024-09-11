@@ -76,7 +76,7 @@
 
 	.datepicker-table td.is-selectable:not(.is-outside-current-month):not(.is-disabled) .datepicker-day-button {
 		color: #fff;
-		background-color: var(--teal-lighten-2);
+		background-color: var(--purple-darken-1);
 	}
 
 	.datepicker-table td.is-selected.is-selectable:not(.is-outside-current-month):not(.is-disabled) .datepicker-day-button {

@@ -26,7 +26,7 @@
 							</div>
 							<div class="row">
 								<div class="col s12">
-									<button class="btn btn-large activator teal lighten-1 waves-effect waves-light" data-trigger="activator" data-url="{{ route('clinica.agendamentos.horariosreservados', [request('year'), request('month'), request('day')]) }}">
+									<button class="btn btn-large activator green waves-effect waves-light" data-trigger="activator" data-url="{{ route('clinica.agendamentos.horariosreservados', [request('year'), request('month'), request('day')]) }}">
 										<i class="material-symbols-outlined left">calendar_clock</i>
 										<span class="activator" style="font-family: inherit; font-size: inherit !important;">Ver horários agendados</span>
 									</button>

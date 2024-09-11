@@ -4,9 +4,11 @@ var table = $('#table_tarefas');
 
 // Excluir a tarefa da tabela. Não deleta diretamente no banco de dados.
 function delete_tarefa() {
-	$('#table_tarefas').find('[name="deletar"]').unbind().bind('click', function() {
-		$(this).parents('tbody').find('.nenhum_registro').show()
+	$('#table_tarefas').find('[name="deletar"]').unbind().bind('click', function () {
 		$(this).parents('tr').remove();
+		if ($('#table_tarefas tbody').find('tr:not(.nenhum_registro)').length == 0) {
+			$('#table_tarefas tbody').find('.nenhum_registro').show();
+		}
 	});
 }
 
@@ -17,7 +19,7 @@ var modal_tarefa = modal.modal({
 
 	onOpenEnd: (e) => {
 
-		$(e).find('input,textarea,select').on('keydown', function(e) {
+		$(e).find('input,textarea,select').on('keydown', function (e) {
 			if (e.keyCode === 13) {
 				e.preventDefault();
 				$(this).parents('.modal').find('button.save').click();
@@ -25,7 +27,7 @@ var modal_tarefa = modal.modal({
 		});
 
 	},
-	onCloseStart: (e) => {},
+	onCloseStart: (e) => { },
 	onCloseEnd: (e) => {
 
 		$(modal).find('input,textarea,select').each((b, a) => {
@@ -48,13 +50,13 @@ var modal_tarefa = modal.modal({
 });
 
 // Validar e adicionar a tarefa à tabela. Não salva no banco neste momento.
-var btn = modal.find('.modal-footer .save').unbind().bind('click', function() {
+var btn = modal.find('.modal-footer .save').unbind().bind('click', function () {
 
 	var data = {};
 	var values = [];
 	var inputs = $('#modal_tarefa').find('.modal-content').find('input,select,textarea');
 
-	inputs.each(function() {
+	inputs.each(function () {
 
 		if ($(this).is(':valid') || $(this).is(':checked')) {
 
@@ -77,7 +79,7 @@ var btn = modal.find('.modal-footer .save').unbind().bind('click', function() {
 		headers: {
 			'X-CSRF-Token': $('[name="_token"]').val(),
 		},
-		success: function(response) {
+		success: function (response) {
 
 			var table = $(response).find('tbody').html();
 
@@ -90,7 +92,7 @@ var btn = modal.find('.modal-footer .save').unbind().bind('click', function() {
 
 		},
 
-		error: function(response) {
+		error: function (response) {
 
 			var errors = response.responseJSON.errors;
 			$('#modal_tarefa').find('.modal-content').find('.input-field').removeClass('error wrong').find('.error').remove();
@@ -110,7 +112,7 @@ var btn = modal.find('.modal-footer .save').unbind().bind('click', function() {
 });
 
 // Clicar no botão de adicionar tarefa
-button.bind('click', function() {
+button.bind('click', function () {
 
 	modal_tarefa.modal('open');
 
