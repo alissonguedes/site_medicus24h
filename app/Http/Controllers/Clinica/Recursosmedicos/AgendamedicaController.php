@@ -37,6 +37,92 @@ class AgendamedicaController extends Controller {
 		//
 	}
 
+	public function agenda(AgendaModel $agenda_model) {
+
+		$data              = request('data') ?? date('Y-m-d'); // data que vem do calendario na requisição
+		$data_time         = strtotime($data); // transforma a data da requisição em inteiro
+		$primeira_data_mes = 1; // primeira data do mês
+		$ultima_data_mes   = date('Y-m-', strtotime($data)) . date('t', strtotime($data)); // A última data do mês (28|29; 30|31)
+		$data_fim_time     = strtotime($ultima_data_mes); // transforma a última data do mês em inteiro
+		$ano               = date('Y', $data_time); // ano da data
+		$mes               = date('m', $data_fim_time); // mês da data
+		$ultima_data_mes   = date('t', strtotime($data)); // última data do mês
+		$dia_semana_ativo  = date('w', $data_time); // o dia da semana que está disponível para atendimento (vem do Banco de dados)
+		$repetir           = null; // o dia da semana que deve se repetir o evento (vem do Banco de dados)
+		$dias_agenda       = [];
+		$dias_ativos       = [];
+		$dias_inativos     = [];
+
+		$agenda = $agenda_model->select('id', 'id_medico', 'id_clinica', 'titulo', 'duracao', 'tempo_min_agendamento', 'tempo_max_agendamento', 'intervalo', 'max_agendamento', 'repetir')
+			->from('tb_medico_agenda AS A')
+			->get();
+
+		if ($agenda->count() > 0) {
+
+			foreach ($agenda as $a) {
+
+				$id                    = $a->id;
+				$id_medico             = $a->id_medico;
+				$medico_model          = $agenda_model->select('nome', 'crm')->from('tb_medico')->where('id', $a->id_medico)->first();
+				$medico                = $medico_model->nome;
+				$crm                   = $medico_model->crm;
+				$id_clinica            = $a->id_clinica;
+				$clinica               = $agenda_model->select('razao_social')->from('tb_empresa')->where('id', $a->id_clinica)->first();
+				$clinica               = $clinica->razao_social;
+				$titulo                = $a->titulo;
+				$duracao               = $a->duracao;
+				$tempo_min_agendamento = $a->tempo_min_agendamento;
+				$tempo_max_agendamento = $a->tempo_max_agendamento;
+				$intervalo             = $a->intervalo;
+				$max_agendamento       = $a->max_agendamento;
+				$repetir               = $a->repetir;
+
+				$horarios = $agenda_model->from('tb_medico_agenda_horario')
+					->where('id_agenda', $a->id)
+					->orderBy('dia', 'asc')
+					->orderBy('inicio', 'asc')
+					->orderBy('fim', 'asc')
+					->get();
+
+				for ($d = $primeira_data_mes; $d <= $ultima_data_mes; $d++) {
+
+					$time = strtotime($ano . '-' . $mes . '-' . $d);
+
+					if ($horarios->count() > 0) {
+
+						foreach ($horarios as $h) {
+
+							$dia    = (int) $h->dia;
+							$inicio = $h->inicio;
+							$fim    = $h->fim;
+
+							if ($dia == date('w', $time)) {
+								$dias_ativos[] = date('Y-m-d', $time);
+							}
+
+						}
+
+					}
+
+					if (!in_array(date('Y-m-d', $time), $dias_ativos)) {
+						$dias_inativos[] = date('Y-m-d', $time);
+					}
+
+				}
+
+			}
+
+		}
+
+		if (request()->ajax()) {
+			return response()->json(['dias_ativos' => $dias_ativos, 'dias_inativos' => $dias_inativos]);
+		} else {
+			$dados['clinicas'] = 'clinica';
+			return view('clinica.agendamentos.index', $dados);
+		}
+
+	}
+
 	/**
 	 * Store a newly created resource in storage.
 	 */

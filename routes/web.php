@@ -1,10 +1,6 @@
 <?php
 
-// Admin Controllers
-// use App\Http\Controllers\Admin\ApresentacaoController as Apresentacao;
-// use App\Http\Controllers\Admin\A_IbrController as A_Ibr;
-// use App\Http\Controllers\Admin\BannersController as Banners;
-// use App\Http\Controllers\Admin\PastoresController as Pastores;
+// Controllers
 use App\Http\Controllers\APIController as API;
 
 // Clinica Controllers
@@ -31,9 +27,6 @@ use App\Http\Controllers\Site\HomeController;
 // Models
 use App\Models\Clinica\AgendaModel;
 
-// Illuminate
-use Illuminate\Support\Facades\Route;
-
 Route::prefix('/')->group(function () {
 
 	Route::get('/', [HomeController::class, 'index'])->name('site.index');
@@ -56,39 +49,10 @@ Route::middleware([
 
 	// Atendimentos
 	Route::prefix('/atendimentos')->group(function () {
-		Route::get('/tipos/{search?}', function () {
-			$atendimentos = [];
-			$atendimento  = DB::connection('medicus')
-				->table('tb_atendimento_tipo')
-				->select('tipo', 'id')
-				->whereAny(['tipo'], 'like', request('search') . '%')
-				->get();
 
-			if ($atendimento->count() > 0) {
-				foreach ($atendimento as $p) {
-					$atendimentos[] = ['text' => $p->tipo, 'id' => $p->id];
-				}
-			}
+		Route::get('/tipos/{search?}', [App\Http\Controllers\Clinica\Atendimentos\TiposController::class, 'autocomplete'])->name('clinica.atendimentos.tipos.autocomplete');
+		Route::get('/categorias/{search?}', [App\Http\Controllers\Clinica\Atendimentos\CategoriasController::class, 'autocomplete'])->name('clinica.atendimentos.categorias.autocomplete');
 
-			return $atendimentos;
-		})->name('clinica.atendimentos.tipos.autocomplete');
-
-		Route::get('/categorias/{search?}', function () {
-			$atendimentos = [];
-			$atendimento  = DB::connection('medicus')
-				->table('tb_categoria_descricao')
-				->select('titulo AS tipo', 'id_categoria AS id')
-				->whereAny(['titulo'], 'like', request('search') . '%')
-				->get();
-
-			if ($atendimento->count() > 0) {
-				foreach ($atendimento as $p) {
-					$atendimentos[] = ['text' => $p->tipo, 'id' => $p->id];
-				}
-			}
-
-			return $atendimentos;
-		})->name('clinica.atendimentos.categorias.autocomplete');
 	});
 
 	// Pacientes
@@ -96,53 +60,12 @@ Route::middleware([
 
 		Route::get('/', [Pacientes::class, 'index'])->name('clinica.pacientes.index');
 		Route::get('/q/{search?}', [Pacientes::class, 'search'])->name('clinica.pacientes.search');
-		Route::get('/a/{search?}', function () {
-			$pacientes = [];
-			$paciente  = DB::connection('medicus')
-				->table('tb_paciente AS P')
-				->select('nome', 'id', 'cpf', 'matricula')
-				->whereAny(['nome', 'cpf', 'matricula'], 'like', request('search') . '%')
-				->get();
-
-			if ($paciente->count() > 0) {
-				foreach ($paciente as $p) {
-					$pacientes[] = ['text' => $p->nome . ' - ' . format($p->cpf), 'id' => $p->id];
-				}
-			}
-
-			return $pacientes;
-		})->name('clinica.pacientes.autocomplete');
+		Route::get('/a/{search?}', [Pacientes::class, 'autocomplete'])->name('clinica.pacientes.autocomplete');
 		Route::get('/id/{id}', [Pacientes::class, 'index'])->name('clinica.pacientes.edit');
 		Route::post('/', [Pacientes::class, 'store'])->name('clinica.pacientes.post');
 		Route::put('/', [Pacientes::class, 'update'])->name('clinica.pacientes.post');
 		Route::delete('/', [Pacientes::class, 'destroy'])->name('clinica.pacientes.delete');
-
-		Route::get('/{id}/dados', function () {
-
-			$id = request('id');
-
-			$pacientes = [];
-			$result    = DB::connection('medicus')
-				->table('tb_paciente AS P')
-				->select('*', DB::raw('DATE_FORMAT(data_nascimento, "%d/%m/%Y") AS data_nascimento'))
-				->where('id', request('id'))
-				->get()
-				->first();
-
-			$paciente['mae']             = $result->mae ?? null;
-			$paciente['pai']             = $result->pai ?? null;
-			$paciente['data_nascimento'] = $result->data_nascimento ?? null;
-			$paciente['cpf']             = $result->cpf ?? null;
-			$paciente['telefone']        = $result->telefone ?? null;
-			$paciente['convenio']        = $result->convenio ?? null;
-			$paciente['matricula']       = $result->matricula ?? null;
-			$paciente['validade']        = $result->validade ?? null;
-			$paciente['observacao']      = $result->notas ?? null;
-			$paciente['enviar_email']    = $result->enviar_email ?? null;
-
-			return $paciente;
-
-		})->name('clinca.pacientes.get_dados');
+		Route::get('/{id}/dados', [Pacientes::class, 'get_dados'])->name('clinca.pacientes.get_dados');
 
 	});
 
@@ -211,33 +134,7 @@ Route::middleware([
 
 			Route::prefix('/medico/{id_medico}/{id_clinica?}')->group(function () {
 
-				Route::get('/', function (AgendaModel $agenda) {
-
-					$data           = [];
-					$data['medico'] = $agenda->select('M.id', 'M.nome')
-						->from('tb_medico AS M')
-						->where('id', request('id_medico'))
-						->first();
-
-					// $data['agenda'] = $agenda->select('A.horarios')
-					// 	->from('tb_medico_agenda AS A')
-					// 	->where('id_medico', request('id_medico'))
-					// 	->get();
-
-					// dd($data);
-					// $data['agenda'] = $agenda->select('C.id_medico', 'horarios')
-					// 	->from('tb_medico_agenda AS A')
-					// // ->join('tb_medico_agenda_horario AS H', 'H.id_agenda', 'A.id')
-					// 	->join('tb_medico_clinica AS C', 'C.id', 'A.id_medico')
-					// 	->where('C.id_medico', request('id_medico'))
-					// 	->get()
-					// 	->first();
-
-					// return view('clinica.recursosmedicos.agenda.index-calendar', $data);
-					// return view('clinica.recursosmedicos.agenda.index-agenda', $data);
-					return view('clinica.recursosmedicos.agenda.medico', $data);
-
-				})->name('clinica.recursosmedicos.agenda.medico');
+				Route::get('/', [Profissionais::class, 'agenda'])->name('clinica.recursosmedicos.agenda.medico');
 
 				Route::post('/', [Agendamedica::class, 'store']);
 				Route::put('/', [Agendamedica::class, 'store']);
@@ -339,91 +236,7 @@ Route::middleware([
 
 		Route::prefix('/agenda')->group(function () {
 
-			Route::get('/', function (AgendaModel $agenda_model) {
-
-				$data              = request('data') ?? date('Y-m-d'); // data que vem do calendario na requisição
-				$data_time         = strtotime($data); // transforma a data da requisição em inteiro
-				$primeira_data_mes = 1; // primeira data do mês
-				$ultima_data_mes   = date('Y-m-', strtotime($data)) . date('t', strtotime($data)); // A última data do mês (28|29; 30|31)
-				$data_fim_time     = strtotime($ultima_data_mes); // transforma a última data do mês em inteiro
-				$ano               = date('Y', $data_time); // ano da data
-				$mes               = date('m', $data_fim_time); // mês da data
-				$ultima_data_mes   = date('t', strtotime($data)); // última data do mês
-				$dia_semana_ativo  = date('w', $data_time); // o dia da semana que está disponível para atendimento (vem do Banco de dados)
-				$repetir           = null; // o dia da semana que deve se repetir o evento (vem do Banco de dados)
-				$dias_agenda       = [];
-				$dias_ativos       = [];
-				$dias_inativos     = [];
-
-				$agenda = $agenda_model->select('id', 'id_medico', 'id_clinica', 'titulo', 'duracao', 'tempo_min_agendamento', 'tempo_max_agendamento', 'intervalo', 'max_agendamento', 'repetir')
-					->from('tb_medico_agenda AS A')
-					->get();
-
-				if ($agenda->count() > 0) {
-
-					foreach ($agenda as $a) {
-
-						$id                    = $a->id;
-						$id_medico             = $a->id_medico;
-						$medico_model          = $agenda_model->select('nome', 'crm')->from('tb_medico')->where('id', $a->id_medico)->first();
-						$medico                = $medico_model->nome;
-						$crm                   = $medico_model->crm;
-						$id_clinica            = $a->id_clinica;
-						$clinica               = $agenda_model->select('razao_social')->from('tb_empresa')->where('id', $a->id_clinica)->first();
-						$clinica               = $clinica->razao_social;
-						$titulo                = $a->titulo;
-						$duracao               = $a->duracao;
-						$tempo_min_agendamento = $a->tempo_min_agendamento;
-						$tempo_max_agendamento = $a->tempo_max_agendamento;
-						$intervalo             = $a->intervalo;
-						$max_agendamento       = $a->max_agendamento;
-						$repetir               = $a->repetir;
-
-						$horarios = $agenda_model->from('tb_medico_agenda_horario')
-							->where('id_agenda', $a->id)
-							->orderBy('dia', 'asc')
-							->orderBy('inicio', 'asc')
-							->orderBy('fim', 'asc')
-							->get();
-
-						for ($d = $primeira_data_mes; $d <= $ultima_data_mes; $d++) {
-
-							$time = strtotime($ano . '-' . $mes . '-' . $d);
-
-							if ($horarios->count() > 0) {
-
-								foreach ($horarios as $h) {
-
-									$dia    = (int) $h->dia;
-									$inicio = $h->inicio;
-									$fim    = $h->fim;
-
-									if ($dia == date('w', $time)) {
-										$dias_ativos[] = date('Y-m-d', $time);
-									}
-
-								}
-
-							}
-
-							if (!in_array(date('Y-m-d', $time), $dias_ativos)) {
-								$dias_inativos[] = date('Y-m-d', $time);
-							}
-
-						}
-
-					}
-
-				}
-
-				if (request()->ajax()) {
-					return response()->json(['dias_ativos' => $dias_ativos, 'dias_inativos' => $dias_inativos]);
-				} else {
-					$dados['clinicas'] = 'clinica';
-					return view('clinica.agendamentos.index', $dados);
-				}
-
-			})->name('clinica.agendamentos.agenda.horarios');
+			Route::get('/', [Agendamedica::class, 'agenda'])->name('clinica.agendamentos.agenda.horarios');
 
 			Route::get('/agendados/{year?}/{month?}/{day?}', function (AgendaModel $agenda_model) {
 
@@ -439,14 +252,35 @@ Route::middleware([
 				if (preg_match('/^(\d){4}\-(([0]?)[0-9]|[1][0-2])\-([0-2][0-9]|[3][0-1])$/', $data)) {
 					$agenda = $agenda->where('data', $data);
 				} else {
-					$agenda = $agenda->where(DB::raw('DATE_FORMAT(data, "%Y-%m")'), $data);
+					$agenda = $agenda->where(DB::raw('DATE_FORMAT(data, "%Y-%m")'), $data)
+						->where('data', '>=', date('Y-m-d'));
 				}
 
-				$agenda = $agenda->orderBy('data', 'ASC')
+				if (request('search')) {
+					$agenda = $agenda->where(function ($query) {
+						$query->where('id_medico', function ($query) {
+							$query->select('id')->from('tb_medico')->where('nome', 'like', request('search') . '%')->whereColumn('id', 'id_medico');
+						})->orWhere('id_paciente', function ($query) {
+							$query->select('id')->from('tb_paciente')->where('nome', 'like', request('search') . '%')->whereColumn('id', 'id_paciente');
+						})->orWhere('id_especialidade', function ($query) {
+							$query->select('id')->from('tb_especialidade')->where('especialidade', 'like', request('search') . '%')->whereColumn('id', 'id_especialidade');
+						})->orWhere('id_clinica', function ($query) {
+							$query->select('id')->from('tb_empresa')->where('razao_social', 'like', request('search') . '%')->orWhere('titulo', 'like', request('search') . '%')->whereColumn('id', 'id_paciente');
+						});
+					});
+				}
+
+				$agenda = $agenda->orderBy(request('sort') ?? 'data', 'ASC')
 					->orderBy('hora_agendada', 'ASC')->get();
 
 				$dados['data']   = $data;
 				$dados['agenda'] = $agenda;
+
+				if (request()->ajax() && isset($_REQUEST['search'])) {
+					$dados['results_search'] = $agenda->count();
+					$dados['search']         = request('search');
+					return view('clinica.agendamentos.results_horarios_reservados', $dados);
+				}
 
 				return view('clinica.agendamentos.horarios_reservados', $dados);
 

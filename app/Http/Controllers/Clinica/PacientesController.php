@@ -9,6 +9,7 @@ use App\Models\Clinica\EtniaModel;
 use App\Models\Clinica\PacienteModel;
 use App\Models\FileModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PacientesController extends Controller {
 
@@ -39,6 +40,50 @@ class PacientesController extends Controller {
 
 		return view('clinica.pacientes.index', $data);
 
+	}
+
+	public function autocomplete(Request $request) {
+
+		$pacientes = [];
+		$paciente  = DB::connection('medicus')
+			->table('tb_paciente AS P')
+			->select('nome', 'id', 'cpf', 'matricula')
+			->whereAny(['nome', 'cpf', 'matricula'], 'like', request('search') . '%')
+			->get();
+
+		if ($paciente->count() > 0) {
+			foreach ($paciente as $p) {
+				$pacientes[] = ['text' => $p->nome . ' - ' . format($p->cpf), 'id' => $p->id];
+			}
+		}
+
+		return $pacientes;
+
+	}
+
+	public function get_dados(Request $request) {
+		$id = $request->id;
+
+		$pacientes = [];
+		$result    = DB::connection('medicus')
+			->table('tb_paciente AS P')
+			->select('*', DB::raw('DATE_FORMAT(data_nascimento, "%d/%m/%Y") AS data_nascimento'))
+			->where('id', request('id'))
+			->get()
+			->first();
+
+		$paciente['mae']             = $result->mae ?? null;
+		$paciente['pai']             = $result->pai ?? null;
+		$paciente['data_nascimento'] = $result->data_nascimento ?? null;
+		$paciente['cpf']             = $result->cpf ?? null;
+		$paciente['telefone']        = $result->telefone ?? null;
+		$paciente['convenio']        = $result->convenio ?? null;
+		$paciente['matricula']       = $result->matricula ?? null;
+		$paciente['validade']        = $result->validade ?? null;
+		$paciente['observacao']      = $result->notas ?? null;
+		$paciente['enviar_email']    = $result->enviar_email ?? null;
+
+		return $paciente;
 	}
 
 	/**

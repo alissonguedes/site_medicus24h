@@ -233,7 +233,7 @@
 
 		<div id="modal_tarefa" class="modal modal-fixed-footer">
 
-			<div class="modal-content">
+			<div class="modal-content white">
 
 				<div class="row">
 					<div class="col s12">

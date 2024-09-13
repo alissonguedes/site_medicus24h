@@ -7,13 +7,11 @@ use App\Models\Clinica\ProfissionalModel;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class ProfissionaisController extends Controller
-{
+class ProfissionaisController extends Controller {
 	/**
 	 * Display a listing of the resource.
 	 */
-	public function index(Request $request, ProfissionalModel $profissional)
-	{
+	public function index(Request $request, ProfissionalModel $profissional) {
 
 		$data['profissionais'] = $profissional->get();
 		$data['profissional']  = $profissional->where('id', $request->id)->get()->first();
@@ -23,19 +21,31 @@ class ProfissionaisController extends Controller
 
 	}
 
+	public function agenda(Request $request, ProfissionalModel $profissional, $id_medico, $id_clinica = null) {
+
+		$data               = [];
+		$data['id_medico']  = $id_medico;
+		$data['id_clinica'] = $id_clinica;
+		$data['medico']     = $profissional->select('M.id', 'M.nome')
+			->from('tb_medico AS M')
+			->where('id', $id_medico)
+			->first();
+
+		return view('clinica.recursosmedicos.agenda.medico', $data);
+
+	}
+
 	/**
 	 * Show the form for creating a new resource.
 	 */
-	public function create()
-	{
+	public function create() {
 		//
 	}
 
 	/**
 	 * Store a newly created resource in storage.
 	 */
-	public function store(Request $request, ProfissionalModel $profissional)
-	{
+	public function store(Request $request, ProfissionalModel $profissional) {
 
 		$data = $request->all();
 
@@ -116,24 +126,21 @@ class ProfissionaisController extends Controller
 	/**
 	 * Display the specified resource.
 	 */
-	public function show(string $id)
-	{
+	public function show(string $id) {
 		//
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function edit(string $id)
-	{
+	public function edit(string $id) {
 		//
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 */
-	public function update(Request $request, ProfissionalModel $profissional)
-	{
+	public function update(Request $request, ProfissionalModel $profissional) {
 
 		$data     = $request->all();
 		$empresas = $data['empresas'];
@@ -159,8 +166,7 @@ class ProfissionaisController extends Controller
 	/**
 	 * Remove the specified resource from storage.
 	 */
-	public function destroy(Request $request, ProfissionalModel $profissional)
-	{
+	public function destroy(Request $request, ProfissionalModel $profissional) {
 
 		// // $this->authorize('delete', PacienteModel::class);
 

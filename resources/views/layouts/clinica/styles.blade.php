@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ asset('assets/node_modules/materialize-css/dist/css/materialize.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/plugins/materialize/materialize.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/node_modules/perfect-scrollbar/css/perfect-scrollbar.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/node_modules/froala-editor/css/froala_editor.pkgd.min.css') }}" />
 
