@@ -7,11 +7,11 @@
 
 		<div class="row">
 
-			<div class="col s12 m6 l6 xl3">
+			<div class="col s12 m4 l3 xl3">
 				<div class="card gradient-45deg-purple-deep-purple gradient-shadow min-height-100 white-text animate fadeLeft">
 					<div class="padding-4">
 						<div class="row">
-							<div class="col s4 m4 center-align">
+							<div class="col s4 m4">
 								<i class="material-symbols-outlined background-round mt-5">people</i>
 								<p>Pacientes</p>
 							</div>
@@ -24,11 +24,11 @@
 				</div>
 			</div>
 
-			<div class="col s12 m6 l6 xl3">
+			<div class="col s12 m4 l3 xl3">
 				<div class="card gradient-45deg-purple-deep-purple gradient-shadow min-height-100 white-text animate fadeLeft">
 					<div class="padding-4">
 						<div class="row">
-							<div class="col s4 m4 center-align">
+							<div class="col s4 m4">
 								<i class="material-symbols-outlined background-round mt-5">real_estate_agent</i>
 								<p>HomeCare</p>
 							</div>
@@ -41,11 +41,11 @@
 				</div>
 			</div>
 
-			<div class="col s12 m6 l6 xl3">
+			<div class="col s12 m4 l3 xl3">
 				<div class="card gradient-45deg-purple-deep-purple gradient-shadow min-height-100 white-text animate fadeLeft">
 					<div class="padding-4">
 						<div class="row">
-							<div class="col s4 m4 center-align">
+							<div class="col s4 m4">
 								<i class="material-symbols-outlined background-round mt-5">cardiology</i>
 								<p>Atendimentos</p>
 							</div>
@@ -58,11 +58,11 @@
 				</div>
 			</div>
 
-			<div class="col s12 m6 l6 xl3">
+			<div class="col s12 m4 l3 xl3">
 				<div class="card gradient-45deg-purple-deep-purple gradient-shadow min-height-100 white-text animate fadeLeft">
 					<div class="padding-4">
 						<div class="row">
-							<div class="col s4 m4 center-align">
+							<div class="col s4 m4">
 								<i class="material-symbols-outlined background-round mt-5">stacked_inbox</i>
 								<p>Tickets</p>
 							</div>
