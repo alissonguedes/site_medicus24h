@@ -43,17 +43,27 @@
 		<script>
 			$(function() {
 				$('input[id="search"]').bind('keyup paste', delay(function() {
+
+					$('.progress').show();
+
 					$.ajax({
 						url: "{{ route('clinica.agendamentos.horariosreservados', [request('year'), request('month'), request('day')]) }}",
 						data: {
 							search: $(this).val()
 						},
 						success(response) {
-							var html = $(response).html();
-							$('#results_horarios_reservados').html(html);
-							$.getScript(BASE_PATH + 'assets/js/app.js');
+							setTimeout(function() {
+								var html = $(response).html();
+								$('#results_horarios_reservados').html(html);
+								$.getScript(BASE_PATH + 'assets/js/app.js');
+								$('.progress').hide();
+							}, 500);
+						},
+						error() {
+							$('.progress').hide();
 						}
 					});
+
 				}, 300));
 			});
 		</script>
