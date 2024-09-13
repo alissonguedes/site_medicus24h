@@ -42,7 +42,7 @@
 
 		<script>
 			$(function() {
-				$('input[id="search"]').bind('keyup', function() {
+				$('input[id="search"]').bind('keyup paste', delay(function() {
 					$.ajax({
 						url: "{{ route('clinica.agendamentos.horariosreservados', [request('year'), request('month'), request('day')]) }}",
 						data: {
@@ -53,9 +53,9 @@
 							$('#results_horarios_reservados').html(html);
 							$.getScript(BASE_PATH + 'assets/js/app.js');
 						}
-					})
-				});
-			})
+					});
+				}, 300));
+			});
 		</script>
 	</div>
 	<div class="col s6 right-align">
